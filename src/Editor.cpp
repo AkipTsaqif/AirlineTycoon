@@ -120,7 +120,7 @@ static long _R4=GetPlaneBuildIndex("R4");
 static long _R5=GetPlaneBuildIndex("R5");
 static long _R6=GetPlaneBuildIndex("R6");
 
-//Für das Anhängen der Tragflächen:
+//Fï¿½r das Anhï¿½ngen der Tragflï¿½chen:
 static XY _rbody2a( 66,79);
 static XY _rbody2b(118,91);
 static XY _rbody2c(169,105);
@@ -157,7 +157,7 @@ static XY _lwing5( 62,86);
 static XY _rwing6(200,21);
 static XY _lwing6(111,100);
 
-//Für das Anhängen der Triebwerke:
+//Fï¿½r das Anhï¿½ngen der Triebwerke:
 static XY _motor1(45, 6);
 static XY _motor2(33, 4);
 static XY _motor3(44,13);
@@ -201,7 +201,7 @@ static XY _m_rwing6b(117,105);
 static XY _m_lwing6a(178, 87);
 static XY _m_lwing6b(177, 43);
 
-//2d: Zum anhängen des Cockpits:
+//2d: Zum anhï¿½ngen des Cockpits:
 static XY _2d_cbody1(  0,0);
 static XY _2d_cbody2(  0,36);
 static XY _2d_cbody3(  0,0);
@@ -214,7 +214,7 @@ static XY _2d_cpit3( 76,0);
 static XY _2d_cpit4( 37,0);
 static XY _2d_cpit5( 99,0);
 
-//2d: Zum anhängen des Hecks:
+//2d: Zum anhï¿½ngen des Hecks:
 static XY _2d_hbody1( 89,0);
 static XY _2d_hbody2(214,11);
 static XY _2d_hbody3(134,0);
@@ -229,7 +229,7 @@ static XY _2d_heck5( 0,47);
 static XY _2d_heck6( 0,29);
 static XY _2d_heck7( 0,59);
 
-//2d: Die Tragflächen anhängen:
+//2d: Die Tragflï¿½chen anhï¿½ngen:
 static XY _2d_tbody1( 44,39);
 static XY _2d_tbody2a(150,48);
 static XY _2d_tbody2b(110,48);
@@ -253,7 +253,7 @@ static XY _2d_left4(40,69);
 static XY _2d_left5(90,44);
 static XY _2d_left6(93,31);
 
-//Für das Anhängen der Triebwerke:
+//Fï¿½r das Anhï¿½ngen der Triebwerke:
 static XY _2d_motor1(28,0);
 static XY _2d_motor2(42,6);
 static XY _2d_motor3(34,14);
@@ -370,7 +370,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation ( 345, _B5, _H6, _2d_hbody5-_2d_heck6, XY( -98,  -59),  NOTE_STD, NOTE_STD, NOTE_STD,      0,    0,     "H0", "H0" ),
    CPlanePartRelation ( 346, _B5, _H7, _2d_hbody5-_2d_heck7, XY(-136, -113),  NOTE_STD, NOTE_STD, NOTE_SPEED800, 0,    0,     "H0", "H0" ),
 
-   //Bug->Flügel     // Id,  From, To, Offset2d,     Offset3d,        Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
+   //Bug->Flï¿½gel     // Id,  From, To, Offset2d,     Offset3d,        Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
    CPlanePartRelation ( 400, _B1, _R4, _2d_tbody1-_2d_rght4, XY(-128,   59),  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "Rx", "RxR1R2R3" ),
    CPlanePartRelation ( 600, _B1, _L4, _2d_tbody1-_2d_left4, XY(  42,  -93),  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "Lx", "LxL1L2L3" ),
    CPlanePartRelation ( 401, _B1, _R5, _2d_tbody1-_2d_rght5, XY( -66,   58),  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "Rx", "RxR1R2R3" ),
@@ -432,7 +432,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation ( 474, _B5, _R5, _2d_tbody5-_2d_rght5, _rbody5-_rwing5,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "Rx", "Rx" ),
    CPlanePartRelation ( 674, _B5, _L5, _2d_tbody5-_2d_left5, _lbody5-_lwing5+XY(45,15),  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "Lx", "Lx" ),
 
-   //Flügel->Motor   // Id,  From, To, Offset2d,                  Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
+   //Flï¿½gel->Motor   // Id,  From, To, Offset2d,                  Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
    CPlanePartRelation ( 700, _R1, _M1, _2d_m_rwing1a-_2d_motor1, _m_rwing1a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 2,     "M1", "M1" ),
    CPlanePartRelation ( 710, _L1, _M1, _2d_m_lwing1a-_2d_motor1, _m_lwing1a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    2,     "M4", "M4" ),
    CPlanePartRelation ( 701, _R1, _M2, _2d_m_rwing1a-_2d_motor2, _m_rwing1a-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 15,    "M1", "M1" ),
@@ -472,7 +472,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation ( 747, _R1, _M8, _2d_m_rwing1c-_2d_motor8, _m_rwing1c-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 0,     "M3", "M2M3" ),
    CPlanePartRelation ( 757, _L1, _M8, _2d_m_lwing1c-_2d_motor8, _m_lwing1c-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "M6", "M5M6" ),
 
-   //Flügel2->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
+   //Flï¿½gel2->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
    CPlanePartRelation ( 800, _R2, _M1, _2d_m_rwing2a-_2d_motor1, _m_rwing2a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 2,     "M1", "M1" ),
    CPlanePartRelation ( 810, _L2, _M1, _2d_m_lwing2a-_2d_motor1, _m_lwing2a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    2,     "M4", "M4" ),
    CPlanePartRelation ( 801, _R2, _M2, _2d_m_rwing2a-_2d_motor2, _m_rwing2a-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 15,    "M1", "M1" ),
@@ -512,7 +512,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation ( 847, _R2, _M8, _2d_m_rwing2c-_2d_motor8, _m_rwing2c-_motor8,  NOTE_KAPUTTXL, NOTE_STD, NOTE_STD, 3000, 0,     "M3", "M2M3" ),
    CPlanePartRelation ( 857, _L2, _M8, _2d_m_lwing2c-_2d_motor8, _m_lwing2c-_motor8,  NOTE_KAPUTTXL, NOTE_STD, NOTE_STD, 0,    0,     "M6", "M5M6" ),
 
-   //Flügel2->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
+   //Flï¿½gel2->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
    CPlanePartRelation ( 900, _R3, _M1, _2d_m_rwing3a-_2d_motor1, _m_rwing3a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 2,     "M1", "M1" ),
    CPlanePartRelation ( 910, _L3, _M1, _2d_m_lwing3a-_2d_motor1, _m_lwing3a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    2,     "M4", "M4" ),
    CPlanePartRelation ( 901, _R3, _M2, _2d_m_rwing3a-_2d_motor2, _m_rwing3a-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 20,    "M1", "M1" ),
@@ -552,7 +552,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation ( 947, _R3, _M8, _2d_m_rwing3c-_2d_motor8, _m_rwing3c-_motor8,  NOTE_KAPUTTXL, NOTE_STD, NOTE_STD, 3000, 0,     "M3", "M2M3" ),
    CPlanePartRelation ( 957, _L3, _M8, _2d_m_lwing3c-_2d_motor8, _m_lwing3c-_motor8,  NOTE_KAPUTTXL, NOTE_STD, NOTE_STD, 0,    0,     "M6", "M5M6" ),
 
-   //Flügel4->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
+   //Flï¿½gel4->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
    CPlanePartRelation (1000, _R4, _M1, _2d_m_rwing4a-_2d_motor1, _m_rwing4a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 2,     "M3", "M3" ),
    CPlanePartRelation (1010, _L4, _M1, _2d_m_lwing4a-_2d_motor1, _m_lwing4a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    2,     "M6", "M6" ),
    CPlanePartRelation (1001, _R4, _M2, _2d_m_rwing4a-_2d_motor2, _m_rwing4a-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 20,    "M3", "M3" ),
@@ -585,7 +585,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation (1027, _R4, _M8, _2d_m_rwing4b-_2d_motor8, _m_rwing4b-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 0,     "M2", "M2" ),
    CPlanePartRelation (1037, _L4, _M8, _2d_m_lwing4b-_2d_motor8, _m_lwing4b-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    0,     "M5", "M5" ),
 
-   //Flügel4->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
+   //Flï¿½gel4->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Slot, RulesOutSlots
    CPlanePartRelation (1100, _R5, _M1, _2d_m_rwing5-_2d_motor1, _m_rwing5-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000,  2,    "M3", "M3" ),
    CPlanePartRelation (1110, _L5, _M1, _2d_m_lwing5-_2d_motor1, _m_lwing5-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,     2,    "M6", "M6" ),
    CPlanePartRelation (1101, _R5, _M2, _2d_m_rwing5-_2d_motor2, _m_rwing5-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000,  20,   "M3", "M3" ),
@@ -603,7 +603,7 @@ CPlanePartRelation gPlanePartRelations[307]=
    CPlanePartRelation (1107, _R5, _M8, _2d_m_rwing5-_2d_motor8, _m_rwing5-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 3000,  15,   "M3", "M2M3" ),
    CPlanePartRelation (1117, _L5, _M8, _2d_m_lwing5-_2d_motor8, _m_lwing5-_motor8,  NOTE_STD, NOTE_STD, NOTE_STD, 0,     15,   "M6", "M5M6" ),
 
-   //Flügel6->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
+   //Flï¿½gel6->Motor  // Id,  From, To, Offset2d,                 Offset3d,            Note1,    Note1,    Note1,    zAdd, Noise, Slot, RulesOutSlots
    CPlanePartRelation (1200, _R6, _M1, _2d_m_rwing6a-_2d_motor1, _m_rwing6a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 2,     "M3", "M3" ),
    CPlanePartRelation (1210, _L6, _M1, _2d_m_lwing6a-_2d_motor1, _m_lwing6a-_motor1,  NOTE_STD, NOTE_STD, NOTE_STD, 0,    2,     "M6", "M6" ),
    CPlanePartRelation (1201, _R6, _M2, _2d_m_rwing6a-_2d_motor2, _m_rwing6a-_motor2,  NOTE_STD, NOTE_STD, NOTE_STD, 3000, 20,    "M3", "M3" ),
@@ -646,7 +646,7 @@ CPlanePartRelation gPlanePartRelations[307]=
 };
 
 //--------------------------------------------------------------------------------------------
-//Die Schalter wird eröffnet:
+//Die Schalter wird erï¿½ffnet:
 //--------------------------------------------------------------------------------------------
 CEditor::CEditor(BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNum, "Editor.gli", GFX_EDITOR)
 {
@@ -845,7 +845,7 @@ void CEditor::OnPaint()
       if (PartUnderCursorB!="")
          GripAtPosB = GripAtPos+XY(PartBms[GetPlaneBuild(PartUnderCursor).BitmapIndex].Size.x*3/4, -PartBms[GetPlaneBuild(PartUnderCursorB).BitmapIndex].Size.y);
 
-      //Für alle Relations:
+      //Fï¿½r alle Relations:
       for (c=0; c<sizeof(gPlanePartRelations)/sizeof(gPlanePartRelations[0]); c++)
          if (gPlanePartRelations[c].ToBuildIndex==GetPlaneBuildIndex(PartUnderCursor))
             if (Plane.Parts.IsSlotFree (gPlanePartRelations[c].Slot))
@@ -877,7 +877,7 @@ void CEditor::OnPaint()
                   //     if (gPlaneBuilds[OtherParent].Shortname[0]=='L') OtherParent-=(5+8);
                   //else if (gPlaneBuilds[OtherParent].Shortname[0]=='R') OtherParent+=(5+8);
 
-                  //Für alle eingebauten Planeparts:
+                  //Fï¿½r alle eingebauten Planeparts:
                   
                   for (d=0; d<(long)Plane.Parts.AnzEntries(); d++)
                      if (Plane.Parts.IsInAlbum(d))
@@ -931,7 +931,7 @@ void CEditor::OnPaint()
    long tank      = Plane.CalcTank(true);
    long reichw    = Plane.CalcReichweite();
 
-   //NUR TEMPORÄR:
+   //NUR TEMPORï¿½R:
    long verbrauch2=0;
    if (verbrauch && speed && passa)
       verbrauch2 = verbrauch*100/speed*100/passa;
@@ -989,9 +989,9 @@ void CEditor::OnPaint()
    CString wartungtext          = StandardTexte.GetS (TOKEN_MISC, 8508); //sehr gut
    if (wartung>-30) wartungtext = StandardTexte.GetS (TOKEN_MISC, 8507); //recht gut
    if (wartung>-20) wartungtext = StandardTexte.GetS (TOKEN_MISC, 8506); //gut
-   if (wartung>-10) wartungtext = StandardTexte.GetS (TOKEN_MISC, 8505); //über normal
+   if (wartung>-10) wartungtext = StandardTexte.GetS (TOKEN_MISC, 8505); //ï¿½ber normal
    if (wartung>=0)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8504); //normal
-   if (wartung>20)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8503); //mäßig
+   if (wartung>20)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8503); //mï¿½ï¿½ig
    if (wartung>50)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8502); //schlecht
    if (wartung>80)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8501); //sehr schlecht
    if (wartung>110)  wartungtext = StandardTexte.GetS (TOKEN_MISC, 8500); //katastrophal
@@ -1084,14 +1084,14 @@ void CEditor::OnPaint()
       if (PartUnderCursorB!="") ColorFX.BlitOutline (PartBms[GetPlaneBuild(PartUnderCursorB).BitmapIndex].pBitmap, RoomBm.pBitmap, GripAtPosB, 0xffffff);
    }
 
-   //Die Maske um Überhänge zu verdecken:
+   //Die Maske um ï¿½berhï¿½nge zu verdecken:
    RoomBm.BlitFromT (MaskenBms[0], 0, 0);
    RoomBm.BlitFromT (MaskenBms[1], 0, 343);
 
    //Flugzeugname:
    RoomBm.PrintAt (Plane.Name, FontNormalGreen, TEC_FONT_CENTERED, 193, 4+3, 471, 25+3);
    
-   //Die aktuell gewählten Parts:
+   //Die aktuell gewï¿½hlten Parts:
    if (bAllowB) RoomBm.BlitFromT (SelPartBms[index_b],  66-SelPartBms[index_b].Size.x/2, 399-SelPartBms[index_b].Size.y/2);
    else         ColorFX.BlitTrans (SelPartBms[index_b].pBitmap, RoomBm.pBitmap, XY(66-SelPartBms[index_b].Size.x/2, 399-SelPartBms[index_b].Size.y/2), NULL, 5);
    if (bAllowC) RoomBm.BlitFromT (SelPartBms[index_c], 193-SelPartBms[index_c].Size.x/2, 399-SelPartBms[index_c].Size.y/2);
@@ -1438,7 +1438,7 @@ void CEditor::OnLButtonUp(UINT, CPoint point)
 }
 
 //--------------------------------------------------------------------------------------------
-// Testet ob ein aktuell gewähltes Teil da gar nicht dran paßt:
+// Testet ob ein aktuell gewï¿½hltes Teil da gar nicht dran paï¿½t:
 //--------------------------------------------------------------------------------------------
 void CEditor::CheckUnusablePart(long iDirection)
 {
@@ -1462,7 +1462,7 @@ again_w:
 }
 
 //--------------------------------------------------------------------------------------------
-// Löscht das aktuelle Flugzeug:
+// Lï¿½scht das aktuelle Flugzeug:
 //--------------------------------------------------------------------------------------------
 void CEditor::DeleteCurrent(void)
 {
@@ -1488,7 +1488,7 @@ void CEditor::OnRButtonDown(UINT nFlags, CPoint point)
 {
    DefaultOnRButtonDown ();
 
-   //Außerhalb geklickt? Dann Default-Handler!
+   //Auï¿½erhalb geklickt? Dann Default-Handler!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       return;
@@ -1628,7 +1628,7 @@ bool CPlaneParts::IsShortnameInAlbum (CString ShortName)
 }
 
 //--------------------------------------------------------------------------------------------
-// Gibt true zurück, falls der Slot noch von keinem Part belegt ist:
+// Gibt true zurï¿½ck, falls der Slot noch von keinem Part belegt ist:
 //--------------------------------------------------------------------------------------------
 bool CPlaneParts::IsSlotFree (CString Slotname)
 {
@@ -1674,7 +1674,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPlaneParts &pp)
 }
 
 //--------------------------------------------------------------------------------------------
-// Lädt ein CPlaneParts-Objekt:
+// Lï¿½dt ein CPlaneParts-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPlaneParts &pp)
 {
@@ -1687,7 +1687,7 @@ TEAKFILE &operator >> (TEAKFILE &File, CPlaneParts &pp)
 //--------------------------------------------------------------------------------------------
 // CPlanePart
 //--------------------------------------------------------------------------------------------
-// Gibt die Bitmap zurück (via das PlaneBuild Array) was dieses Part repräsentiert
+// Gibt die Bitmap zurï¿½ck (via das PlaneBuild Array) was dieses Part reprï¿½sentiert
 //--------------------------------------------------------------------------------------------
 SBBM &CPlanePart::GetBm (SBBMS &PartBms)
 {
@@ -1710,7 +1710,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPlanePart &pp)
 }
 
 //--------------------------------------------------------------------------------------------
-// Lädt ein CPlanePart-Objekt:
+// Lï¿½dt ein CPlanePart-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPlanePart &pp)
 {
@@ -1722,7 +1722,7 @@ TEAKFILE &operator >> (TEAKFILE &File, CPlanePart &pp)
 //--------------------------------------------------------------------------------------------
 // CXPlane::
 //--------------------------------------------------------------------------------------------
-// Löscht ein altes Flugzeug
+// Lï¿½scht ein altes Flugzeug
 //--------------------------------------------------------------------------------------------
 void CXPlane::Clear (void)
 {
@@ -1733,7 +1733,7 @@ void CXPlane::Clear (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Kosten für ein Flugzeug:
+// Berechnet die Kosten fï¿½r ein Flugzeug:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcCost (void)
 {
@@ -1774,7 +1774,7 @@ long CXPlane::CalcReichweite (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet das benötigte Flugpersonal:
+// Berechnet das benï¿½tigte Flugpersonal:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcPiloten (void)
 {
@@ -1804,7 +1804,7 @@ long CXPlane::CalcPiloten (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet das benötigte Flugpersonal:
+// Berechnet das benï¿½tigte Flugpersonal:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcBegleiter (void)
 {
@@ -1834,7 +1834,7 @@ long CXPlane::CalcBegleiter (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Tankgröße des Flugzeuges:
+// Berechnet die Tankgrï¿½ï¿½e des Flugzeuges:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcTank (bool bFaked)
 {
@@ -1847,7 +1847,7 @@ long CXPlane::CalcTank (bool bFaked)
 
    if (bFaked) return (tank);
 
-   //Länger als 22 Stunden unterwegs?
+   //Lï¿½nger als 22 Stunden unterwegs?
    long Verbrauch=CalcVerbrauch();
    if (Verbrauch>0 && tank>0 && tank/Verbrauch>22)
       tank=22*Verbrauch;
@@ -1886,7 +1886,7 @@ long CXPlane::CalcVerbrauch (void)
 
    /*if (verbrauch>0)
    {
-      //Länger als 22 Stunden unterwegs?
+      //Lï¿½nger als 22 Stunden unterwegs?
       if (CalcTank()/verbrauch>22)
          verbrauch=CalcTank()/22;
    }*/
@@ -1895,7 +1895,7 @@ long CXPlane::CalcVerbrauch (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet das Gewicht für ein Flugzeug:
+// Berechnet das Gewicht fï¿½r ein Flugzeug:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcWeight (void)
 {
@@ -1909,7 +1909,7 @@ long CXPlane::CalcWeight (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Kraft der Triebwerke für ein Flugzeug:
+// Berechnet die Kraft der Triebwerke fï¿½r ein Flugzeug:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcPower (void)
 {
@@ -1923,7 +1923,7 @@ long CXPlane::CalcPower (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Kraft der Triebwerke für ein Flugzeug:
+// Berechnet die Kraft der Triebwerke fï¿½r ein Flugzeug:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcNoise (void)
 {
@@ -1941,7 +1941,7 @@ long CXPlane::CalcNoise (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Wartungsintensität:
+// Berechnet die Wartungsintensitï¿½t:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcWartung (void)
 {
@@ -1973,7 +1973,7 @@ long CXPlane::CalcWartung (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Berechnet die Wartungsintensität:
+// Berechnet die Wartungsintensitï¿½t:
 //--------------------------------------------------------------------------------------------
 long CXPlane::CalcSpeed (void)
 {
@@ -2009,7 +2009,7 @@ long CXPlane::CalcSpeed (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Gibtr ggf. true zurück
+// Gibtr ggf. true zurï¿½ck
 //--------------------------------------------------------------------------------------------
 bool CXPlane::IstPartVorhanden (CString Shortname, bool bOnlyThisType)
 {
@@ -2050,7 +2050,7 @@ bool CXPlane::IsBuildable (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Gibt eine Fehlerbeschreibung zurück:
+// Gibt eine Fehlerbeschreibung zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 CString CXPlane::GetError (void)
 {
@@ -2088,11 +2088,11 @@ CString CXPlane::GetError (void)
             return (StandardTexte.GetS (TOKEN_MISC, 8300));
       }
 
-   //Triebwerke kräftig genug?
+   //Triebwerke krï¿½ftig genug?
    if (CalcPower()*4<CalcWeight())
       return (StandardTexte.GetS (TOKEN_MISC, 8301));
 
-   //Tragflächen groß genug?
+   //Tragflï¿½chen groï¿½ genug?
    /*if (IstPartVorhanden ("R5"))
       if (IstPartVorhanden ("B2") || IstPartVorhanden ("B4") || IstPartVorhanden ("B5"))
          return (StandardTexte.GetS (TOKEN_MISC, 8302));
@@ -2151,7 +2151,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CXPlane &p)
 }
 
 //--------------------------------------------------------------------------------------------
-// Lädt ein CXPlane-Objekt:
+// Lï¿½dt ein CXPlane-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CXPlane &p)
 {
@@ -2179,7 +2179,100 @@ TEAKFILE &operator >> (TEAKFILE &File, CXPlane &p)
 //--------------------------------------------------------------------------------------------
 // ::
 //--------------------------------------------------------------------------------------------
-// Gibt das passende Build zum Shortname zurück:
+// Gibt das passende Build zum Shortname zurï¿½ck:
+//--------------------------------------------------------------------------------------------
+// Hilfsfunktionen fuer den KI-Flugzeugbau in der Designerwerkstatt (Free Game)
+//--------------------------------------------------------------------------------------------
+
+// Sucht den Array-Index einer Relation anhand ihrer Id-Nummer
+static SLONG FindPlaneRelIdx (SLONG Id)
+{
+   for (SLONG i = 0; i < (SLONG)(sizeof(gPlanePartRelations)/sizeof(gPlanePartRelations[0])); i++)
+      if (gPlanePartRelations[i].Id == Id)
+         return i;
+   return -1;
+}
+
+// Fuegt ein Teil mit gegebener Relation-Id zum CXPlane hinzu
+static void AddAIPart (CXPlane& plane, const char* shortname, const char* parentShortname, SLONG relationId)
+{
+   SLONG idx = FindPlaneRelIdx(relationId);
+   if (idx < 0) return;
+
+   ULONG partId = plane.Parts.GetUniqueId();
+   plane.Parts += partId;
+   plane.Parts[partId].Pos2d            = XY(0, 0);
+   plane.Parts[partId].Pos3d            = XY(0, 0);
+   plane.Parts[partId].Shortname        = shortname;
+   plane.Parts[partId].ParentShortname  = parentShortname;
+   plane.Parts[partId].ParentRelationId = idx;
+}
+
+//--------------------------------------------------------------------------------------------
+// Baut ein sinnvolles Flugzeug fuer die KI in der Designerwerkstatt (Free Game).
+// Probiert Konfigurationen vom groessten zum kleinsten, waehlt die erste die
+// ins Budget passt und die Mindestreichweite erfuellt.
+// Gibt true zurueck wenn ein gueltiges Flugzeug gebaut wurde.
+//--------------------------------------------------------------------------------------------
+bool BuildAIXPlane (CXPlane& plane, SLONG neededRange, SLONG neededPax, SLONG maxBudget)
+{
+   plane.Clear();
+
+   // --- Konfiguration C: Grossraumjet B2+C5+H2+R1+L1+4xM7 ---
+   // ca. 600 Pax, ~81 Mio. DM, ~12500 km Reichweite
+   if (maxBudget >= 81000000L) {
+      plane.Name = "AI Grossjet";
+      AddAIPart(plane, "B2", "",   101);  // B2 Rumpf
+      AddAIPart(plane, "C5", "B2", 214);  // Cockpit C5 an B2
+      AddAIPart(plane, "H2", "B2", 311);  // Heck H2 an B2
+      AddAIPart(plane, "R1", "B2", 411);  // Rechter Fluegel R1 an B2
+      AddAIPart(plane, "L1", "B2", 611);  // Linker Fluegel L1 an B2
+      AddAIPart(plane, "M7", "R1", 726);  // Motor M7 an R1 Slot M2
+      AddAIPart(plane, "M7", "L1", 736);  // Motor M7 an L1 Slot M5 (symmetrisch)
+      AddAIPart(plane, "M7", "R1", 746);  // Motor M7 an R1 Slot M3
+      AddAIPart(plane, "M7", "L1", 756);  // Motor M7 an L1 Slot M6 (symmetrisch)
+      if (plane.IsBuildable() && plane.CalcReichweite() >= neededRange && plane.CalcCost() <= maxBudget)
+         return true;
+      plane.Clear();
+   }
+
+   // --- Konfiguration B: Mittelstrecke B4+C5+H2+R2+L2+4xM4 ---
+   // ca. 320 Pax, ~53 Mio. DM, ~8100 km Reichweite
+   if (maxBudget >= 53000000L) {
+      plane.Name = "AI Mittelstrecke";
+      AddAIPart(plane, "B4", "",   103);  // B4 Rumpf
+      AddAIPart(plane, "C5", "B4", 234);  // Cockpit C5 an B4
+      AddAIPart(plane, "H2", "B4", 331);  // Heck H2 an B4
+      AddAIPart(plane, "R2", "B4", 460);  // Rechter Fluegel R2 an B4
+      AddAIPart(plane, "L2", "B4", 660);  // Linker Fluegel L2 an B4
+      AddAIPart(plane, "M4", "R2", 823);  // Motor M4 an R2 Slot M2
+      AddAIPart(plane, "M4", "L2", 833);  // Motor M4 an L2 Slot M5 (symmetrisch)
+      AddAIPart(plane, "M4", "R2", 843);  // Motor M4 an R2 Slot M3
+      AddAIPart(plane, "M4", "L2", 853);  // Motor M4 an L2 Slot M6 (symmetrisch)
+      if (plane.IsBuildable() && plane.CalcReichweite() >= neededRange && plane.CalcCost() <= maxBudget)
+         return true;
+      plane.Clear();
+   }
+
+   // --- Konfiguration A: Kompaktjet B4+C5+H2+R4+L4+2xM7 ---
+   // ca. 320 Pax, ~43 Mio. DM, ~3400 km Reichweite
+   if (maxBudget >= 43000000L) {
+      plane.Name = "AI Kompaktjet";
+      AddAIPart(plane, "B4", "",   103);  // B4 Rumpf
+      AddAIPart(plane, "C5", "B4", 234);  // Cockpit C5 an B4
+      AddAIPart(plane, "H2", "B4", 331);  // Heck H2 an B4
+      AddAIPart(plane, "R4", "B4", 461);  // Rechter Fluegel R4 an B4
+      AddAIPart(plane, "L4", "B4", 661);  // Linker Fluegel L4 an B4
+      AddAIPart(plane, "M7", "R4", 1006); // Motor M7 an R4 Slot M3
+      AddAIPart(plane, "M7", "L4", 1016); // Motor M7 an L4 Slot M6 (symmetrisch)
+      if (plane.IsBuildable() && plane.CalcReichweite() >= neededRange && plane.CalcCost() <= maxBudget)
+         return true;
+      plane.Clear();
+   }
+
+   return false;
+}
+
 //--------------------------------------------------------------------------------------------
 long GetPlaneBuildIndex (CString Shortname)
 {
@@ -2192,7 +2285,7 @@ long GetPlaneBuildIndex (CString Shortname)
 }
 
 //--------------------------------------------------------------------------------------------
-// Gibt das passende Build zum Shortname zurück:
+// Gibt das passende Build zum Shortname zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 CPlaneBuild &GetPlaneBuild (CString Shortname)
 {

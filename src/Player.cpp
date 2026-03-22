@@ -8,6 +8,7 @@
 
 extern SLONG RocketPrices [];
 extern SLONG StationPrices [];
+extern bool  BuildAIXPlane (CXPlane& plane, SLONG neededRange, SLONG neededPax, SLONG maxBudget);
 
 static const char FileId[] = "Play";
 
@@ -913,13 +914,10 @@ void PLAYER::NewDay (void)
       SLONG neg=1; //Vorzeichen verdrehen, weil: wenig ist gut
       if (Sim.Difficulty==DIFF_ADDON01) neg=-1;
 
-      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg>GetMissionRating()*neg)     Bonus+=100000;
-      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg*2/3>GetMissionRating()*neg) Bonus+=100000;
-      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg/2>GetMissionRating()*neg)   Bonus+=100000;
-
-      if (RobotUse(ROBOT_USE_BONUS_X2)) Bonus*=2;
-      if (RobotUse(ROBOT_USE_BONUS_X4)) Bonus*=4;
-      if (RobotUse(ROBOT_USE_BONUS_X8)) Bonus*=8;
+      //Reduced catch-up pool: 33K per tier (max ~100K/night), no difficulty multipliers
+      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg>GetMissionRating()*neg)     Bonus+=33000;
+      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg*2/3>GetMissionRating()*neg) Bonus+=33000;
+      if (Sim.Players.Players[Sim.localPlayer].GetMissionRating()*neg/2>GetMissionRating()*neg)   Bonus+=33000;
    }
 
    //Laptop wird �ber Nacht repariert:
@@ -2674,7 +2672,8 @@ void PLAYER::RobotPlan()
       else if (RobotUse(ROBOT_USE_GOODPLANES) && Sim.Date%4==PlayerNum && Sim.GetHour()==9 && Sim.GetMinute()<=35) RobotActions[1].ActionId=ACTION_VISITMECH;
       else if (WantToDoRoutes && Image<150 && PlayerWalkRandom.Rand(4)==0) RobotActions[1].ActionId=ACTION_WERBUNG;
       else if (BuyBigPlane && Money>100000 && PlayerWalkRandom.Rand(4)==0 && !RobotUse(ROBOT_USE_GROSSESKONTO)) RobotActions[1].ActionId=ACTION_VISITMUSEUM;
-      else if (Sim.Date+1>=PlayerNum && (MaxAktien-AnzAktien)>=25000 && (Money<3000000 || Credit>1000000 || RobotUse(ROBOT_USE_EMITMUCHSHARES))) RobotActions[1].ActionId=ACTION_EMITSHARES;
+      else if (BuyBigPlane && Money>20000000 && RobotUse(ROBOT_USE_DESIGNER) && PlayerWalkRandom.Rand(3)==0) RobotActions[1].ActionId=ACTION_VISITDESIGNER;
+      else if (Sim.Date+1>=PlayerNum && (MaxAktien-AnzAktien)>=25000 && BilanzGestern.GetSumme()>0 && (Money<3000000 || Credit>1000000 || RobotUse(ROBOT_USE_EMITMUCHSHARES))) RobotActions[1].ActionId=ACTION_EMITSHARES; //Fix B: only emit if profitable
       else if (Sim.Time-TimePersonal>3*60000) RobotActions[1].ActionId=ACTION_PERSONAL;
       else if (Sim.Time-TimeAufsicht>3*60000 || (TimeAufsicht-Sim.Time>1*60000 && Sim.Time>16*60000 && RobotUse(ROBOT_USE_AUFSICHT))) RobotActions[1].ActionId=ACTION_VISITAUFSICHT;
       else if (Sim.Time-TimeReiseburo>90000 && !DoRoutes) { RobotActions[1].ActionId=ACTION_CHECKAGENT1; RobotActions[2].ActionId=ACTION_CHECKAGENT2; }
@@ -2820,8 +2819,9 @@ void PLAYER::RobotPlanRoutes(void)
       }
 
    //Sind einige Routen in Gefahr? Dann mindestens 4 Flugzeuge darauf ansetzen:
+   //Fix E: Skip rescue for chronically unprofitable routes (TageMitVerlust > 5)
    forall (c, Routen)
-      if (Routen.IsInAlbum(c) && RentRouten.RentRouten[c].Rang && RentRouten.RentRouten[c].TageMitGering>=15)
+      if (Routen.IsInAlbum(c) && RentRouten.RentRouten[c].Rang && RentRouten.RentRouten[c].TageMitGering>=15 && RentRouten.RentRouten[c].TageMitVerlust<=5)
       {
          SLONG PlanesFound=0;
 
@@ -2889,6 +2889,23 @@ void PLAYER::RobotPlanRoutes(void)
          if (Planes[d].ptReichweite>=BuyBigPlane) BuyBigPlane=0;
          //if (PlaneTypes[Planes[d].TypeId].Reichweite>=BuyBigPlane) BuyBigPlane=0;
 
+   //Retire planes with very low condition: sell for 90% market value if fleet > 1
+   if (Planes.GetNumUsed() > 1)
+      forall (d, Planes)
+         if (Planes.IsInAlbum(d) && Planes[d].Zustand < 25)
+         {
+            ChangeMoney(Planes[d].CalculatePrice() * 9 / 10, 2011, Planes[d].Name);
+            Planes -= d;
+            UpdateAuftragsUsage();
+            MapWorkers(false);
+            break;
+         }
+
+   //Fix K: Proactive maintenance — keep all active planes targeted at 70+ condition
+   forall (d, Planes)
+      if (Planes.IsInAlbum(d))
+         Planes[d].TargetZustand = max(Planes[d].TargetZustand, (UBYTE)70);
+
    //Neue Routenpl�ne verteilen
    do
    {
@@ -2944,7 +2961,7 @@ void PLAYER::RobotPlanRoutes(void)
 
                qPlan.Flug[d].Okay          = 0;
                qPlan.Flug[d].Startdate     = Sim.Date;
-               qPlan.Flug[d].Startzeit     = Sim.GetHour()+2;
+               qPlan.Flug[d].Startzeit     = Sim.GetHour()+2 + PlanesOnRoute[BestC]*6; //Fix C: stagger departures
                qPlan.Flug[d].HoursBefore   = 50;
                qPlan.Flug[d].Ticketpreis   = RentRouten.RentRouten[BestC].Ticketpreis;
                qPlan.Flug[d].TicketpreisFC = RentRouten.RentRouten[BestC].TicketpreisFC;
@@ -3047,6 +3064,18 @@ void PLAYER::RobotPlanRoutes(void)
 
          RentRouten.RentRouten[c].Ticketpreis   = TotalCost*2*3/10*10;
          RentRouten.RentRouten[c].TicketpreisFC = RentRouten.RentRouten[c].Ticketpreis*2;
+
+         //Fix L: Yield pricing — raise on busy routes, lower on empty ones
+         if (RentRouten.RentRouten[c].TageMitGering == 0 && Sim.Date > 7)
+         {
+            RentRouten.RentRouten[c].Ticketpreis   = RentRouten.RentRouten[c].Ticketpreis   * 115 / 100 / 10 * 10;
+            RentRouten.RentRouten[c].TicketpreisFC = RentRouten.RentRouten[c].TicketpreisFC * 115 / 100 / 10 * 10;
+         }
+         else if (RentRouten.RentRouten[c].TageMitGering > 5)
+         {
+            RentRouten.RentRouten[c].Ticketpreis   = max(TotalCost/10*10,   RentRouten.RentRouten[c].Ticketpreis   * 90 / 100 / 10 * 10);
+            RentRouten.RentRouten[c].TicketpreisFC = max(TotalCost/10*10*2, RentRouten.RentRouten[c].TicketpreisFC * 90 / 100 / 10 * 10);
+         }
 
          if (e>1)
          {
@@ -3767,20 +3796,30 @@ void PLAYER::RobotExecuteAction(void)
          break;
 
       case ACTION_VISITMAKLER:
-         if (Planes.GetNumUsed()>0)
-         if (!RobotUse(ROBOT_USE_TRAVELHOLDING) && LocalRandom.Rand(8)==0)
+         if (Planes.GetNumUsed() > 0 && !RobotUse(ROBOT_USE_TRAVELHOLDING))
          {
-            CPlane &qPlane = Planes[Planes.GetRandomUsedIndex(&LocalRandom)];
+            //Fix M: Find the plane with lowest total service quality, upgrade in priority order
+            SLONG bestPlane = -1, lowestTotal = 99999;
+            for (SLONG dm=0; dm<SLONG(Planes.AnzEntries()); dm++)
+               if (Planes.IsInAlbum(dm))
+               {
+                  SLONG total = Planes[dm].SitzeTarget + Planes[dm].TablettsTarget +
+                                Planes[dm].DecoTarget  + Planes[dm].TriebwerkTarget +
+                                Planes[dm].ReifenTarget + Planes[dm].ElektronikTarget +
+                                Planes[dm].SicherheitTarget;
+                  if (total < lowestTotal) { lowestTotal = total; bestPlane = dm; }
+               }
 
-            switch (LocalRandom.Rand(7))
+            if (bestPlane >= 0 && lowestTotal < 14) // 14 = all 7 targets at max (2)
             {
-               case 0: qPlane.SitzeTarget      = min(2, qPlane.SitzeTarget+1);      break;
-               case 1: qPlane.TablettsTarget   = min(2, qPlane.TablettsTarget+1);   break;
-               case 2: qPlane.DecoTarget       = min(2, qPlane.DecoTarget+1);       break;
-               case 3: qPlane.TriebwerkTarget  = min(2, qPlane.TriebwerkTarget+1);  break;
-               case 4: qPlane.ReifenTarget     = min(2, qPlane.ReifenTarget+1);     break;
-               case 5: qPlane.ElektronikTarget = min(2, qPlane.ElektronikTarget+1); break;
-               case 6: qPlane.SicherheitTarget = min(2, qPlane.SicherheitTarget+1); break;
+               CPlane &qPlane = Planes[bestPlane];
+               if      (qPlane.SitzeTarget      < 2) qPlane.SitzeTarget      = min(2, qPlane.SitzeTarget+1);
+               else if (qPlane.TablettsTarget   < 2) qPlane.TablettsTarget   = min(2, qPlane.TablettsTarget+1);
+               else if (qPlane.DecoTarget       < 2) qPlane.DecoTarget       = min(2, qPlane.DecoTarget+1);
+               else if (qPlane.TriebwerkTarget  < 2) qPlane.TriebwerkTarget  = min(2, qPlane.TriebwerkTarget+1);
+               else if (qPlane.ReifenTarget     < 2) qPlane.ReifenTarget     = min(2, qPlane.ReifenTarget+1);
+               else if (qPlane.ElektronikTarget < 2) qPlane.ElektronikTarget = min(2, qPlane.ElektronikTarget+1);
+               else if (qPlane.SicherheitTarget < 2) qPlane.SicherheitTarget = min(2, qPlane.SicherheitTarget+1);
             }
          }
          WorkCountdown=20*5;
@@ -4152,7 +4191,14 @@ void PLAYER::RobotExecuteAction(void)
          break;
 
       case ACTION_VISITMUSEUM:
-         if (BuyBigPlane && !RobotUse(ROBOT_USE_GROSSESKONTO))
+         {
+            //Check if any owned plane is badly degraded (needs replacement)
+            bool bFleetDegraded = false;
+            for (SLONG dd=0; dd<SLONG(Planes.AnzEntries()); dd++)
+               if (Planes.IsInAlbum(dd) && Planes[dd].Zustand < 40)
+                  { bFleetDegraded = true; break; }
+
+         if ((BuyBigPlane || bFleetDegraded) && !RobotUse(ROBOT_USE_GROSSESKONTO))
          {
             Sim.UpdateUsedPlanes ();
             for (SLONG d=0; d<3; d++)
@@ -4201,6 +4247,7 @@ void PLAYER::RobotExecuteAction(void)
          }
          else
             WorkCountdown=20*5;
+         } //end bFleetDegraded scope
          break;
 
       case ACTION_VISITDUTYFREE:
@@ -4243,7 +4290,7 @@ void PLAYER::RobotExecuteAction(void)
                Sim.Players.Players[Sim.localPlayer].Messages.AddMessage (BERATERTYP_INFO, bprintf (StandardTexte.GetS (TOKEN_ADVICE, 9004), (LPCSTR)NameX, (LPCSTR)AirlineX, NeueAktien));
             }
 
-            if (PlayerNum!=3 || RobotUse(ROBOT_USE_REBUYSHARES))
+            if ((PlayerNum!=3 || RobotUse(ROBOT_USE_REBUYSHARES)) && Money > NeueAktien/2*EKurs + 2000000) //Fix B: only buy back if solvent
             {
                //Direkt wieder die H�lfte aufkaufen:
                OwnsAktien[PlayerNum]+=NeueAktien/2;
@@ -4774,7 +4821,19 @@ void PLAYER::RobotExecuteAction(void)
          break;
 
       case ACTION_VISITAUFSICHT:
-         if (OutOfGates>SLONG(Planes.GetNumUsed())) //Gates erwerben
+         {
+         //Fix F: scan flight plans for unassigned gates (OutOfGates was always 0)
+         bool bNeedsGate = false;
+         forall (c, Planes)
+            if (Planes.IsInAlbum(c))
+            {
+               CFlugplan &qGatePlan = Planes[c].Flugplan;
+               for (SLONG eg=0; eg<qGatePlan.Flug.AnzEntries(); eg++)
+                  if (qGatePlan.Flug[eg].ObjectType!=0 && qGatePlan.Flug[eg].Gate==-1)
+                     { bNeedsGate = true; break; }
+               if (bNeedsGate) break;
+            }
+         if (bNeedsGate) //Gates erwerben
          {
             SLONG Cheapest;
 
@@ -4814,7 +4873,7 @@ void PLAYER::RobotExecuteAction(void)
                    RentCities.RentCities[(SLONG)Cities(TafelData.City[c].ZettelId)].Rang==0)
                {
                   if (((TafelData.City[c].Player!=-1 && (Sympathie[TafelData.City[c].Player]<40 || PlayerNum==0 || LocalRandom.Rand(10)==0 || (Sim.Date>10 && LocalRandom.Rand(5)==0))) || (TafelData.City[c].Player==-1 && LocalRandom.Rand(3)==0)) &&
-                      BilanzGestern.GetSumme()>TafelData.City[c].Preis*10 && Credit*2<Money*3 && Money>0 &&
+                      BilanzGestern.GetSumme()>TafelData.City[c].Preis*3 && Credit*2<Money*3 && Money>0 && //Fix D: was *10
                       ((TafelData.Route[c].Player==dislike || PlayerNum==0 || RobotUse(ROBOT_USE_ABROAD))))
                   {
                      if (TafelData.City[c].Player==Sim.localPlayer && Sim.Players.Players[Sim.localPlayer].HasBerater (BERATERTYP_INFO))
@@ -4826,6 +4885,7 @@ void PLAYER::RobotExecuteAction(void)
                   }
                }
 
+         } //end bNeedsGate scope (Fix F)
          TimeAufsicht=Sim.Time;
          WorkCountdown=20*7;
          break;
@@ -4980,18 +5040,43 @@ void PLAYER::RobotExecuteAction(void)
          if (RobotUse (ROBOT_USE_DESIGNER_BUY))
          {
             CString fn = FullFilename (CString(bprintf("pl%li.pln", Sim.Difficulty)), MiscPath);
+            CXPlane plane;
             if (DoesFileExist(fn))
             {
-               CXPlane plane;
+               //ATFS-Missionen: vorgefertigtes Design aus Datei laden
                plane.Load (fn);
-
-               while (Money-plane.CalcCost()>6000000)
+               if (Money-plane.CalcCost()>6000000)
                {
                   TEAKRAND rnd;
                   rnd.SRand (Sim.Date);
-
-                  //Kauf des Flugzeuges:
                   BuyPlane (plane, &rnd);
+               }
+            }
+            else
+            {
+               //Freies Spiel: Flugzeug nach Streckenbedarf selbst entwerfen
+               SLONG neededPax = 100;
+               for (SLONG c=0; c<(SLONG)RentRouten.RentRouten.AnzEntries(); c++)
+                  if (Routen.IsInAlbum(c) && RentRouten.RentRouten[c].Rang)
+                     neededPax = max(neededPax, (SLONG)(Routen[c].Bedarf/4));
+
+               __int64 MonthlyRent = 0;
+               for (SLONG r=0; r<(SLONG)RentRouten.RentRouten.AnzEntries(); r++)
+                  if (Routen.IsInAlbum(r) && RentRouten.RentRouten[r].Rang)
+                     MonthlyRent += RentRouten.RentRouten[r].Miete;
+               __int64 SafeReserve = max((__int64)6000000, MonthlyRent*2);
+
+               SLONG budget = (Money-SafeReserve > LONG_MAX) ? LONG_MAX : (SLONG)(Money-SafeReserve);
+               SLONG minRange = BuyBigPlane ? 5000 : 2000;
+
+               if (budget > 0 && BuildAIXPlane(plane, minRange, neededPax, budget))
+               {
+                  if (Money-plane.CalcCost() > SafeReserve)
+                  {
+                     TEAKRAND rnd;
+                     rnd.SRand (Sim.Date);
+                     BuyPlane (plane, &rnd);
+                  }
                }
             }
          }
@@ -5007,16 +5092,22 @@ void PLAYER::RobotExecuteAction(void)
          {
             if ((DoRoutes || WantToDoRoutes) && Money>500000)
             {
+               //Fix N: Prioritise contested + high-demand routes for advertising
+               SLONG bestRoute = -1, bestScore = -1;
                for (SLONG c=0; c<RentRouten.RentRouten.AnzEntries(); c++)
-                  if (RentRouten.RentRouten[c].Rang)
-                     if (RentRouten.RentRouten[c].Image<70 || (RentRouten.RentRouten[c].Image<80 && !SavesForPlane && !SavesForRocket) || (Money>2000000 && RentRouten.RentRouten[c].Image<100 && !SavesForPlane && !SavesForRocket))
-                     {
-                        RentRouten.RentRouten[c].Image+=UBYTE(gWerbePrice[6+3]/2000);
-                        Limit ((UBYTE)0, RentRouten.RentRouten[c].Image, (UBYTE)100);
-
-                        ChangeMoney (-gWerbePrice[6+3], 3+3120, "");
-                        break;
-                     }
+                  if (RentRouten.RentRouten[c].Rang && RentRouten.RentRouten[c].TageMitVerlust<=5
+                      && (RentRouten.RentRouten[c].Image<70 || (RentRouten.RentRouten[c].Image<80 && !SavesForPlane && !SavesForRocket) || (Money>2000000 && RentRouten.RentRouten[c].Image<100 && !SavesForPlane && !SavesForRocket)))
+                  {
+                     bool humanContest = Sim.Players.Players[Sim.localPlayer].RentRouten.RentRouten[c].Rang > 0;
+                     SLONG score = Routen[c].Bedarf * (humanContest ? 3 : 1);
+                     if (score > bestScore) { bestScore = score; bestRoute = c; }
+                  }
+               if (bestRoute >= 0)
+               {
+                  RentRouten.RentRouten[bestRoute].Image += UBYTE(gWerbePrice[6+3]/2000);
+                  Limit((UBYTE)0, RentRouten.RentRouten[bestRoute].Image, (UBYTE)100);
+                  ChangeMoney(-gWerbePrice[6+3], 3+3120, "");
+               }
             }
             if ((((Image<0 || ((DoRoutes || WantToDoRoutes) && Image<300)) && Money>1500000 && !SavesForPlane && !SavesForRocket) || (Money>150000 && RobotUse(ROBOT_USE_MUCHWERBUNG) && (Image+10<Sim.Players.Players[(PlayerNum+1)%3].Image || (dislike!=-1 && Image+10<Sim.Players.Players[dislike].Image)))) || (Image<1000 && Money-Credit>4000000 && !SavesForPlane && !SavesForRocket))
             {
@@ -6790,7 +6881,7 @@ bool RobotUse (SLONG FeatureId)
       case ROBOT_USE_MAX20PERCENT     : pFeatureDesc = "XXXXXX" "!" "XXXXXXXXXX" "XXXXX-XXXX"; break;
       case ROBOT_USE_TANKS            : pFeatureDesc = "------" "." "----------" "--------XX"; break;
       case ROBOT_USE_DESIGNER         : pFeatureDesc = "------" "?" "----------" "---XX-XX--"; break;
-      case ROBOT_USE_DESIGNER_BUY     : pFeatureDesc = "------" "." "----------" "----X--X--"; break;
+      case ROBOT_USE_DESIGNER_BUY     : pFeatureDesc = "------" "X" "----------" "----X--X--"; break;
 
       default:
          TeakLibW_Exception (FNL, ExcNever);

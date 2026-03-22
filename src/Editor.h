@@ -2,12 +2,12 @@
 // Editor.h : Der Flugzeugeditor
 //============================================================================================
 
-#define NUM_PLANE_BODY    5  //Anzahl der Rümpfe
+#define NUM_PLANE_BODY    5  //Anzahl der Rï¿½mpfe
 #define NUM_PLANE_COCKPIT 5  //Anzahl der Cockpits
 #define NUM_PLANE_HECK    7  //Anzahl der Hecks
-#define NUM_PLANE_LWING   6  //Anzahl der hinteren Flügen
+#define NUM_PLANE_LWING   6  //Anzahl der hinteren Flï¿½gen
 #define NUM_PLANE_MOT     8  //Anzahl der Motoren
-#define NUM_PLANE_RWING   6  //Anzahl der vorderen Flügen
+#define NUM_PLANE_RWING   6  //Anzahl der vorderen Flï¿½gen
 
 //--------------------------------------------------------------------------------------------
 // Der Verbindungspunkt von 2 PlaneParts
@@ -18,14 +18,14 @@ class CPlanePartRelation
       long  Id;             // [csv] Id der Relation
       long  FromBuildIndex; // [csv] An dieses Teil wird etwas geklebt
       long  ToBuildIndex;   // [csv] ..und zwar dieses Teil hier
-      XY    Offset2d;       // Offset für die 2d-Ansicht am Flughafen
-      XY    Offset3d;       // Offset für die 2d-Ansicht im Editor
+      XY    Offset2d;       // Offset fï¿½r die 2d-Ansicht am Flughafen
+      XY    Offset3d;       // Offset fï¿½r die 2d-Ansicht im Editor
       long  Note1;          // [CSV] Spezielle Anmerkung, z.B. zu auf/Aberwertung
       long  Note2;          // [CSV] dito
       long  Note3;          // [CSV] dito
       long  zAdd;
-      long  Noise;          // [CSV] Zusätzlicher Lärm
-      const char *Slot;           // Dieser Slot wird benötigt (BCHLMR)
+      long  Noise;          // [CSV] Zusï¿½tzlicher Lï¿½rm
+      const char *Slot;           // Dieser Slot wird benï¿½tigt (BCHLMR)
       const char *RulesOutSlots;  // Und diese Slots werden blockiert
 
    public:
@@ -85,14 +85,14 @@ class CPlaneBuilds : public ALBUM<CPlaneBuild>
 #define NOTE_SPEED600    106   //Maximale Geschwindigkeit
 #define NOTE_SPEED700    107   //Maximale Geschwindigkeit
 #define NOTE_SPEED800    108   //Maximale Geschwindigkeit
-#define NOTE_PILOT1      109   //Zusätzliche Piloten
-#define NOTE_PILOT2      110   //Zusätzliche Piloten
-#define NOTE_PILOT3      111   //Zusätzliche Piloten
-#define NOTE_PILOT4      112   //Zusätzliche Piloten
-#define NOTE_BEGLEITER4  113   //Zusätzliche Begleiter
-#define NOTE_BEGLEITER6  114   //Zusätzliche Begleiter
-#define NOTE_BEGLEITER8  115   //Zusätzliche Begleiter
-#define NOTE_BEGLEITER10 116   //Zusätzliche Begleiter
+#define NOTE_PILOT1      109   //Zusï¿½tzliche Piloten
+#define NOTE_PILOT2      110   //Zusï¿½tzliche Piloten
+#define NOTE_PILOT3      111   //Zusï¿½tzliche Piloten
+#define NOTE_PILOT4      112   //Zusï¿½tzliche Piloten
+#define NOTE_BEGLEITER4  113   //Zusï¿½tzliche Begleiter
+#define NOTE_BEGLEITER6  114   //Zusï¿½tzliche Begleiter
+#define NOTE_BEGLEITER8  115   //Zusï¿½tzliche Begleiter
+#define NOTE_BEGLEITER10 116   //Zusï¿½tzliche Begleiter
 
 class CEditor : public CStdRaum
 {
@@ -128,13 +128,13 @@ public:
 
    BOOL           DragDropMode;
    CString        PartUnderCursor;   //Das Part was dranklebt oder Leerstring
-   CString        PartUnderCursorB;  //Der andere Flügel, der ggf. mit dranklebt
-   long           RelationIdUnderCursor;  //Für das Snap-In die passende Relation
+   CString        PartUnderCursorB;  //Der andere Flï¿½gel, der ggf. mit dranklebt
+   long           RelationIdUnderCursor;  //Fï¿½r das Snap-In die passende Relation
 
    bool           bBodyOutlined;     //Ist Body markiert?
    bool           bCockpitOutlined;  //Ist Cockpit markiert?
    bool           bHeckOutlined;     //Ist Heck markiert?
-   bool           bWingOutlined;     //Sind Flügel markiert?
+   bool           bWingOutlined;     //Sind Flï¿½gel markiert?
    bool           bMotorOutlined;    //Ist Motor markiert?
 
    bool           bAllowB;
@@ -143,11 +143,11 @@ public:
    bool           bAllowW;
    bool           bAllowM;
 
-   long           sel_b;             // Index von 0.. für die aktuelle Wahl des Bodies
-   long           sel_c;             // Index von 0.. für die aktuelle Wahl des Cockpits
-   long           sel_h;             // Index von 0.. für die aktuelle Wahl des Hecks
-   long           sel_w;             // Index von 0.. für die aktuelle Wahl des Flügels
-   long           sel_m;             // Index von 0.. für die aktuelle Wahl des Motors
+   long           sel_b;             // Index von 0.. fï¿½r die aktuelle Wahl des Bodies
+   long           sel_c;             // Index von 0.. fï¿½r die aktuelle Wahl des Cockpits
+   long           sel_h;             // Index von 0.. fï¿½r die aktuelle Wahl des Hecks
+   long           sel_w;             // Index von 0.. fï¿½r die aktuelle Wahl des Flï¿½gels
+   long           sel_m;             // Index von 0.. fï¿½r die aktuelle Wahl des Motors
 
    SB_CFont       FontNormalRed;
 
@@ -178,5 +178,6 @@ protected:
 
 CPlaneBuild &GetPlaneBuild (CString Shortname);
 long         GetPlaneBuildIndex (CString Shortname);
+bool         BuildAIXPlane (CXPlane& plane, SLONG neededRange, SLONG neededPax, SLONG maxBudget);
 
 /////////////////////////////////////////////////////////////////////////////

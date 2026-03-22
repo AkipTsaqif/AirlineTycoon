@@ -1,0 +1,320 @@
+Name;Geschlecht;Art;Gehalt in DM;Talent;Alter;Kommentar
+Noah Franken;0;1;9500;95;44;Ms. Franken has been employed as personnel manager at a major bank for the past 20 years. She is now seeking a new challenge. 
+Alexandra Wallace;0;1;6000;60;27;Ms. Wallace has just finished her management studies. She specialized in personnel management.
+Francois Lanoire;1;1;7000;65;68;Francois has just overcome the death of his fourth wife. Because he is bored now, he has decided to return to his old profession.
+Anne Danner;0;1;5000;80;21;She gained experience in personal management at her father's office.
+Carla Santiago;0;1;12000;80;29;Worked as staff manager in Spain, until she had to leave her country for personnel reasons.
+Michael Jones;1;2;7700;77;29;Mr. Jones works in a top-ranking oil company in Canada. Now he's looking for a new job.
+Isaak Grunbaum;1;2;9500;95;45;For 20 years, Mr. Grunbaum was top manager of an oil company that owns many oil rigs in the North Atlantic. Now he wants to return to dry land. 
+Corey McKinsey;1;2;5500;44;23;He was junior manager in an olive oil company before. 
+Ricardo Sanchez;1;2;7000;44;43;Mr. Sanchez has no references. Rumor has it he was involved in the explosion of three oil derricks.
+Terry Light;1;2;4800;48;21;Mr. Light isn't very experienced yet, but he wants to work for an airline anyway. He has been working in his parents' gas station for the past ten years.
+Monique Pelier;0;2;5000;30;22;Monique has been collecting daily papers for 20 years. Therefor she has extensive archives which she consults for every decision.
+Charles Mill;1;3;9000;90;44;Mr. Mill has worked for all major travel agencies. He knows the business inside out.
+Donald Fairstein;1;3;8000;40;33;Has studied philosophy for one year. Has a previous conviction for drug trafficking.
+Bartholomew Galman;1;3;7000;75;57;A few years before he retired, Mr. Galman was fired by his employer. He has been trying to find a job again for a few years now.
+Ernest Miller;1;4;10000;94;51;Mr. Miller comes from a big travel agency. He wants to change his job for personal reasons.
+Randal Hemmingway;1;4;7400;80;24;Mr. Hemmingway is a young English manager with little experience in the international tourism business.
+Andrew Roberts;1;4;9900;99;22;Has just finished his management studies. Major: Airplane logistics.
+Lola Laroche;0;4;9900;99;23;Has just finished his logistics studies. 
+Rose Florence;0;4;9900;99;24;Studied management in very short time and graduated with distinction.
+Mannfred Altmann;1;4;15000;99;32;Studied at Oxford and graduated with first-class honors in management, political economics and electronics.
+Will Smith;1;5;6200;55;25;Mr. Smith comes from Canada. After some years of auto-didactic studies, he graduated in management.
+Alexander Crown;1;5;8200;75;26;Is a young graduate. Grade: B
+Otto Kleinhückelskoten;1;5;8400;90;27;Is a young German management graduate. Grade: A
+Carlo Saliva;1;6;6700;70;28;Is a young economics graduate. Grade: C
+Shawn Zappa;0;6;3000;30;29;Left university without graduating. Now seeking employment... 
+Frank Wesley;1;6;6100;75;41;Is still employed by another airline, but no longer feels happy there.
+Paul Norland;1;6;4500;45;61;Has had a pub for 40 years. Because he is his best customer, he can hardly remember the conversations of the people in his pub.
+Jeff Flianz;1;7;4500;50;30;Is a young management graduate. Grade: D
+Tim Lee;1;7;6000;80;31;Is a young economics graduate. Grade: B
+Gara Singh;1;7;12000;90;32;Is a young management graduate. Grade: A
+John Plowback;1;7;18000;100;50;Worked for a US airplane manufacturer for years and knows each airplane that has ever been built.
+Peter Higgins;1;7;8000;80;15;Left school because he was only interested in planes - he really does know a lot about them.
+Yoga Nishiuye;1;8;7200;80;33;Is a young graduate. Grade: B
+Barbara Tess;0;8;5000;80;34;Barbara studied sports and French, but she couldn't find a job as a teacher.
+Ike van Gürtz;1;8;7600;80;35;Is a young management graduate. Grade: B
+Solomon Sonnenblum;1;8;6500;80;36;Is a young graduate. Grade: B
+Gritt Schütz;0;8;8000;80;27;"Star of the aerobic video ""Fit with Grit"". Wants another job because of the poor success of the film. "
+Heinz Pflümli;1;8;25000;90;23;Pflümli is well known as a fitness guru in Switzerland. Still unknown here.
+Olga Snalson;0;8;6000;70;50;Weighs 250 pounds and runs 100 meters in 2 minutes.  But she knows all about fitness and provides good tips.
+Arnold Rander;1;9;9900;99;37;Amateur actor in macho films. Thinks he is a inspired performer.
+Bobby 'Babyface' Green;1;9;7000;60;38;Is very strong and very thick. He believes he can break a sound barrier by punching it with force.
+Li Wu;1;9;13000;90;39;Has mastered 72 kinds of martial arts. He only eats thistles and nuts.
+Melany Anders;0;9;11000;85;40;A quite impressive 8 foot woman. Hobbies: collecting stamps, deep sea diving.
+Biff Baker;1;9;7000;70;30;Owner of a fitness studio, looking for a side-line to pay his gambling-depts.
+Vicky Young;0;9;6000;60;27;Looks small and petite, but has been accused for grievous bodily harm several times.
+Charles Reuter;1;10;12000;90;50;Has flown every type of aircraft in his 45 years of service - and has always landed safely.
+Piotr Antrov;1;10;10000;70;30;Comes from the Russian air force. Has a lot of talent, but does not have a high regard for safety.
+Annabelle Effers;0;10;6500;35;28;Comes from a family of pilots. Another airline fired her, because she failed in a critical situation.
+Delphine Perré;0;10;7500;45;34;Brought Chop Suey to Africa. Now she wants to begin a career as a top pilot. Not very gifted but hard-working.
+Jose Fernandez;1;10;10200;72;45;Is a Spanish flying instructor. His wife is living here so he wants to change his job.
+Carl Baker;1;10;10000;70;26;Just finished pilot school. German glider champion 1991.
+Yilmaz Ögülü;1;10;11000;80;42;Left the Turkish air force where he flew transport aircraft. Very experienced.
+Peter Cesary;1;10;9200;62;32;Was not accepted at the pilot school. Had to pay the instruction fees himself and is heavily in debt.
+Hermann von Götz;1;10;8500;55;24;Comes from a rich family, regards the pilot job as a hobby.
+Neil Herforder;1;10;12100;91;27;Is an Austrian combat pilot. Had to leave the service due to military cutbacks. He is very talented and has completed an excellent elite pilot training program.
+Melanie Rougee;0;10;11000;80;27;Young French pilot. Paid for her pilot training herself and graduated with distinction.
+Pete Miller;1;10;10500;75;30;Former RAF combat pilot. Left the air force due to medical problems. He is physically fit for airline service.
+Dave Blowfield;1;10;7500;45;45;Had a little alcohol problem after a plane crash, but he says he does no longer drink.
+Adam Seinford;1;10;11000;80;35;Is still employed by another airline, but no longer feels happy there.
+Lutz Kebaunik;1;10;11500;85;22;Is very talented but not very experienced. Wants a very high salary.
+David Berkeley;1;10;8700;57;24;Is very young and not very gifted, but flies very carefully.
+Guiseppe Andiamo;1;10;11600;86;45;Is a former Italian air force officer. Very experienced, very gifted.
+Win Che Sun;1;10;6200;32;60;Trained as a Kamikaze pilot. Fired because he had no mission experience. 
+Ronald Bell;1;10;12100;91;32;Made the money for his pilot's license flipping burgers. Once, after an engine breakdown, he flew a plane 60 miles only with the aid of thermal air currents.
+Juliet Haller;0;10;11700;87;30;A former Lufthansa pilot, left the airline because of an affair with another pilot. She is more talented than many male colleagues and is proof that women are capable of being more than just stewardesses.
+Monica Bellner;1;10;10800;78;37;Wanted to do something new after her divorce. Very keen and hard working.
+Hans P. Heintz;1;10;9500;65;47;"Has been a self-taught flying instructor for one-engine planes for 20 years. His former employer says he is ""average""."
+Rob Cleenwood;1;10;12900;99;28;Former Navy pilot, left the Navy voluntarily. Finished as this year's best pilot. Is still a reservist and can be called up at any time in the event of war.
+Tom Wood;1;10;12900;99;28;An aircraft electronics specialist. Flying is his hobby... 
+Tim Stallion;1;10;12100;91;32;Lost his job after a long illness, had to give up his license. Now he has obtained a license again. Excellent pilot now, in top condition again.
+Chris Orgow;1;10;11900;89;47;Former convict charged with burglary. Escaped from prison in a plane. After shaking off two aircraft hot in pursuit, he had to carry out an emergency landing due to engine problems. 
+John Clauser;1;10;11500;85;49;Former convict charged with espionage. Escaped from prison in a tornado and tried to flee abroad. Unfortunately, the plane ran out of fuel and he was forced to land on a freeway.
+Abraham Yannik;1;10;6600;36;23;Worked as a plane mechanic, but was fired because of incompetence. Obtained his pilot's license in Zimbabwe - it is valid here, too…
+Kurt von Herzog;1;10;10800;78;43;Owns a pilot school. The school is almost broke, therefor he is forced to work as a pilot.
+Dave Doorman;1;10;7500;45;39;Obtained his license in the Foreign Legion. Training records are available, but dubious.
+Ron Beus;1;10;9900;69;34;Former glider pilot. After a crash he prefers to fly with an engine. Never flies without his parachute.
+Moses Benshaid;1;10;8500;55;40;Former driving instructor. Wants to turn his greatest hobby into his profession. Unfortunately, he cannot take off in a car...
+Burghard Meßner;1;10;7500;45;55;Flew pesticide planes in Switzerland. Immediately became allergic to pesticides so he had to change his job.
+Chuck Bell;1;10;9500;65;88;Is retired, but can't stop flying, so he does it as hobby... 
+Antonio Moridelli;1;10;6200;32;66;Former fireman who flew fire fighting planes. Was fired for reasons unknown.
+Jean-Claude Lebesgue;1;10;5500;25;45;Comes from France where he got his private license, now wants to work here…
+James Eck;1;10;7700;47;89;"Was fired from a notable US airline for criticizing the security standard of the airline. Chairman of the pilots' union ""Cockpit""."
+Jack Dowell;1;10;5100;21;35;"Is a young, very impetuous pilot. Has watched ""Top Gun"" too often."
+Jim Small;1;10;5700;27;45;Comes from France, moved here due to personal reasons. Worked as a test pilot for an aircraft manufacturer up until now.
+Stephe Miller;1;10;6400;34;67;Is a former flight attendant. Became disillusioned with his job and decided to become a pilot.
+Nils Book;1;10;6200;32;77;Did time for 13 years for smuggling drugs over the border in a hot-air balloon he built himself. Says he is clean now.
+Dorothy Bush;0;10;6500;35;45;Studied engineering and took her PhD in aircraft technolgy. Hasn’t been able to find a job and is looking for alternatives. Very theoretic woman…
+Carol Fisher;0;10;5700;27;62;Her father is a multimillionaire, and she has been flying the company jets for years. Wants a real job now. An energetic woman, but not a great pilot.
+Gerrit Dell;1;10;5100;21;21;Former pizza service driver in Mexico. His father works at the airport. Strangely enough, he cannot read and write…
+Pierre de Gruit;1;10;5900;29;84;Former French airforce pilot. Had to leave because of espionage. Very experienced, the elite!
+Stephano Rossonik;1;10;6100;31;34;Obtained his license in the former Eastern block. Strangely, he does not know the difference between a propeller and a turbine…
+Dietrich Beckmann;1;10;9200;62;43;Worked in the control tower for years. Now wants to do something new…
+Jordan Smith;1;10;6300;33;78;Was fired by a Canadian airline because of marital problems. Now lives here, with his wife…
+Ramin Raihda;1;10;5400;42;55;A former submarine captain. Now wants to see the world from another angle.
+Gerd Beck;1;10;8500;55;55;A former policeman from the drugs squad. Very conscientious, but not very experienced.
+Steve Miller;1;10;10600;76;40;Still employed as a pilot for a major US airline. He wants to change his job and is waiting for another offer.
+Pete Clark;1;10;9700;67;45;Has been flying for a British airline for the past 20 years. Now he is looking for another airline which pays more. Can start straight away!
+Willi Griese;1;10;6500;35;60;"Is chairman of the model plane club ""Albatross"", knows technical details and history of every planes but cannot fly…"
+Max de Vellner;1;10;9000;60;40;Has been flying transport planes in Denmark for 18 years. Known for his unsafe landings - so could never complain about his low pay.
+Gruit Gullit;1;10;10000;70;24;"Has been para-sailing for 10 years, has been world champion several times. Now his cash is running out, and he wants a ""real"" job."
+John Abresh;1;10;6500;35;30;Former system analyzer. Unfortunately, his analyses failed. His big dream is to become a pilot.
+Steve Foster;1;10;6500;35;27;Is a nephew of the CEO at the Foster brewery. Unfortunately, so far all he has done is to test the beer…
+Kai Eberhard;1;10;11800;88;25;After completing a British Airways training program he was assigned to domestic flights only. Now he wants a new job.
+Friedhelm Jürgens;1;10;10000;70;30;Is a pilot for a notable German airline. Wants to improve. Can start straight away.
+Sa Jo Jun Gon;1;10;6200;65;32;Is a pilot for a notable Japanese airline. Wants to improve. Can start straight away.
+Guybrush Threepwood;1;10;10000;70;28;Is a pilot for a notable British airline. Wants to improve. Can start straight away.
+Sonny Bonds;1;10;10000;70;30;Is a pilot for a notable US airline. Wants to improve. Can start straight away.
+Meinhard Eckhaas;1;10;9800;68;31;Is a pilot for a notable Dutch airline. Wants to improve. Can start straight away.
+Steve Baire;1;10;10000;70;29;Is a pilot for a notable US airline. Wants to improve. Can start straight away.
+Hassan Abdalla;1;10;10000;70;32;Is a pilot for a notable Israeli airline. Wants to improve. Can start straight away.
+Özmir Özdek;1;10;10200;72;33;Is a pilot for a notable Turkish airline. Wants to improve. Can start straight away.
+Jilly Piper;1;10;10500;75;34;Is a pilot for a notable British airline. Wants to improve. Can start straight away.
+Claude Gaullois;1;10;10000;70;35;Is a pilot for a notable Canadian airline. Wants to improve. Can start straight away.
+Gunnar Heinemann;1;10;9200;62;33;Is a pilot for a notable Finnish airline. Wants to improve. Can start straight away.
+Johanna Massaka;1;10;9200;68;34;Is a pilot for a notable Polish airline. Wants to improve. Can start straight away.
+Anthony Lecter;1;10;9800;68;31;Is a pilot for a notable Irish airline. Wants to improve. Can start straight away.
+Pierce Steward;1;10;10900;79;36;Is a pilot for a notable US airline. Wants to improve. Can start straight away.
+Brandon Cheese;1;10;9800;68;38;Is a pilot for a small US airline. Wants to improve. Can start straight away.
+Pamela Jaimoni;0;10;8500;55;34;Is a pilot for a notable US airline. Wants to improve. Can start straight away.
+Paul Dukman;1;10;8400;54;36;Is a pilot for a notable British airline. Wants to improve. Can start straight away.
+Marty Porsche;1;10;10000;70;30;Is a pilot for a US airline. Wants to improve. Can start straight away.
+Benny Gnommy;1;10;10500;75;29;Is a pilot for a notable Austrian airline. Wants to improve. Can start straight away.
+Fred Becker;1;10;10000;70;27;Is a pilot for a small US airline. Wants to improve. Can start straight away.
+Dorothy Miller;1;10;9800;68;39;Is a pilot for a British airline. Wants to improve. Can start straight away.
+Donald Goose;1;10;10600;76;45;Was multi-millionaire, but spent all his money when his wife left him.
+Carlo Mucho;1;10;8500;55;32;Carlo was a mercenary in the Libyan Army and repaired helicopters. He got his pilot's license there too…
+Mary Morgan;1;10;7500;45;31;Mary obtained her pilot's license at a German adult education college. Wants to show her husband what's what!
+Steve Foster;1;10;12500;95;42;Steve still works in Australia. Has been flying jumbos for 10 years and wants to move to here now.
+Fred Firewater;1;10;9600;66;61;Col. Firewater worked for the US AF as a tank commander. Now he has left the air force and wants a new task.
+Steph Hosecut;1;10;12600;96;36;A pilot for the US Mail. He is on time every day with his old biplane.
+Mubba Babdalla;1;10;6300;33;39;An African medicine man who obtained his pilot's license in the Foreign Legion - in exchange for marihuana…
+Simon Turner;1;10;10800;78;49;Has been homeless for 20 years, used to be a normal family man. Is now trying to make a new start.
+Ralph Caller;1;10;7400;44;41;After 20 years of body building his liver has shrunk, so he has to change his profession. Has something else shrunk too?
+Sue Summer;1;10;6400;34;33;Sue is florist and wants to make flower arrangements standard on all planes. By the way: she also wants to fly…
+Franziska Rossin;0;10;12900;99;59;Used to be the only female air force general, she wants to continue earning money for a few more years. Seize the opportunity!
+John 'Viper' Coy;1;10;12900;99;42;Has left the US Navy, winner of Top Gun. A man, hard as steel - needs a tough plane too.
+Heini Goebel;1;10;11800;88;71;A WW2 flight veteran. Flies just for fun, but still very good!
+Andrea Dahl;0;10;12500;95;32;Has been flying for an Austrian airline for 10 years. No chance of promotion so he wants a new job.
+Pete Carpaccio;1;10;7400;44;35;Pete has been a taxi driver for 10 years. His big dream is flying, so he is prepared to work for a low salary, but is also not very skilled.
+Mecki Kleis;1;10;10800;78;36;"Is flying instructor, but can no more fly little planes, because he now weighs 250 pounds… so he's looking for ""a more substantial challenge""."
+Jack Track;1;10;9300;63;24;Boosts up aircraft engines and used to have his own workshop - until an engine exploded in the shop...
+Nikolaus Bourbaki;1;10;9300;63;56;Mr. Bourbaki was a famous French mathematician, but a slur campaign against him by some envious colleagues ruined his reputation and his job. 
+Thom Bieder;1;10;11300;83;34;Is a pilot for an Austrian airline. Wants to improve.
+Magdalena Choana;0;10;9900;69;33;Magdalena is a Samba dancer in Brazil. Her father taught her to fly. Now she wants to settle down here.
+Ceasaer Üsimül;1;10;5500;25;49;Mr. Üsimül is Turkish and emigrated to Albania. Nobody knows how he came here - or how he flies.
+Bob Fiola;1;10;6100;31;45;Bob embezzled 10 Mio $ from his old airline. Now he's out of prison.
+Eide Üjaklan;1;10;12500;95;48;Eide comes from Turkey where he flew small planes for 20 years.
+Manuel Tegmento;1;10;10300;73;49;Capt. Tegmento is cartographer in the Spanish army. He wants to work as pilot after his discharge.
+Robin Shark;1;10;12100;91;25;Robin graduated from a domestic pilot school. Grade: A
+Marc Berner;1;10;10100;71;26;Marc graduated from a domestic pilot school. Grade: C
+Joseph McMillian;1;10;9100;61;24;Joseph graduated from a domestic pilot school. Grade: D
+Dennis Learstone;1;10;12200;92;27;Dennis graduated from a notable domestic pilot school. Grade: A
+George Masters;1;10;9100;61;28;George graduated from a domestic pilot school. Grade: D
+Sarah Huges;0;10;10100;71;25;Sarah graduated from a domestic pilot school. Grade: C
+Josef Chuante;1;10;11100;81;26;Josef graduated from a Spanish pilot school. Grade: B
+Marcus Wolbers;1;10;10100;71;24;Marcus graduated from a domestic pilot school. Grade: C
+Michael Charles;1;10;11400;84;28;Michael graduated from a domestic pilot school. Grade: B
+Isa Glem;0;10;12300;93;29;Isa graduated from a domestic pilot school. Grade: A
+Maik Joahn;1;10;12200;92;28;Maik graduated from a domestic pilot school. Grade: A
+Steve York;1;10;12100;91;28;Steve graduated from a domestic pilot school. Grade: A
+Andrew Becker;1;10;12300;93;27;Andrew graduated from a domestic pilot school. Grade: A
+Charly Opitz;1;10;12100;91;27;Charly graduated from a domestic pilot school. Grade: A
+Raoul Dupin;1;10;12100;91;29;Raoul graduated from a French pilot school. Grade: A
+Aline Mignot;0;10;11100;81;34;Ms. Mignot flies circuits around the Eiffel tower. She wants to change due to personal reasons.
+Stanislaw Humboldt;1;10;8500;55;41;Mr. Humboldt is chief pilot for the Polish state airline. He wants a new task.
+Rachmael Abdacham;1;10;7500;45;28;Rachmael was in the Libyan army. He had to leave his country for political reasons. Now he's looking for work.
+Pete Austin;1;10;10900;79;45;Captain Austin is still pilot for a US airline, but he wants to change.
+Marc Ozner;1;10;11200;82;45;Captain Ozner is still pilot for a US airline, but he wants to change.
+Alois Breitenstein;1;10;11400;84;46;Captain Breitenstein is still pilot for a US airline, but he wants to change.
+Menten Juhan;1;10;9800;68;41;Captain Menten is still pilot for a US airline, but he wants to change.
+Yilmaz Üztürk;1;10;9300;63;42;Captain Öztürk is still pilot for a US airline, but he wants to change.
+Katrin Duse;0;10;10400;74;49;Captain Duse is still pilot for a US airline, but she wants to change.
+Silvia Fuante;0;10;11400;84;46;Captain Fuante is still pilot for a US airline, but she wants to change.
+Silvis Bonna;1;10;9400;64;42;Captain Bonna is still pilot for a US airline, but he wants to change.
+Ned Guana;1;10;11100;81;43;Captain Guana is still pilot for a US airline, but he wants to change.
+Tom Baker;1;10;7400;44;28;Mr. Baker is strictly speaking a businessman, but he is willing to risk changing his job.
+Tim Pueblo;1;10;9500;65;21;Tim has just left secondary school. He paid for his license himself. His dream is to fly.
+Arancha Vicanchez;0;10;7300;43;34; 
+Joe Isob;1;10;9900;69;27;Joe is a stunt pilot and wants to win the world championships. Therefor he needs money…
+Liz Oberon;0;10;12900;99;25;Liz has just finished her training as a flight attendant, but she would prefer to fly the planes herself.
+Didi Herford;1;10;12300;93;34;"Mr. Herford is an internationally known flight instructor for sports planes. Now he wants to fly ""proper ones""."
+Ali Gülümü;1;10;11300;83;50;Mister Gülümü was transport pilot in the Turkish air force. So far he has not made it very far and wants to start again!
+Karl Querruder;1;10;11100;81;39;Is still employed in another airline, but he is no more feeling fine there.
+Pete Northbank;1;10;9600;66;44;Flew pesticide planes in Ireland. Now he wants a new field of activity.
+Iren Miller;0;10;10800;78;31;Ms. Miller used to test aircraft in England. Computers put her out of work.
+Kathleen Turner;0;10;7300;43;33;Ms. Turner worked for the Canadian air-traffic control. Then she married and moved to this country.
+Barney Skinner;1;10;8400;54;22;Successfully completed the stunt pilot school in Düsseldorf, Germany. Had to leave due to medical reasons.
+Mel Handson;1;10;6300;33;21;Has just finished high school. Preferences: math, physics and geography
+Frank Oppenborough;1;10;6300;33;21;Has just finished high school. Preferences: natural sciences
+Ishra Sharhaa;1;10;5300;23;34;Comes from Israel and was singer-song-writer. Wants to practise his hobby in the air too
+Cloud Mc Coy;1;10;7500;45;36;Comes from Australia where he has organized flight shows for years. Now he is looking for a job all over the world.
+Ignacio Sanchezo;1;10;8300;53;36;Was born in Spain, but lived in Alaska till now. Was a skipper on ice-breakers there, but now he wants to return to the sun.
+Pete Little;1;10;8600;56;44;Has not much in common with his name: He weighs 350 pounds. Had to leave his old airline because he did not fit into his pilot seat anymore...
+Franz Steiner;1;10;8600;56;25;Is a German who grew up in Africa and got his pilot's license there.
+Peter Stone;1;10;8200;52;41;The former butcher has only 8 fingers because an accident at work, but he is an excellent and experienced private pilot.
+Winston Snider;1;10;8900;59;52;Flew the private jet for the English Royal Family.
+Carla Mounee;0;10;9400;64;31;Is a French hobby pilot who wants a job after her divorce.
+Karla Dupree;0;10;9400;64;35;Worked in the tower for a long time until she discovered  her love of flying.
+Andre Macer;1;10;7600;46;41;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Brad Tower;1;10;9900;69;42;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Charles Mill;1;10;11000;80;43;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Tim Dupler;1;10;10000;70;44;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Melany Gote;0;10;10000;70;45;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Bill Hurse;1;10;11000;80;44;Is still employed by another airline, but he is no more feeling fine there.
+John T. Geiger;1;10;10000;70;43;Is still employed by another airline. Is looking for a new airline which pays a higher salary.
+Ronald Huffield;1;10;12000;90;42;Is still employed, wants to change his line of work.
+Bernard Clubb;1;10;9000;60;41;Is still employed, wants to change his line of work.
+Andrew Burgers;1;10;8000;50;48;Is still employed, wants to change his line of work.
+Matthew Hufner;1;10;9000;60;49;Is still employed by another airline, but he is no longer happy there.
+Andre Klotte;1;10;10000;70;44;Is still employed in another airline, but he is no longer happy there.
+Sascha Morane;1;10;11000;80;45;Has studied some semesters and thinks he has found his real vocation now.
+George Loll;1;10;6400;34;44;After 20 semesters of management studies, he has been thrown out.
+Ned Miller;1;10;9500;65;47;Has been flying circuits over London for tourists for 20 years. Wants to fly in a straight line at last.
+Willi Seidner;1;10;8000;50;51;Comes from Bavaria and likes nothing more than Weissbier.
+Paul Mc Coy;1;10;9600;66;55;Was a plane engineer in Scotland, but his company is broke. Now he wants to make his hobby his job.
+Steve Handson;1;10;8500;55;30;Was an Australian air force pilot and was fired due to an internal affair.
+Andrea Huss;0;10;6500;35;25;"Was a fitness trainer for airline managers and pilots and developed a ""fit for flight"" program. Now she wants to fly herself."
+Carla Mass;0;10;11500;85;23;Left the military training academy prematurely, but is very qualified for civil aircraft.
+Ed Nenson;1;10;8500;55;24;Left the military training academy prematurely. 
+Mark Smith;1;10;7500;45;35;Former pesticide pilot.
+Harry White;1;10;7400;44;22;Just obtained a private pilot's license.
+Raissja Anakowa;0;10;9700;67;29;Was a pilot for a notable Russian airline and wants to change now.
+Veronique Amber;0;10;12800;90;30;Flying is her passion in life and her only hobby. Her record is 92 hours of non-stop flying.
+Christa Hamm;0;11;5200;80;30;Voted as wine queen in Oberkirch, Germany. Speaks five languages, including Chinese and Turkish.
+John Paul Lecock;1;11;4000;30;50;Is lazy and has a beer-belly. Was fired by his last employer because he hit the passengers.
+Carla Demmigs;0;11;5000;90;22;Young, pretty and always in a good mood. Is very friendly and speaks French and German.
+Monica Debloom;0;11;2000;50;18;Has just left school. Has almost no practical experience.
+Harry Schoolman;1;11;1100;30;19;Has just left the school for mentally handicapped children. Can stutter English and stammer German.
+Lucas Glass;1;11;2000;70;27;A sunnyboy who is always in a good mood. His hobby is bull-fighting. Has got some scars from this hobby, some of them on his face.
+Anne Phillips;0;11;3800;60;28;A management student who left the university before taking her exams. Speaks some German and likes to dive on the Maldives.
+Anna Crown;0;11;4000;80;31;Anna is a former model. Still has a good figure, but doesn't speak any foreign languages.
+Cecilia Morrison;0;11;6300;100;23;Cecilia has wanted to be a flight attendant since she was 3 years old. She speaks 8 languages fluently, is self-confident, willing to help and incredibly friendly.
+Dorothy Edison;0;11;3800;64;43;A country-woman from Oklahoma who wants to see the world. Speaks American English and is familiar with British English.
+Frank Stegman;1;11;6123;50;48;She taught herself French and German from books. Unfortunately, she forgot to learn the correct pronunciation of the words...
+Hope Millman;0;11;7700;77;33;Is still employed but wants to improve.
+Ray Goodman;1;11;3700;70;34;Admits that he has an alcohol problem. Takes part in a self-help group. Is very friendly but not very reliable.
+Herman Baas;1;11;3000;40;26;Plays underwater rugby. Muscular, sun tanned and very thick.
+Barbara Northerland;0;11;6600;66;33;Used to be an entertainer and has a great sense of humor.
+Gloria Barman;0;11;5620;90;31;Very experienced. After a plane she was on lost part of its roof, she continued selling duty free items risking her life.
+Johanna Krassowka;0;11;4700;77;44;Knows more than 200 jokes about blondes and entertains the passengers with them.
+Josepha Cincinna;0;11;5500;45;23;Likes to play business simulation games.
+Hannah Freeheim;0;11;7000;99;34;Has worked for a big US airline for 14 years. She has received an excellent training and would guarantee the improvement of the service.
+Anne Field;0;11;7000;99;42;Has worked for a big European airline for 7 years. She has excellent references and will guarantee the improvement of the service.
+Miriam Brigg;0;11;7500;91;46;Was a first officer on a notable Australian airline for 14 years. Now he has married here and wants a new job.
+Clara Hutt;0;11;7000;89;44;Trained young flight attendants 20 years ago. Now she wants to return to the job and to improve the service.
+Mariah Evergreen;0;11;3500;77;27;Has broken off a modelling career and only wants a job for 2 or 3 years.
+Martha Carey;0;11;2500;50;29;Has broken off his management studies and is looking for new inspiration and for a new job.
+Melany Old;0;11;3000;66;25;"Worked as a hostess in the ""Sun"" club in Spain. Now she wants to return to an ""orderly"" life."
+Alicia Rodriguez;0;11;3000;56;23;Has just left school where she wasted a lot of time. Now she wants to make some money at last.
+Elaine Stuywe;0;11;4000;67;30;Worked in a travel agency for a long time. Now she wants to see the world herself.
+Mary Bols;0;11;6500;80;34;Is a flight attendant and has been unemployed for 1 year.
+Tifanny Leistner;0;11;6700;80;35;Is a flight attendant and has been unemployed for 2 years.
+Amy Friedham;0;11;6300;80;37;Is a flight attendant and has been unemployed for 1 year.
+Barb Forster;0;11;5400;78;38;Wants to return to work now her maternity leave is over.
+Doris Snyder;0;11;4300;74;23;Has just finished her training as a flight attendant. Now she wants a work.
+Felicita Sanchez;0;11;4500;71;25;Paid for her training as a flight attendant herself and wants to see the world now.
+Cathryn Robbins;0;11;3000;49;39;Was a housewife and mother. Now the children have grown up and she wants a job.
+Maren Newtons;0;11;3800;77;27;Dreams of being a pilot. Unfortunately, she is colour-blind. Still wants to fly anyhow.
+Elke Stetter;0;11;2900;47;24;"Has just finished her economics studies, now she wants a ""real"" job."
+Anna Bratislawa;0;11;3100;55;26;Comes from the former Eastern block and wants a job.
+Sandra Tumbmore;0;11;3500;38;29;Wants to change after a hairdressing apprenticeship.
+Susan Cornell;0;11;6000;90;28;Is nurse and wants to see the world.
+Marlene Stevens;0;11;6000;90;34;Is a flight attendant with an additional qualification as a nurse.
+Ingrid Baker;0;11;6000;90;23;Has just finished her nursing training, but she cannot stand the sight of blood, so she wants to take off.
+Patricia Lomp;0;11;6000;90;30;Has worked for 5 years as a flight attendant and 5 years as a nurse. Very competent!
+Clara Hide;0;11;6000;90;40;Has trained flight attendants in first aid for 10 years. Wants to return to her old job.
+Candy Joyce;0;11;7200;85;21;Grew up in Luxembourg as daughter of an American soldier and a Spanish nurse. Speaks 4 languages without any accent.
+Bob Berger;1;11;8000;70;48;Is fat and has lost his hair. Perhaps that's why most people like him.
+Diana von Sydow;0;11;15000;70;37;A high-class lady. Speaks two languages. The age she claims to be is probably not correct.
+Ina Black;0;11;5200;40;30;Has the desire but not the talent to become a flight attendant.
+Grandma Jones;0;11;4000;88;72;She has forgotten her first name. Has worked as a flight attendant for 30 years and has picked up 22 languages in this time.
+Phil Hagen;1;11;8200;68;42;A passionate glider pilot who got a job as a flight attendant thanks to connections. Now he wants to improve.
+Sira Szalica;0;11;5800;70;32;Had to flee from her African native country because of religious persecution. Speaks English and several African languages.
+Charly Cornelius;1;11;7000;70;37;A former soccer goalie who got a job as a flight attendant thanks to connections, because his job is at risk, he wants a new employer.
+Louisa Almaz;0;11;8000;80;40;A Stewardess from Albania. She wants a job in the West, because her talent isn't paid accordingly in her native country.
+Anny Kapper;0;11;4200;35;37;Tried to get through the flight attendant training four times, was kicked out four times. Only got in in the end because her trainers couldn't bear seeing her again…
+Delphine Leblanc;0;11;6200;70;28;As daughter of a French diplomat she has travelled the world. A great talent, but no significant training.
+Catharina Westby;0;11;7200;56;30;A  woman with strict values and old-fashioned opinions. Has been adequately trained but refuses to wear the knee-length uniform skirt.
+Peter de Vries;1;11;8000;80;40;A former games show host who speaks four languages - but all of them with a horrible Dutch accent.
+Francesca Brinolini ;0;11;7000;60;32;Successfully completed elementary school, high school and training. In addition to this, her personal background is unknown and she refuses to speak about it.
+Joan Lapper;0;11;8000;40;40;Studied English and French in Oxford. Is arrogant and pert.
+Anton Salekki;1;11;9200;70;40;Son of a Greek immigrant. Designed microprocessors for years, until he had had enough and wanted to try something new.
+Clara Loft;0;11;8000;30;22;A young lady who likes archaeology and sports vacations. Arrogant, spoilt and sometimes very aggressive…
+Vera Midmeyer;0;11;6400;70;37;A gifted flight attendant with a run of bad luck. The last four airlines she worked for went bust.
+Mary Smith;0;11;7000;70;30;Lost her memory in a car crash and still doesn't know her real name. Judging from her abilities, she must have completed professional training.
+Edgar Pallsbeck;1;11;8000;50;48;Collects antique manuscripts and does his job onlyto make enough money to buy more antique manuscripts.
+Annie Salek;0;11;7200;60;27;Ten years ago, after a rock concert, she ran off with the drummer. Since then, she has completed a training course, but still likes to play the drums.
+John O'Leary;1;11;8000;70;30;Can sing, juggle, play melodies on water glasses, and knows a few little magic tricks, but only speaks Gaelic.
+Xenia Dahne;0;11;7000;85;30;Experienced flight attendant. Landed a plane herself  2 years ago, when the pilot locked himself in the rest room.
+Judith Radis;0;11;6000;60;25;Averagely gifted flight attendant with great expectations and few language skills.
+Indra Lhemis;0;11;7800;63;28;Three times she married men she met in 1st class. She has been widowed three times too.
+Amy Thowsand;0;11;8000;70;30;Experienced flight attendant. Speaks some Chinese, but no French or German.
+Andre Roberts;1;11;7500;72;33;Wanted to be an opera-singer at first, but was not talented enough. He does however know a lot of Italian words.
+Sue Leeb;0;11;6800;75;32;Has been around the world by bicycle. Picked up some languages on his travels. Gets on well with people.
+Radost Lahmack;0;11;5000;50;21;Broke off her management studies because she heard that flight attendants earn more money than managers.
+Annie Holyman;0;11;5300;55;23;Was fired from her last job in a translation agency. Speaks three languages, but doesn't get along with people.
+John Rollins;1;11;6000;40;28;Doesn't get on with people. When studying in France he had a job as night-watch man in the morgue.
+Pete Fanner;1;11;7000;60;31;Former building contractor. Since his company has gone bankrupt he wants a new job abroad, if possible…
+Ralph Ivening;1;11;8000;90;25;Grew up in a bilingual family. Was a student representative and on the students' council. Is very popular.
+Ron Siemens;1;11;7000;80;27;Ambitious young man. Before his 40th birthday he wants to have been to India, built a ship and swum through the Panama Canal. 
+Claudia Horace;0;11;6500;58;42;A housewife who has tried several jobs without success since her divorce.
+Denise Lakmann;0;11;5200;42;26;Very ambitious, but not very gifted translator. Wants to visit her relations in Uzbekistan from time to time.
+Inga Ohlson;0;11;5100;68;56;Linguistically gifted. She worked for years for the UN but lost her job due to rationalization. Chain-smoker.
+David Wiggins;1;11;7100;60;27;Amiable young man who always wears black. He frequently joins in voodoo and devil worship ceremonies.
+Ruth Cronstein;0;11;8200;78;21;Former BBC foreign correspondent in Italy. Wants to improve her career and hopes to do this by becoming a flight attendant.
+Tina Smith;0;11;5800;75;25;Timid, but very talented woman. Studied veterinary medicine in France, then psychology. Unfortunately finished neither.
+Ralf Karmack;1;11;6600;69;29;Former diving instructor on the Maldives, until he got sick of the good weather. Gets along with people and speaks Spanish.
+Xenia Darman;0;11;7100;58;24;Nobody knows much about this mysterious woman. They say she worked for the CIA in Libya for two years. Her further background is cloudy.
+Gloria Crabb;0;11;9100;95;26;With an IQ of 167 she is a little arrogant, but still quite likeable and very pretty. Speaks 8 languages.
+Safra Madras;0;11;8700;67;23;Has lived here for quite a few years. She fled from India, her native country, when her parents wanted to force her into an arranged marriage. Speaks German, English and Hindi.
+Angelique Dumatier;0;11;7000;70;26;Young flight attendant who gained experience on a rival airline. She keeps cool in every situation. Speaks German and a little French.
+Petra Laplace;0;11;6400;50;21;Unemployed since she dropped out of school. A nice enough person, but not very reliable.
+Bob Hickory;1;11;6200;48;23;As son of a cattle-breeder, he got sick of life on a farm. Now he wants to see the world. 
+Marian Onyville;0;11;7100;58;24;Worked as a local reporter on a big daily paper. Before working as a foreign correspondent, she wants to visit as many countries as possible.
+Yolanda Ottman;0;11;9100;95;26;Comes from an aviator family. Mother and grandmothers were flight attendants, father and grandfathers were pilots. So there is no doubt about what she wants to be.
+Marta Grimes;0;11;8700;67;23;Prefers to fly at night, has long, pointed canine teeth. Speaks several Russian dialects.
+Susan Rossignac;0;11;7000;70;26;Took part in washing powder ads for years. Because she is linguistically gifted, she wants to be a flight attendant now.
+Will Zanis;1;11;6400;50;21;First he wanted to be a fireman. He refuses to say why he changed his mind.
+Gladis Rapier;0;11;6200;48;23;Has studied Spanish and French. Belongs to a sect whose members pray to the moon.

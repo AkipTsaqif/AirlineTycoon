@@ -467,12 +467,20 @@ SLONG SB_CPrimaryBitmap::Present()
         SDL_RenderClear(lpDD);
 
         // Set the backbuffer as the render target
-        if (SDL_SetRenderTarget(lpDD, NULL) < 0)
+        int setTargetRet = SDL_SetRenderTarget(lpDD, NULL);
+        if (setTargetRet < 0)
+        {
+            Hdu.HercPrintf("Present: SDL_SetRenderTarget failed: %s", SDL_GetError());
             return -1;
+        }
 
         // Copy our primary texture to the backbuffer
-        if (SDL_RenderCopy(lpDD, lpTexture, NULL, NULL) < 0)
+        int copyRet = SDL_RenderCopy(lpDD, lpTexture, NULL, NULL);
+        if (copyRet < 0)
+        {
+            Hdu.HercPrintf("Present: SDL_RenderCopy failed: %s", SDL_GetError());
             return -2;
+        }
 
         // Render the cursor onto the backbuffer
         if (Cursor)
@@ -500,7 +508,12 @@ SLONG SB_CPrimaryBitmap::Create(SDL_Renderer** out, SDL_Window* Wnd, unsigned sh
 
     if (lpDD)
     {
+        int logRet = SDL_RenderSetLogicalSize(lpDD, w, h);
+        int rw, rh; SDL_RenderGetLogicalSize(lpDD, &rw, &rh);
+        int ow, oh; SDL_GetRendererOutputSize(lpDD, &ow, &oh);
+        int ww, wh; SDL_GetWindowSize(Wnd, &ww, &wh);
         Hdu.HercPrintf("Using hardware accelerated presentation");
+        Hdu.HercPrintf("Create: texture=%dx%d  logicalSize=%dx%d (ret=%d)  rendererOutput=%dx%d  window=%dx%d", w, h, rw, rh, logRet, ow, oh, ww, wh);
         lpTexture = SDL_CreateTexture(lpDD, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STREAMING, w, h);
         if (SDL_LockTextureToSurface(lpTexture, NULL, &lpDDSurface) < 0)
         {

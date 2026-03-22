@@ -8,7 +8,7 @@
 #include "synthese.h"
 #include "Intro.h"
 #include "Outro.h"
-#include "NewGamePopup.h"  //Fenster zum Wahl der Gegner und der Spielstärke
+#include "NewGamePopup.h"  //Fenster zum Wahl der Gegner und der Spielstï¿½rke
 #include "cd_prot.h"
 #include "AtNet.h"
 
@@ -249,8 +249,6 @@ GameFrame::GameFrame()
       return;
    }
    SDL_ShowWindow(h);
-   SDL_GetWindowSurface(h);
-   SDL_UpdateWindowSurface(h);
    m_hWnd = h;
 
    pGfxMain  = new GfxMain (lpDD);
@@ -610,7 +608,7 @@ void GameFrame::PrepareFade(void)
 {
    gBlendBm.ReSize (PrimaryBm.Size);
 
-   //Erklärung, bei der Kopie dieses Code-Fragments...
+   //Erklï¿½rung, bei der Kopie dieses Code-Fragments...
    if (!bLeaveGameLoop)
    {
       SLONG c=0;
@@ -682,7 +680,7 @@ void GameFrame::OnPaint()
                if (ToolTipId>0)
                {
                   str=StandardTexte.GetS (TOKEN_TOOLTIP, ToolTipId);
-                  if (str=="Triebwerke auswählen") str="Scheinwerfer auswählen";
+                  if (str=="Triebwerke auswï¿½hlen") str="Scheinwerfer auswï¿½hlen";
                }
                else if (ToolTipId<0)
                   str=ToolTipString;
@@ -825,7 +823,7 @@ void GameFrame::OnPaint()
          //ins System-RAM kopiert wird das ganze Game 50% langsamer. Vermutlich
          //hat DirectX Probleme aus irgend einem Grund und verschiebt einige Bitmaps
          //aus dem Video ins System RAM. Und das bremst AT aus. Also verschieben wir
-         //per memcpy, dann geht alles wunderbar. Der Bug trat übrigens nur im Fenster-
+         //per memcpy, dann geht alles wunderbar. Der Bug trat ï¿½brigens nur im Fenster-
          //Modus auf. Vielleicht, weil da weniger RAM frei ist.
          {
             SLONG c=0;
@@ -891,7 +889,7 @@ void GameFrame::OnActivateApp(BOOL bActive, DWORD hTask)
          //Re-Aktiviere TakeOff (ignoriert die Message beim normalen StartUp):
          if (gItemBms.AnzEntries()>0)
          {
-            //Großalarm, wegen Fullscreen: Zahlreiche Bitmaps müssen restauriert werden:
+            //Groï¿½alarm, wegen Fullscreen: Zahlreiche Bitmaps mï¿½ssen restauriert werden:
             //PrimaryBm.PrimaryBm.GetPrimarySurface()->Restore();
 
             //if (PrimaryBm.PrimaryBm.GetLastPage())
@@ -1004,7 +1002,7 @@ BOOL GameFrame::OnHelpInfo (void*)
 //--------------------------------------------------------------------------------------------
 void GameFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-   static char TypeBuffer[30];   //Für Cheats
+   static char TypeBuffer[30];   //Fï¿½r Cheats
    long nTargetRoom=0;
 
    if(nChar== VK_RETURN) {
@@ -1036,7 +1034,7 @@ void GameFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
    if (gLanguage==LANGUAGE_D || gLanguage==LANGUAGE_N)
    {
-      // Deutsch, Niederländisch
+      // Deutsch, Niederlï¿½ndisch
       switch (toupper(nChar))
       {
          case 'J': nTargetRoom = 'J'; break;
@@ -2020,11 +2018,11 @@ void GameFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
           TypeBuffer[29]=='P')
       {
          Sim.Players.Players[0].SecurityFlags = (1<<7);
-         Sim.Players.Players[Sim.localPlayer].ArabTrust  = 6; //Für Spieler 2
+         Sim.Players.Players[Sim.localPlayer].ArabTrust  = 6; //Fï¿½r Spieler 2
 
          /*Sim.Players.Players[Sim.localPlayer].ArabMode2  = 1; //Bakterien im Kaffee
-         Sim.Players.Players[Sim.localPlayer].ArabOpfer2 = 2; //Für Spieler 2
-         Sim.Players.Players[Sim.localPlayer].ArabTrust  = 6; //Für Spieler 2
+         Sim.Players.Players[Sim.localPlayer].ArabOpfer2 = 2; //Fï¿½r Spieler 2
+         Sim.Players.Players[Sim.localPlayer].ArabTrust  = 6; //Fï¿½r Spieler 2
 
          Sim.Players.Players[Sim.localPlayer].NetSynchronizeSabotage (); */
          CheatSound ();
@@ -2293,7 +2291,7 @@ void GameFrame::OnKeyUp(UINT, UINT, UINT)
 //--------------------------------------------------------------------------------------------
 void GameFrame::OnLButtonDown(UINT nFlags, CPoint point)
 {
-   //Alles blockieren, wenn im Optionsmenü:
+   //Alles blockieren, wenn im Optionsmenï¿½:
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer<Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom()!=ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom()!=0) return;
 
    gMouseClickPosition = gMousePosition;
@@ -2307,7 +2305,7 @@ void GameFrame::OnLButtonDown(UINT nFlags, CPoint point)
 //--------------------------------------------------------------------------------------------
 void GameFrame::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-   //Alles blockieren, wenn im Optionsmenü:
+   //Alles blockieren, wenn im Optionsmenï¿½:
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer < Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom() != ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom() != 0) return;
 
    RePostMessage (point);
@@ -2316,7 +2314,7 @@ void GameFrame::OnLButtonDblClk(UINT nFlags, CPoint point)
 }
 void GameFrame::OnLButtonUp(UINT nFlags, CPoint point)
 {
-   //Alles blockieren, wenn im Optionsmenü:
+   //Alles blockieren, wenn im Optionsmenï¿½:
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer < Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom() != ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom() != 0) return;
 
    RePostMessage(point);
@@ -2324,7 +2322,7 @@ void GameFrame::OnLButtonUp(UINT nFlags, CPoint point)
 }
 void GameFrame::OnRButtonDown(UINT nFlags, CPoint point)
 {
-   //Alles blockieren, wenn im Optionsmenü:
+   //Alles blockieren, wenn im Optionsmenï¿½:
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer < Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom() != ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom() != 0) return;
 
    RePostMessage (point);
@@ -2332,7 +2330,7 @@ void GameFrame::OnRButtonDown(UINT nFlags, CPoint point)
 }
 void GameFrame::OnRButtonUp(UINT nFlags, CPoint point) 
 {
-   //Alles blockieren, wenn im Optionsmenü:
+   //Alles blockieren, wenn im Optionsmenï¿½:
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer < Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom() != ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom() != 0) return;
 
    RePostMessage(point);
@@ -2411,7 +2409,7 @@ void SetMouseLook (SLONG Look, SLONG TipId, SLONG ClickArea, SLONG ClickId, SLON
 }
 
 //--------------------------------------------------------------------------------------------
-//Aktiviert einen Tool-Tip wobei eine TextString übergeben wird. 
+//Aktiviert einen Tool-Tip wobei eine TextString ï¿½bergeben wird. 
 //--------------------------------------------------------------------------------------------
 void SetMouseLook (SLONG Look, SLONG TipId, const CString &Description, SLONG ClickArea, SLONG ClickId, SLONG ClickPar1, SLONG ClickPar2)
 {

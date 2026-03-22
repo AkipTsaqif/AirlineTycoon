@@ -1,9 +1,11 @@
 .vs
 out
 build
+BUILD
 CMakeSettings.json
 /enet
 /cmake/sdl2
 /cmake/sdl2-image
 /cmake/sdl2-mixer
 /cmake/sdl2-ttf
+tools/sprites/

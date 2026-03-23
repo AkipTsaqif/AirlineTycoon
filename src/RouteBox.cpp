@@ -222,6 +222,7 @@ void CRouteBox::OnPaint()
 
             if (abs(nach.x-von.x)<180)
             {
+               if (p1==p2) continue; // skip zero-length route (cities at same map pixel)
                if (mindist==-1 || CalcDistanceLine2Dot (p1, p2, gMousePosition)<mindist)
                {
                   minc=c;

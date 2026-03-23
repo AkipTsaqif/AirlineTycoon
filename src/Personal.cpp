@@ -1,5 +1,5 @@
 //============================================================================================
-// Personal.Cpp - Das Personalbüro des Spielers
+// Personal.Cpp - Das Personalbï¿½ro des Spielers
 //============================================================================================
 // Link: "Personal.h"
 //============================================================================================
@@ -72,7 +72,7 @@ CPersonal::CPersonal(BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNum
                             NULL, SMACKER_CLIP_SET, 0, NULL,  //Labern
                             "A9E1E1", 7, 8, 9);
    SP_Frau.Clips[8].ReSize (8, "PFTurnW.smk", "", XY (340, 113), SPM_LISTENING,  CRepeat(1,1), CPostWait(20,20), SMACKER_CLIP_CANCANCEL,
-                            NULL, SMACKER_CLIP_SET, 0, NULL,  //Zuhören
+                            NULL, SMACKER_CLIP_SET, 0, NULL,  //Zuhï¿½ren
                             "A9A1E1E1", 8, 10, 7, 9);
    SP_Frau.Clips[9].ReSize (9, "PFTurnZ.smk", "", XY (340, 113), SPM_IDLE,       CRepeat(1,1), CPostWait(0,0),   SMACKER_CLIP_DONTCANCEL,
                             NULL, SMACKER_CLIP_SET, 0, NULL,  //Warten
@@ -149,7 +149,7 @@ CPersonal::~CPersonal()
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-// Personalbüro message handlers
+// Personalbï¿½ro message handlers
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 //--------------------------------------------------------------------------------------------
@@ -282,7 +282,7 @@ void CPersonal::OnRButtonDown(UINT nFlags, CPoint point)
 {
    DefaultOnRButtonDown ();
 
-   //Außerhalb geklickt? Dann Default-Handler!
+   //Auï¿½erhalb geklickt? Dann Default-Handler!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       return;
@@ -314,7 +314,7 @@ CWorkers::CWorkers (const CString &TabFilename, const CString &TabFilename2)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt die Tabelle von der Platte
+//Lï¿½dt die Tabelle von der Platte
 //--------------------------------------------------------------------------------------------
 void CWorkers::ReInit (const CString &TabFilename, const CString &TabFilename2)
 {
@@ -378,9 +378,9 @@ void CWorkers::ReInit (const CString &TabFilename, const CString &TabFilename2)
    FNames.ReSize (0);
    MNames.ReSize (0);
    LNames.ReSize (0);
-   FNames.ReSize (40);
-   MNames.ReSize (40);
-   LNames.ReSize (80);
+   FNames.ReSize (MAX_PNAMES1);
+   MNames.ReSize (MAX_PNAMES1);
+   LNames.ReSize (MAX_PNAMES2);
 
    //Die erste Zeile einlesen
    FileP=0;
@@ -412,7 +412,7 @@ void CWorkers::ReInit (const CString &TabFilename, const CString &TabFilename2)
 }
 
 //--------------------------------------------------------------------------------------------
-//Neuer Tag, die Leute sind etwas unglücklicher und der Arbeitsmarkt ändert sich:
+//Neuer Tag, die Leute sind etwas unglï¿½cklicher und der Arbeitsmarkt ï¿½ndert sich:
 //--------------------------------------------------------------------------------------------
 void CWorkers::NewDay (void)
 {
@@ -422,7 +422,7 @@ void CWorkers::NewDay (void)
 
    TEAKRAND LocalRand (Sim.Date+Sim.StartTime);
 
-   //Eingestellte Leute bei Mensch-Spielern unglücklich machen:
+   //Eingestellte Leute bei Mensch-Spielern unglï¿½cklich machen:
    for (c=0; c<Workers.AnzEntries(); c++)
    {
       Workers[c].WarnedToday=FALSE;
@@ -434,7 +434,7 @@ void CWorkers::NewDay (void)
          if (Anz && Sim.Players.Players[Workers[c].Employer].Image<0) Anz++;
          if (Anz && Sim.Players.Players[Workers[c].Employer].Image<-500) Anz++;
 
-         //Worker u.U. mehrfach um 1%-Punkt unglücklicher machen
+         //Worker u.U. mehrfach um 1%-Punkt unglï¿½cklicher machen
          for (; Anz>0; Anz--)
          {
             Workers[c].Happyness--;
@@ -444,7 +444,7 @@ void CWorkers::NewDay (void)
 
             if (Workers[c].Happyness<-100)
             {
-               //Ihm reicht's! Er kündigt:
+               //Ihm reicht's! Er kï¿½ndigt:
                if (Sim.Players.Players[Workers[c].Employer].Owner==0)
                   Sim.Players.Players[Workers[c].Employer].Messages.AddMessage (BERATERTYP_GIRL, bprintf (StandardTexte.GetS (TOKEN_ADVICE, 2000+Workers[c].Typ+Workers[c].Geschlecht*100), Workers[c].Name));
 
@@ -509,13 +509,13 @@ void CWorkers::NewDay (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Erhöht oder erniedrigt einer Personen das Gehalt
+//Erhï¿½ht oder erniedrigt einer Personen das Gehalt
 //--------------------------------------------------------------------------------------------
 void CWorker::Gehaltsaenderung (BOOL Art)
 {
    if (Art)
    {
-      //Gehaltserhöhung:
+      //Gehaltserhï¿½hung:
       SLONG OldGehalt=Gehalt;
 
       Gehalt += (Gehalt/100*10);
@@ -525,7 +525,7 @@ void CWorker::Gehaltsaenderung (BOOL Art)
    }
    else
    {
-      //Gehaltskürzung:
+      //Gehaltskï¿½rzung:
       Gehalt -= (Gehalt/100*10);
       Happyness -= 25;
 
@@ -547,7 +547,7 @@ void CWorker::Gehaltsaenderung (BOOL Art)
 }     
 
 //--------------------------------------------------------------------------------------------
-//Erzeugt einen zufälligen Namen
+//Erzeugt einen zufï¿½lligen Namen
 //--------------------------------------------------------------------------------------------
 CString CWorkers::GetRandomName(BOOL Geschlecht)
 {
@@ -556,7 +556,7 @@ CString CWorkers::GetRandomName(BOOL Geschlecht)
 }
 
 //--------------------------------------------------------------------------------------------
-//Verhindert, daß es zu wenig Piloten oder Stewardessen gibt:
+//Verhindert, daï¿½ es zu wenig Piloten oder Stewardessen gibt:
 //--------------------------------------------------------------------------------------------
 void CWorkers::CheckShortage (void)
 {
@@ -615,7 +615,7 @@ void CWorkers::CheckShortage (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Erhöht oder erniedrigt allen Personen das Gehalt
+//Erhï¿½ht oder erniedrigt allen Personen das Gehalt
 //--------------------------------------------------------------------------------------------
 void CWorkers::Gehaltsaenderung (BOOL Art, SLONG PlayerNum)
 {
@@ -643,7 +643,7 @@ SLONG CWorkers::GetQualityRatio (SLONG prs)
 }
 
 //--------------------------------------------------------------------------------------------
-//Stellt sicher, daß der gewünschte Berater heute im Angebot ist:
+//Stellt sicher, daï¿½ der gewï¿½nschte Berater heute im Angebot ist:
 //--------------------------------------------------------------------------------------------
 void CWorkers::EnsureBerater (SLONG Typ)
 {
@@ -724,7 +724,7 @@ SLONG CWorkers::GetMinHappyness (SLONG PlayerNum)
 }
 
 //--------------------------------------------------------------------------------------------
-//Verändert die Happiness aller Worker um den angegebenen Betrag:
+//Verï¿½ndert die Happiness aller Worker um den angegebenen Betrag:
 //--------------------------------------------------------------------------------------------
 void CWorkers::AddHappiness (SLONG PlayerNum, SLONG Value)
 {
@@ -806,7 +806,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CWorker &Worker)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein Worker-Objekt:
+//Lï¿½dt ein Worker-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CWorker &Worker)
 {
@@ -837,7 +837,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CWorkers &Workers)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein Workers-Objekt:
+//Lï¿½dt ein Workers-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CWorkers &Workers)
 {

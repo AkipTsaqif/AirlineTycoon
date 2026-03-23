@@ -161,11 +161,11 @@ inline bool operator!=(const CPoint& lhs, const CPoint& rhs)
 //Generelles
 #define CUSTOMERS_PER_PERSON  5       //Eine Person (Bildschirm) repr�sentiert 10 Kunden
 #define CUSTOMERS_PER_PERSONB 15       //Wenn schon 100 an Bord sind, geht es hiermit weiter
-#define DEBT_LIMIT           -1000000  //Max. Kontokorrentkredit
-#define DEBT_WARNLIMIT1       -500000  //Warnung: Limit ist 1 Mio
-#define DEBT_WARNLIMIT2      -1000000  //Warnung: Kein weiterer Kredit
-#define DEBT_WARNLIMIT3      -3000000  //Warnung: Konkurs
-#define DEBT_GAMEOVER        -5000000  //Konkurs
+#define DEBT_LIMIT           -20000000  //Max. Kontokorrentkredit
+#define DEBT_WARNLIMIT1      -10000000  //Warnung: Limit ist 20 Mio
+#define DEBT_WARNLIMIT2      -20000000  //Warnung: Kein weiterer Kredit
+#define DEBT_WARNLIMIT3      -60000000  //Warnung: Konkurs
+#define DEBT_GAMEOVER       -100000000  //Konkurs
 #define MOODCOUNT_START       60
 #define BUILDHASHSIZE         320
 #define DAYS_WITHOUT_LAPTOP   7

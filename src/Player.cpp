@@ -2666,14 +2666,14 @@ void PLAYER::RobotPlan()
       for (SLONG r=0; r<RentRouten.RentRouten.AnzEntries(); r++)
          if (Routen.IsInAlbum(r) && RentRouten.RentRouten[r].Rang)
             MonthlyRent += RentRouten.RentRouten[r].Miete;
-      __int64 SafeReserve = max((__int64)2000000, MonthlyRent * 2);
+      __int64 SafeReserve = max((__int64)10000000, MonthlyRent * 2);
 
-      if (Money > SafeReserve+3000000 && Image>-100 && !SavesForRocket && SLONG(Sim.Time)>timeMuseOpen && Sim.Weekday!=5 && Sim.Weekday!=6 && !bWasInMuseumToday) RobotActions[1].ActionId=ACTION_BUYUSEDPLANE;
+      if (Money > SafeReserve+15000000 && Image>-100 && !SavesForRocket && SLONG(Sim.Time)>timeMuseOpen && Sim.Weekday!=5 && Sim.Weekday!=6 && !bWasInMuseumToday) RobotActions[1].ActionId=ACTION_BUYUSEDPLANE;
       else if (RobotUse(ROBOT_USE_GOODPLANES) && Sim.Date%4==PlayerNum && Sim.GetHour()==9 && Sim.GetMinute()<=35) RobotActions[1].ActionId=ACTION_VISITMECH;
       else if (WantToDoRoutes && Image<150 && PlayerWalkRandom.Rand(4)==0) RobotActions[1].ActionId=ACTION_WERBUNG;
-      else if (BuyBigPlane && Money>100000 && PlayerWalkRandom.Rand(4)==0 && !RobotUse(ROBOT_USE_GROSSESKONTO)) RobotActions[1].ActionId=ACTION_VISITMUSEUM;
-      else if (BuyBigPlane && Money>20000000 && RobotUse(ROBOT_USE_DESIGNER) && PlayerWalkRandom.Rand(3)==0) RobotActions[1].ActionId=ACTION_VISITDESIGNER;
-      else if (Sim.Date+1>=PlayerNum && (MaxAktien-AnzAktien)>=25000 && BilanzGestern.GetSumme()>0 && (Money<3000000 || Credit>1000000 || RobotUse(ROBOT_USE_EMITMUCHSHARES))) RobotActions[1].ActionId=ACTION_EMITSHARES; //Fix B: only emit if profitable
+      else if (BuyBigPlane && Money>500000 && PlayerWalkRandom.Rand(4)==0 && !RobotUse(ROBOT_USE_GROSSESKONTO)) RobotActions[1].ActionId=ACTION_VISITMUSEUM;
+      else if (BuyBigPlane && Money>100000000 && RobotUse(ROBOT_USE_DESIGNER) && PlayerWalkRandom.Rand(3)==0) RobotActions[1].ActionId=ACTION_VISITDESIGNER;
+      else if (Sim.Date+1>=PlayerNum && (MaxAktien-AnzAktien)>=25000 && BilanzGestern.GetSumme()>0 && (Money<15000000 || Credit>5000000 || RobotUse(ROBOT_USE_EMITMUCHSHARES))) RobotActions[1].ActionId=ACTION_EMITSHARES; //Fix B: only emit if profitable
       else if (Sim.Time-TimePersonal>3*60000) RobotActions[1].ActionId=ACTION_PERSONAL;
       else if (Sim.Time-TimeAufsicht>3*60000 || (TimeAufsicht-Sim.Time>1*60000 && Sim.Time>16*60000 && RobotUse(ROBOT_USE_AUFSICHT))) RobotActions[1].ActionId=ACTION_VISITAUFSICHT;
       else if (Sim.Time-TimeReiseburo>90000 && !DoRoutes) { RobotActions[1].ActionId=ACTION_CHECKAGENT1; RobotActions[2].ActionId=ACTION_CHECKAGENT2; }
@@ -3752,17 +3752,17 @@ void PLAYER::RobotExecuteAction(void)
             Sim.Players.Players[PlayerNum].StrikeHours = 0;
          }
 
-         if (RobotUse(ROBOT_USE_LUXERY) && Planes.GetNumUsed()>0 && Money>200000)
+         if (RobotUse(ROBOT_USE_LUXERY) && Planes.GetNumUsed()>0 && Money>1000000)
          {
             long prob=5;
 
-            if (Money>2500000) prob=3;
-            if (Money>15000000) prob=2;
-            if (Money>25000000) prob=1;
+            if (Money>12500000) prob=3;
+            if (Money>75000000) prob=2;
+            if (Money>125000000) prob=1;
             if (LocalRandom.Rand(prob)==0)
             {
                long Anzahl=1;
-               if (Money>10000000) Anzahl+=long(Money/10000000);
+               if (Money>50000000) Anzahl+=long(Money/50000000);
                for (SLONG count=0; count<Anzahl; count++)
                {
                   for (SLONG bpass=0; bpass<3; bpass++)
@@ -3832,11 +3832,11 @@ void PLAYER::RobotExecuteAction(void)
 
       case ACTION_VISITARAB:
          WorkCountdown=20*5;
-         if (RobotUse(ROBOT_USE_TANKS) && Sim.Kerosin<500 && Money>1000000)
+         if (RobotUse(ROBOT_USE_TANKS) && Sim.Kerosin<500 && Money>5000000)
          {
-            __int64 Menge = (Money-2500000)/Sim.Kerosin;
-            if (Sim.Kerosin<400) Menge = (Money-2000000)/Sim.Kerosin;
-            if (Sim.Kerosin<350) Menge = (Money-1500000)/Sim.Kerosin;
+            __int64 Menge = (Money-12500000)/Sim.Kerosin;
+            if (Sim.Kerosin<400) Menge = (Money-10000000)/Sim.Kerosin;
+            if (Sim.Kerosin<350) Menge = (Money-7500000)/Sim.Kerosin;
 
             if (Menge>0)
             {
@@ -3866,7 +3866,7 @@ void PLAYER::RobotExecuteAction(void)
 
          if (ArabHints<100 && Image>-500 && ArabMode==0 && ArabMode2==0 && ArabMode3==0)
          {
-            if (((Sim.Date+PlayerNum)%3!=0 || RobotUse(ROBOT_USE_EXTREME_SABOTAGE) || LocalRandom.Rand(4)==0 || (PlayerNum==0 && LocalRandom.Rand(2)==0)) && dislike!=-1 && dislike!=PlayerNum && (ArabHints<80 || (ArabHints<90 && Credit<1000000 && Money>3000000 && PlayerNum==1 && (Sim.Date&3)==0)) && (Sim.Players.Players[dislike].Owner==1 || RobotUse(ROBOT_USE_MUCH_SABOTAGE)))
+            if (((Sim.Date+PlayerNum)%3!=0 || RobotUse(ROBOT_USE_EXTREME_SABOTAGE) || LocalRandom.Rand(4)==0 || (PlayerNum==0 && LocalRandom.Rand(2)==0)) && dislike!=-1 && dislike!=PlayerNum && (ArabHints<80 || (ArabHints<90 && Credit<5000000 && Money>15000000 && PlayerNum==1 && (Sim.Date&3)==0)) && (Sim.Players.Players[dislike].Owner==1 || RobotUse(ROBOT_USE_MUCH_SABOTAGE)))
             {
                long SecurityAnnoiance=0;
 
@@ -3983,28 +3983,28 @@ void PLAYER::RobotExecuteAction(void)
             if (Dividende>25) Dividende=25;
          }
 
-         if (RobotUse (ROBOT_USE_PAYBACK_CREDIT) && Money>750000 && Sim.Date>1 && !RobotUse(ROBOT_USE_MAXKREDIT))
+         if (RobotUse (ROBOT_USE_PAYBACK_CREDIT) && Money>3750000 && Sim.Date>1 && !RobotUse(ROBOT_USE_MAXKREDIT))
          {
-            SLONG m=long(min(0x7fffffff, min(Credit, Money-250000)));
+            SLONG m=long(min(0x7fffffff, min(Credit, Money-1250000)));
             Money-=m;
             Credit-=m;
          }
 
-         if ((PlayerNum==1 || RobotUse(ROBOT_USE_MAXKREDIT)) && Credit<1000000+Sim.Date*50000 && !RobotUse (ROBOT_USE_PAYBACK_CREDIT))
+         if ((PlayerNum==1 || RobotUse(ROBOT_USE_MAXKREDIT)) && Credit<5000000+Sim.Date*250000 && !RobotUse (ROBOT_USE_PAYBACK_CREDIT))
          {
-            SLONG m=long(min(0x7fffffff, 1000000+Sim.Date*50000-Credit));
+            SLONG m=long(min(0x7fffffff, 5000000+Sim.Date*250000-Credit));
             Money+=m;
             Credit+=m;
          }
-         else if (Money>1500000 && Credit>0 && PlayerNum!=1 && !RobotUse(ROBOT_USE_MAXKREDIT))
+         else if (Money>7500000 && Credit>0 && PlayerNum!=1 && !RobotUse(ROBOT_USE_MAXKREDIT))
          {
-            SLONG m=long(min(0x7fffffff, min(Credit, Money-1500000)));
+            SLONG m=long(min(0x7fffffff, min(Credit, Money-7500000)));
             Money-=m;
             Credit-=m;
          }
-         else if (Money<1000000 && PlayerNum!=1 && !RobotUse (ROBOT_USE_PAYBACK_CREDIT))
+         else if (Money<5000000 && PlayerNum!=1 && !RobotUse (ROBOT_USE_PAYBACK_CREDIT))
          {
-            SLONG m=long(min(0x7fffffff, 1400000-Money));
+            SLONG m=long(min(0x7fffffff, 7000000-Money));
             Money+=m;
             Credit+=m;
          }
@@ -4018,7 +4018,7 @@ void PLAYER::RobotExecuteAction(void)
                Money+=min(SLONG(Kurse[0]*Sells), 20000);
             }
          }
-         if ((Credit>1000000 && PlayerNum==2 && RobotUse(ROBOT_USE_SELLSHARES)) || Credit>3000000)
+         if ((Credit>5000000 && PlayerNum==2 && RobotUse(ROBOT_USE_SELLSHARES)) || Credit>15000000)
          if (PlayerNum!=1 || Money<-100000)
          {
             for (c=0; c<Sim.Players.AnzPlayers; c++)
@@ -4034,10 +4034,10 @@ void PLAYER::RobotExecuteAction(void)
                      Money+=SLONG(Kurse[0]*Sells);
                   }
                }
-               if (Money>2000000) break;
+               if (Money>10000000) break;
             }
          }
-         if (!SavesForPlane && !SavesForRocket && !RobotUse(ROBOT_USE_DONTBUYANYSHARES) && ((Money>3000000 && Credit<1000000) || (Money>2000000 && Kurse[0]<Dividende/2)))
+         if (!SavesForPlane && !SavesForRocket && !RobotUse(ROBOT_USE_DONTBUYANYSHARES) && ((Money>15000000 && Credit<5000000) || (Money>10000000 && Kurse[0]<Dividende/2)))
          {
             if (dislike!=-1)
             {
@@ -4046,9 +4046,9 @@ void PLAYER::RobotExecuteAction(void)
                   Anz-=Sim.Players.Players[c].OwnsAktien[dislike];
 
                if (Kurse[0]<Dividende/2)
-                  Anz=min(Anz,SLONG((Money-2000000)/Sim.Players.Players[dislike].Kurse[0]/100*100));
+                  Anz=min(Anz,SLONG((Money-10000000)/Sim.Players.Players[dislike].Kurse[0]/100*100));
                else
-                  Anz=min(Anz,SLONG((Money-3000000)/Sim.Players.Players[dislike].Kurse[0]/100*100));
+                  Anz=min(Anz,SLONG((Money-15000000)/Sim.Players.Players[dislike].Kurse[0]/100*100));
 
                if (Anz)
                {
@@ -4068,16 +4068,16 @@ void PLAYER::RobotExecuteAction(void)
          }
          //ggf. eigene Aktien kaufen
          if (!RobotUse (ROBOT_USE_PAYBACK_CREDIT) && !RobotUse(ROBOT_USE_DONTBUYANYSHARES) && !RobotUse(ROBOT_USE_MAX20PERCENT))
-         if ((Money>3000000 && (Credit<1000000 || PlayerNum==1) && RobotUse(ROBOT_USE_BUYOWNSHARES)) || (Money>6000000 && (Credit<1000000 || PlayerNum==1)) || (Money>2000000 && Kurse[0]<Dividende/2))
+         if ((Money>15000000 && (Credit<5000000 || PlayerNum==1) && RobotUse(ROBOT_USE_BUYOWNSHARES)) || (Money>30000000 && (Credit<5000000 || PlayerNum==1)) || (Money>10000000 && Kurse[0]<Dividende/2))
          {
             SLONG Anz=AnzAktien;
             for (SLONG c=0; c<4; c++)
                Anz-=Sim.Players.Players[c].OwnsAktien[PlayerNum];
 
             if (Kurse[0]<Dividende/2)
-               Anz=min(Anz,SLONG((Money-2000000)/Kurse[0]/100*100));
+               Anz=min(Anz,SLONG((Money-10000000)/Kurse[0]/100*100));
             else
-               Anz=min(Anz,SLONG((Money-3000000)/Kurse[0]/100*100));
+               Anz=min(Anz,SLONG((Money-15000000)/Kurse[0]/100*100));
 
             if (Anz)
             {
@@ -4104,10 +4104,10 @@ void PLAYER::RobotExecuteAction(void)
 
                   while (Planes[c].TargetZustand<100 && FreeMoney>300000)
                   {
-                     if (FreeMoney>3000000 && Planes[c].TargetZustand<92)
+                     if (FreeMoney>15000000 && Planes[c].TargetZustand<92)
                      {
                         Planes[c].TargetZustand = min (Planes[c].TargetZustand+15, 100);
-                        FreeMoney-=3000000;
+                        FreeMoney-=15000000;
                      }
                      else
                      {
@@ -4290,7 +4290,7 @@ void PLAYER::RobotExecuteAction(void)
                Sim.Players.Players[Sim.localPlayer].Messages.AddMessage (BERATERTYP_INFO, bprintf (StandardTexte.GetS (TOKEN_ADVICE, 9004), (LPCSTR)NameX, (LPCSTR)AirlineX, NeueAktien));
             }
 
-            if ((PlayerNum!=3 || RobotUse(ROBOT_USE_REBUYSHARES)) && Money > NeueAktien/2*EKurs + 2000000) //Fix B: only buy back if solvent
+            if ((PlayerNum!=3 || RobotUse(ROBOT_USE_REBUYSHARES)) && Money > NeueAktien/2*EKurs + 10000000) //Fix B: only buy back if solvent
             {
                //Direkt wieder die H�lfte aufkaufen:
                OwnsAktien[PlayerNum]+=NeueAktien/2;
@@ -4777,7 +4777,7 @@ void PLAYER::RobotExecuteAction(void)
             for (SLONG r=0; r<RentRouten.RentRouten.AnzEntries(); r++)
                if (Routen.IsInAlbum(r) && RentRouten.RentRouten[r].Rang)
                   BuyMonthlyRent += RentRouten.RentRouten[r].Miete;
-            __int64 BuySafeReserve = max((__int64)2000000, BuyMonthlyRent * 2);
+            __int64 BuySafeReserve = max((__int64)10000000, BuyMonthlyRent * 2);
          if ((Planes.GetNumUsed()<3 || !RobotUse(ROBOT_USE_GROSSESKONTO)) && (Planes.GetNumUsed()<5 || !RobotUse(ROBOT_USE_MAX5PLANES)) && (Planes.GetNumUsed()<4 || !RobotUse(ROBOT_USE_MAX4PLANES)) && (Planes.GetNumUsed()<10 || !RobotUse(ROBOT_USE_MAX10PLANES)))
             for (c=0; c<3; c++)
                if (Sim.UsedPlanes[0x1000000+c].Name.GetLength()>0 && Sim.UsedPlanes[0x1000000+c].Baujahr>1950 && Sim.UsedPlanes[0x1000000+c].Zustand>65 && Sim.UsedPlanes[0x1000000+c].CalculatePrice()<Money-BuySafeReserve)
@@ -5064,7 +5064,7 @@ void PLAYER::RobotExecuteAction(void)
                for (SLONG r=0; r<(SLONG)RentRouten.RentRouten.AnzEntries(); r++)
                   if (Routen.IsInAlbum(r) && RentRouten.RentRouten[r].Rang)
                      MonthlyRent += RentRouten.RentRouten[r].Miete;
-               __int64 SafeReserve = max((__int64)6000000, MonthlyRent*2);
+               __int64 SafeReserve = max((__int64)30000000, MonthlyRent*2);
 
                SLONG budget = (Money-SafeReserve > LONG_MAX) ? LONG_MAX : (SLONG)(Money-SafeReserve);
                SLONG minRange = BuyBigPlane ? 5000 : 2000;
@@ -5090,13 +5090,13 @@ void PLAYER::RobotExecuteAction(void)
       case ACTION_WERBUNG:
          if (!RobotUse(ROBOT_USE_GROSSESKONTO))
          {
-            if ((DoRoutes || WantToDoRoutes) && Money>500000)
+            if ((DoRoutes || WantToDoRoutes) && Money>2500000)
             {
                //Fix N: Prioritise contested + high-demand routes for advertising
                SLONG bestRoute = -1, bestScore = -1;
                for (SLONG c=0; c<RentRouten.RentRouten.AnzEntries(); c++)
                   if (RentRouten.RentRouten[c].Rang && RentRouten.RentRouten[c].TageMitVerlust<=5
-                      && (RentRouten.RentRouten[c].Image<70 || (RentRouten.RentRouten[c].Image<80 && !SavesForPlane && !SavesForRocket) || (Money>2000000 && RentRouten.RentRouten[c].Image<100 && !SavesForPlane && !SavesForRocket)))
+                      && (RentRouten.RentRouten[c].Image<70 || (RentRouten.RentRouten[c].Image<80 && !SavesForPlane && !SavesForRocket) || (Money>10000000 && RentRouten.RentRouten[c].Image<100 && !SavesForPlane && !SavesForRocket)))
                   {
                      bool humanContest = Sim.Players.Players[Sim.localPlayer].RentRouten.RentRouten[c].Rang > 0;
                      SLONG score = Routen[c].Bedarf * (humanContest ? 3 : 1);
@@ -5109,23 +5109,23 @@ void PLAYER::RobotExecuteAction(void)
                   ChangeMoney(-gWerbePrice[6+3], 3+3120, "");
                }
             }
-            if ((((Image<0 || ((DoRoutes || WantToDoRoutes) && Image<300)) && Money>1500000 && !SavesForPlane && !SavesForRocket) || (Money>150000 && RobotUse(ROBOT_USE_MUCHWERBUNG) && (Image+10<Sim.Players.Players[(PlayerNum+1)%3].Image || (dislike!=-1 && Image+10<Sim.Players.Players[dislike].Image)))) || (Image<1000 && Money-Credit>4000000 && !SavesForPlane && !SavesForRocket))
+            if ((((Image<0 || ((DoRoutes || WantToDoRoutes) && Image<300)) && Money>7500000 && !SavesForPlane && !SavesForRocket) || (Money>750000 && RobotUse(ROBOT_USE_MUCHWERBUNG) && (Image+10<Sim.Players.Players[(PlayerNum+1)%3].Image || (dislike!=-1 && Image+10<Sim.Players.Players[dislike].Image)))) || (Image<1000 && Money-Credit>20000000 && !SavesForPlane && !SavesForRocket))
             {
                if (DoRoutes || RobotUse(ROBOT_USE_HARDWERBUNG))
                {
                   if (Sim.Date%4==0) n=0;
                   else
                   {
-                     if (Money<=1800000) n=1;
-                     else if (Money<=2500000) n=2;
-                     else if (Money<=3000000) n=3;
-                     else if (Money<=4000000) n=4;
+                     if (Money<=9000000) n=1;
+                     else if (Money<=12500000) n=2;
+                     else if (Money<=15000000) n=3;
+                     else if (Money<=20000000) n=4;
                      else n=5;
                   }
                }
                else
                {
-                  if (Money<=1800000 || (Sim.Date%3)==0) n=0;
+                  if (Money<=9000000 || (Sim.Date%3)==0) n=0;
                   else if (Image>-20) n=1;
                   else if (Image>-40) n=2;
                   else if (Image>-60) n=3;

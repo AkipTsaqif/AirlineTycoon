@@ -257,7 +257,7 @@ void CRouteBox::OnPaint()
 
          SLONG i=-1;
 
-         if (mindist!=-1 && mindist<2)
+         if (mindist!=-1 && mindist<5)
          {
             for (SLONG d=0; d<(SLONG)Table.LineIndex.AnzEntries(); d++)
                if (Routen(Table.LineIndex[d])==ULONG(minc))

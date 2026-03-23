@@ -19,7 +19,7 @@ static const char FileId[] = "Rout";
 
 static const XY ListOffset   = XY(461, 29);
 static const XY TipOffset    = XY(462, 16);
-static const XY MapOffset    = XY(198, 150);    //Für den Zoom der Karte den Faktor
+static const XY MapOffset    = XY(198, 150);    //Fï¿½r den Zoom der Karte den Faktor
 static const SLONG MapScale = 1925;             //..und den Offset
 static const SLONG ListSize = 22;
 
@@ -170,7 +170,7 @@ void CRouteBox::OnPaint()
       else if (gMousePosition.IfIsWithin (501,330,541,363) && Filter!=1) SetMouseLook (CURSOR_HOT, 4601, ROOM_ROUTEBOX, 31);
       else if (gMousePosition.IfIsWithin (542,331,582,362) && Filter!=2) SetMouseLook (CURSOR_HOT, 4602, ROOM_ROUTEBOX, 32);
 
-      //Die Büroklammern:
+      //Die Bï¿½roklammern:
       if (Sim.ItemClips && !Sim.Players.Players[PlayerNum].HasItem (ITEM_PAPERCLIP))
       if (gMousePosition.IfIsWithin (0,245,36,287) || gMousePosition.IfIsWithin (186,276,214,322) || gMousePosition.IfIsWithin (225,269,245,314) || gMousePosition.IfIsWithin (347,280,383,320)) SetMouseLook (CURSOR_HOT, 0, ROOM_ROUTEBOX, 200);
 
@@ -256,7 +256,7 @@ void CRouteBox::OnPaint()
 
          SLONG i=-1;
 
-         if (mindist!=-1 && mindist<10)
+         if (mindist!=-1 && mindist<2)
          {
             for (SLONG d=0; d<(SLONG)Table.LineIndex.AnzEntries(); d++)
                if (Routen(Table.LineIndex[d])==ULONG(minc))
@@ -533,7 +533,7 @@ void CRouteBox::RepaintMap (void)
       }
    }
 
-   //Die markierung für die Mission:
+   //Die markierung fï¿½r die Mission:
    if (Sim.Difficulty==DIFF_NORMAL)
       for (c=0; c<=5; c++)
       {
@@ -548,7 +548,7 @@ void CRouteBox::RepaintMap (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt den DataTable mit neuen Daten:
+//Fï¿½llt den DataTable mit neuen Daten:
 //--------------------------------------------------------------------------------------------
 void CRouteBox::UpdateDataTable (void)
 {
@@ -743,7 +743,7 @@ void CRouteBox::OnRButtonDown(UINT nFlags, CPoint point)
 {
    DefaultOnRButtonDown ();
 
-   //Außerhalb geklickt? Dann Default-Handler!
+   //Auï¿½erhalb geklickt? Dann Default-Handler!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       return;

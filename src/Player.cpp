@@ -2650,6 +2650,14 @@ void PLAYER::RobotInit()
          RobotActions[3].ActionId=ACTION_CHECKAGENT3;
       }
    }
+   else if (RobotUse(ROBOT_USE_TRAVELHOLDING))
+   {
+      // In route mode: still check orders once per morning (alternate agents each day)
+      if ((PlayerNum+Sim.Date)&1)
+         RobotActions[4].ActionId=ACTION_CHECKAGENT1;
+      else
+         RobotActions[4].ActionId=ACTION_CHECKAGENT2;
+   }
 
    TimeBuro=TimePersonal=TimeAufsicht=TimeReiseburo=-1;
    RobotPlan();
@@ -3408,7 +3416,7 @@ void PLAYER::RobotExecuteAction(void)
          if (!DoRoutes)
          {
             if (RobotUse(ROBOT_USE_SUGGESTROUTES) ||
-                (PlayerNum+30<Sim.Date && Planes.GetNumUsed()>6) ||
+                (PlayerNum+15<Sim.Date && Planes.GetNumUsed()>3) ||
                 (PlayerNum+15<Sim.Date && (Sim.Players.Players[(PlayerNum+3)%4].DoRoutes==1 || Sim.Players.Players[(PlayerNum+3)%4].DoRoutes>20)))
             {
                SLONG c, Anz=0;
@@ -3420,7 +3428,7 @@ void PLAYER::RobotExecuteAction(void)
                {
                   WantToDoRoutes=TRUE;
 
-                  if (GetAnzBits (Sim.Players.Players[Sim.localPlayer].ConnectFlags)>PlayerNum)
+                  if (GetAnzBits (Sim.Players.Players[Sim.localPlayer].ConnectFlags)>PlayerNum || PlayerNum+25<Sim.Date)
                      DoRoutes=TRUE;
                }
                else if (Anz>2)

@@ -5532,20 +5532,17 @@ void CStdRaum::MenuRepaint (void)
                   else
                   {
                      SLONG r=qPlayer.GetMissionRating();
-                     CString sVal;
-                     if (r<10000000) sVal = Insert1000erDots(r);
-                     else            sVal = Insert1000erDots64(r/1000000)+ETexte.GetS(1000,1000+EINH_MIO);
-                     sVal += " (+" + Insert1000erDots(qPlayer.NumPassengersYday) + ")";
-                     OnscreenBitmap.PrintAt (sVal, FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
+                     if (r<10000000) OnscreenBitmap.PrintAt (Insert1000erDots(r),                                            FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
+                     else            OnscreenBitmap.PrintAt (Insert1000erDots64(r/1000000)+ETexte.GetS(1000,1000+EINH_MIO), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
                   }
 
-                  //Row 2: Total cargo tons (all-time) + yesterday's delta
+                  //Row 2: Total cargo tons (all-time)
                   OnscreenBitmap.PrintAt ("Cargo (t):", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+43, 600, 400);
-                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFracht) + " (+" + Insert1000erDots(qPlayer.NumFrachtYday) + ")", FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+43, p.x+240, 400);
+                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFracht), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+43, p.x+240, 400);
 
-                  //Row 3: Total flights (all-time) + yesterday's delta
+                  //Row 3: Total flights (all-time)
                   OnscreenBitmap.PrintAt ("Flights:", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+61, 600, 400);
-                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFlightsTotal) + " (+" + Insert1000erDots(qPlayer.NumFlightsYday) + ")", FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+61, p.x+240, 400);
+                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFlightsTotal), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+61, p.x+240, 400);
 
                   //Row 4: Image
                   OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6010), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+79, 600, 400);

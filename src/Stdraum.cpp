@@ -5525,33 +5525,36 @@ void CStdRaum::MenuRepaint (void)
                   if (diff==DIFF_FREEGAME) diff=DIFF_FIRST;
 
                   //Row 1: Passengers (mission progress)
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 1300+diff), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+33, 600, 360);
-                  if (diff==DIFF_EASY)        OnscreenBitmap.PrintAt (Einheiten[EINH_XDM].bString (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
-                  else if (diff==DIFF_HARD)   OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString   (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
-                  else if (diff==DIFF_ATFS07) OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.GetMissionRating())+"/"+Insert1000erDots(qPlayer.GetMissionRating(true)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 1300+diff), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+25, 600, 400);
+                  if (diff==DIFF_EASY)        OnscreenBitmap.PrintAt (Einheiten[EINH_XDM].bString (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
+                  else if (diff==DIFF_HARD)   OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString   (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
+                  else if (diff==DIFF_ATFS07) OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.GetMissionRating())+"/"+Insert1000erDots(qPlayer.GetMissionRating(true)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
                   else
                   {
                      SLONG r=qPlayer.GetMissionRating();
-                     if (r<10000000) OnscreenBitmap.PrintAt (Insert1000erDots(r),                                            FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
-                     else            OnscreenBitmap.PrintAt (Insert1000erDots64(r/1000000)+ETexte.GetS(1000,1000+EINH_MIO), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
+                     CString sVal;
+                     if (r<10000000) sVal = Insert1000erDots(r);
+                     else            sVal = Insert1000erDots64(r/1000000)+ETexte.GetS(1000,1000+EINH_MIO);
+                     sVal += " (+" + Insert1000erDots(qPlayer.NumPassengersYday) + ")";
+                     OnscreenBitmap.PrintAt (sVal, FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+25, p.x+240, 400);
                   }
 
-                  //Row 2: Total cargo tons (all-time)
-                  OnscreenBitmap.PrintAt ("Cargo (t):", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+51, 600, 360);
-                  OnscreenBitmap.PrintAt (Insert1000erDots (qPlayer.NumFracht),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+51, p.x+240, 360);
+                  //Row 2: Total cargo tons (all-time) + yesterday's delta
+                  OnscreenBitmap.PrintAt ("Cargo (t):", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+43, 600, 400);
+                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFracht) + " (+" + Insert1000erDots(qPlayer.NumFrachtYday) + ")", FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+43, p.x+240, 400);
 
-                  //Row 3: Total flights (all-time)
-                  OnscreenBitmap.PrintAt ("Flights:", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+69, 600, 360);
-                  OnscreenBitmap.PrintAt (Insert1000erDots (qPlayer.NumFlights),   FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+69, p.x+240, 360);
+                  //Row 3: Total flights (all-time) + yesterday's delta
+                  OnscreenBitmap.PrintAt ("Flights:", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+61, 600, 400);
+                  OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.NumFlightsTotal) + " (+" + Insert1000erDots(qPlayer.NumFlightsYday) + ")", FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+61, p.x+240, 400);
 
                   //Row 4: Image
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6010), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+87, 600, 360);
-                  OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (qPlayer.Image/10),          FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+87, p.x+240, 360);
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6010), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+79, 600, 400);
+                  OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (qPlayer.Image/10),          FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+79, p.x+240, 400);
 
                   //Row 5: Personnel satisfaction
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6011), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+105, 600, 360);
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6011), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+97, 600, 400);
                   if (qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay(0))
-                     OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString64 (qPlayer.Statistiken[STAT_ZUFR_PERSONAL].GetAtPastDay(0)*100/qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay(0)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+105, p.x+240, 360);
+                     OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString64 (qPlayer.Statistiken[STAT_ZUFR_PERSONAL].GetAtPastDay(0)*100/qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay(0)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+97, p.x+240, 400);
 
                   bool Important=false;
 
@@ -5569,7 +5572,7 @@ void CStdRaum::MenuRepaint (void)
                   if (Important)
                   {
                      MenuPar1 = 1;
-                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
+                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+112);
                   }
 
             #ifdef DEMO
@@ -5579,7 +5582,7 @@ void CStdRaum::MenuRepaint (void)
                   if (Sim.Overtake && Sim.OvertakenAirline==c)
                   {
                      MenuPar1 = 1;
-                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
+                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+112);
                   }
                }
 
@@ -5595,7 +5598,7 @@ void CStdRaum::MenuRepaint (void)
                         MenuPar1 = 1;
                         XY p=XY(15+46+(Sim.SabotageActs[d].Player&1)*(282-8), 15+68+(Sim.SabotageActs[d].Player/2)*153);
 
-                        OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
+                        OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+112);
                      }
                   }
                }

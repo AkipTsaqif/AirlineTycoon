@@ -59,7 +59,7 @@ void CalcPlayerMaximums (bool bForce);
 
 //Daten des aktuellen Savegames beim laden:
 SLONG SaveVersion=1;
-SLONG SaveVersionSub=107;
+SLONG SaveVersionSub=108;
 
 //�ffnungszeiten:
 extern SLONG timeDutyOpen;
@@ -662,7 +662,13 @@ void SIM::ChooseStartup (BOOL GameModeQuick)
          qPlayer.Statistiken[d].Init();
 
       qPlayer.IsOut=FALSE;
-      qPlayer.NumFlights = 0;
+      qPlayer.NumFlights        = 0;
+      qPlayer.NumFlightsTotal   = 0;
+      qPlayer.NumFlightsYday    = 0;
+      qPlayer.NumPassengersYday = 0;
+      qPlayer.NumFrachtYday     = 0;
+      qPlayer.NumPassengersSnap = 0;
+      qPlayer.NumFrachtSnap     = 0;
       qPlayer.RoutePage  = 0;
       qPlayer.StandCount = 0;
       qPlayer.ImageGotWorse=FALSE;
@@ -687,7 +693,7 @@ void SIM::ChooseStartup (BOOL GameModeQuick)
       }
       qPlayer.DisplayPlanes[c]=TRUE;
 
-      qPlayer.Gates.Gates.ReSize (30);
+      qPlayer.Gates.Gates.ReSize (128);
       qPlayer.Gates.NumRented=0;
       for (d=0; d<qPlayer.Gates.Gates.AnzEntries(); d++)
          qPlayer.Gates.Gates[d].Miete=-1;
@@ -3244,8 +3250,8 @@ BOOL SIM::LoadGame (SLONG Number)
    //Manchmal wird der Checkin nicht richtig gespeichert. Warum, wei� ich nicht, aber das hier korrigiert es:
    if (d-4+1>Sim.CheckIn)
    {
-      Sim.CheckIn  = d-4+1;
-      Sim.WaitZone = d-4+1;
+      Sim.CheckIn  = min(d-4+1, 69);
+      Sim.WaitZone = min(d-4+1, 69);
       goto reload_airport;
    }
 
@@ -3340,7 +3346,7 @@ void SIM::SaveGame (SLONG Number, const CString &Name)
    SLONG NumSaveGameCities=Cities.AnzEntries();
 
    SaveVersion=1;
-   SaveVersionSub=107;  //Version 1.104
+   SaveVersionSub=108;  //Version 1.104
 
    std::filesystem::create_directory (LPCSTR(AppPath+SavegamePath.Left(SavegamePath.GetLength()-3)));
 

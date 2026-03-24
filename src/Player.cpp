@@ -6623,6 +6623,9 @@ TEAKFILE &operator << (TEAKFILE &File, const PLAYER &Player)
 
    if (SaveVersion==1 && SaveVersionSub>=7)   File << Player.StandCount;
    if (SaveVersion==1 && SaveVersionSub>=100) File << Player.TalkedToNasa << Player.ExRoom;
+   if (SaveVersion==1 && SaveVersionSub>=108) File << Player.NumFlightsTotal << Player.NumFlightsYday
+                                                   << Player.NumPassengersYday << Player.NumFrachtYday
+                                                   << Player.NumPassengersSnap << Player.NumFrachtSnap;
 
    //Laufen:
    File << Player.iWalkActive << Player.PrimaryTarget << Player.SecondaryTarget;
@@ -6797,6 +6800,18 @@ TEAKFILE &operator >> (TEAKFILE &File, PLAYER &Player)
       File >> Player.TalkedToNasa >> Player.ExRoom;
    else
       Player.TalkedToNasa=Player.ExRoom=0;
+   if (SaveVersion==1 && SaveVersionSub>=108)
+   {
+      File >> Player.NumFlightsTotal >> Player.NumFlightsYday
+           >> Player.NumPassengersYday >> Player.NumFrachtYday
+           >> Player.NumPassengersSnap >> Player.NumFrachtSnap;
+   }
+   else
+   {
+      Player.NumFlightsTotal=Player.NumFlightsYday=0;
+      Player.NumPassengersYday=Player.NumFrachtYday=0;
+      Player.NumPassengersSnap=Player.NumFrachtSnap=0;
+   }
 
    //Laufen:
    File >> Player.iWalkActive >> Player.PrimaryTarget >> Player.SecondaryTarget;

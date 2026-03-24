@@ -486,6 +486,12 @@ CAufsicht::~CAufsicht()
 
          if (c!=Sim.localPlayer && (Sim.bNetwork==0 || Sim.bIsHost)) qPlayer.LeaveRoom();
 
+         qPlayer.NumFlightsTotal    += qPlayer.NumFlights;
+         qPlayer.NumFlightsYday      = qPlayer.NumFlights;
+         qPlayer.NumPassengersYday   = qPlayer.NumPassengers - qPlayer.NumPassengersSnap;
+         qPlayer.NumFrachtYday       = qPlayer.NumFracht     - qPlayer.NumFrachtSnap;
+         qPlayer.NumPassengersSnap   = qPlayer.NumPassengers;
+         qPlayer.NumFrachtSnap       = qPlayer.NumFracht;
          qPlayer.NumFlights=0;
          qPlayer.WaitWorkTill=-1;
          qPlayer.WorkCountdown=1;

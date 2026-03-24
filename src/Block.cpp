@@ -492,13 +492,9 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                   Bitmap.PrintAt (Table.Values[3+c*Table.AnzColums], *f, TEC_FONT_LEFT, ClientArea+XY(0, (c-Page)*26+10), Bitmap.Size);
                   
                   // Add additional information to plane list
-                  CPlane& qPlane = qPlayer.Planes[c];
-                  // check if plane name is correct, some are mixed up
-                  if (qPlayer.Planes[c].Name == Table.Values[0 + c * Table.AnzColums])
-                  { 
-                      Bitmap.PrintAt(bprintf("%li (%li)", qPlane.MaxPassagiere, qPlane.MaxPassagiereFC), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(70, (c - Page) * 26 + 10), Bitmap.Size);
-                      Bitmap.PrintAt(Einheiten[EINH_KM].bString(qPlane.ptReichweite), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(123, (c - Page) * 26 + 10), Bitmap.Size);
-                  }
+                  CPlane& qPlane = qPlayer.Planes[Table.LineIndex[c]];
+                  Bitmap.PrintAt(bprintf("%li (%li)", qPlane.MaxPassagiere, qPlane.MaxPassagiereFC), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(70, (c - Page) * 26 + 10), Bitmap.Size);
+                  Bitmap.PrintAt(Einheiten[EINH_KM].bString(qPlane.ptReichweite), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(123, (c - Page) * 26 + 10), Bitmap.Size);
                   
                }
                break;

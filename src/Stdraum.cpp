@@ -70,7 +70,7 @@ XY BeraterSprechblasenOffset [] =
      XY(82, 385)          // 15 = Player 4
    };
 
-//Für den Taschenrechner
+//Fï¿½r den Taschenrechner
 XY CalcOffsets [] =
  {
     XY (0,0),  //Rechner
@@ -129,7 +129,7 @@ static DWORD RoomTipTable [] =
   };
 
 //Bei Dialogen sind zwei Fenster offen und es ist zufall, wer den Klick bekommt...
-//Also wird gepacht und über diese Variablen der Klick ans erste Fenster geleitet...
+//Also wird gepacht und ï¿½ber diese Variablen der Klick ans erste Fenster geleitet...
 BOOL   WasLButtonDown=FALSE;
 CPoint WasLButtonDownPoint;
 SLONG  WasLButtonDownMouseClickArea;   //In Statusleiste/Raum
@@ -139,7 +139,7 @@ SLONG  WasLButtonDownMouseClickPar2;
 
 extern CString gHostIP;
 
-//Öfnungszeiten:
+//ï¿½fnungszeiten:
 extern SLONG timeArabOpen;
 extern SLONG timeMuseOpen;
 extern SLONG timeMaklClose;
@@ -167,7 +167,7 @@ static BOOL IgnoreNextPostPaintPump;
 static bool bDestructorCalledInMeantime=false;
 
 //--------------------------------------------------------------------------------------------
-//Sort dafür, daß die Statusanzeige erneuert wird:
+//Sort dafï¿½r, daï¿½ die Statusanzeige erneuert wird:
 //--------------------------------------------------------------------------------------------
 void UpdateStatusBar (void)
 {
@@ -176,7 +176,7 @@ void UpdateStatusBar (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt die Nummer anhand des Id's zurück:
+//Gibt die Nummer anhand des Id's zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 void SetRoomVisited (SLONG PlayerNum, UBYTE RoomId)
 {
@@ -293,7 +293,7 @@ CStdRaum::CStdRaum (BOOL bHandy, ULONG PlayerNum, CString GfxLibName, __int64 gr
    CStdRaum::MenuDialogReEntryB=-1;
 
    CStdRaum::BubblePos     = XY(378,200);
-   CStdRaum::BubbleStyle   = 2;              //Von Süden
+   CStdRaum::BubbleStyle   = 2;              //Von Sï¿½den
    CStdRaum::StatusCount   = 20;
 
    CStdRaum::ZoomCounter   = 0;
@@ -352,7 +352,7 @@ CStdRaum::CStdRaum (BOOL bHandy, ULONG PlayerNum, CString GfxLibName, __int64 gr
 
    StatusBm.ReSize (230, StatusLineSizeY);
 
-   //Und noch 'ne Anomalie. Der Player hält 'ne Kopie der Fenster-Koordinaten
+   //Und noch 'ne Anomalie. Der Player hï¿½lt 'ne Kopie der Fenster-Koordinaten
    if (PlayerNum!=-1)
    {
       Sim.Players.Players[(SLONG)PlayerNum].WinP1 = WinP1;
@@ -459,7 +459,7 @@ void CStdRaum::ProcessEvent(const SDL_Event& event, CPoint position)
    case SDL_TEXTINPUT:
    case SDL_TEXTEDITING:
    {
-		unsigned char testValue = 'ä';
+		unsigned char testValue = 'ï¿½';
    		UTF8Toisolat1(&testValue, 1, (unsigned char*)&event.text.text,2);
    		OnChar(testValue, 1, (SDL_GetModState() & KMOD_LALT) << 5);
    }
@@ -545,7 +545,7 @@ void CStdRaum::SetBackgroundFx (SLONG Number, const CString &Filename, SLONG Avg
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt zurück, ob zur Zeit ein Dialog offen ist:
+//Gibt zurï¿½ck, ob zur Zeit ein Dialog offen ist:
 //--------------------------------------------------------------------------------------------
 BOOL CStdRaum::IsDialogOpen (void)
 {
@@ -553,7 +553,7 @@ BOOL CStdRaum::IsDialogOpen (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Läßt ein neues Text-Fenster auf dem Schirm erscheinen:
+//Lï¿½ï¿½t ein neues Text-Fenster auf dem Schirm erscheinen:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MakeSayWindow (BOOL TextAlign, ULONG SubId, const CString &String, SB_CFont *Normal)
 {
@@ -591,7 +591,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, ULONG SubId, const CString &String
 
       CurrentTextSubIdBis = CurrentTextSubIdVon;
 
-      if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10 && TextAlign!=0) //Im Büro?
+      if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10 && TextAlign!=0) //Im Bï¿½ro?
          TextAreaSizeY[0] = OnscreenBitmap.TryPrintAt (Optionen[0], *pFontNormal, TEC_FONT_LEFT, BigPlayerOffset[Sim.localPlayer].x+48, 0, 620-RightBorder, 400);
       else
          TextAreaSizeY[0] = OnscreenBitmap.TryPrintAt (Optionen[0], *pFontNormal, TEC_FONT_LEFT, BeraterSprechblasenOffset[12+Sim.localPlayer].x+48, 0, 620-RightBorder, 400);
@@ -624,7 +624,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, ULONG SubId, const CString &String
 }
 
 //--------------------------------------------------------------------------------------------
-//Läßt ein neues Text-Fenster auf dem Schirm erscheinen:
+//Lï¿½ï¿½t ein neues Text-Fenster auf dem Schirm erscheinen:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubId, SB_CFont *Normal, ...)
 {
@@ -643,7 +643,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubId, 
 
    TimeBubbleDisplayed = timeGetTime();
 
-   //Hilfskonstruktion für beliebige viele Argumente deklarieren:
+   //Hilfskonstruktion fï¿½r beliebige viele Argumente deklarieren:
    va_list  Vars;
 
    //Tabelle initialisieren:
@@ -662,7 +662,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubId, 
 }
 
 //--------------------------------------------------------------------------------------------
-//Läßt ein neues Auswahl Text-Fenster auf dem Schirm erscheinen:
+//Lï¿½ï¿½t ein neues Auswahl Text-Fenster auf dem Schirm erscheinen:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVon, ULONG SubIdBis, BOOL ParameterIndiziert, SB_CFont *Normal, SB_CFont *Highlight, ...)
 {
@@ -681,7 +681,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVo
       TalkingSpeechFx=FALSE;
    }
 
-   //Platz für den Rand lassen?
+   //Platz fï¿½r den Rand lassen?
    Rand=0;
 
    TimeBubbleDisplayed = timeGetTime();
@@ -702,7 +702,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVo
 
    BUFFER<char> TmpString(4096);
 
-   //Hilfskonstruktion für beliebige viele Argumente deklarieren:
+   //Hilfskonstruktion fï¿½r beliebige viele Argumente deklarieren:
    va_list  Vars;
 
    //Tabelle initialisieren:
@@ -713,7 +713,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVo
    {
       if (c-CurrentTextSubIdVon<0 || c-CurrentTextSubIdVon>=10) DebugBreak();
 
-      //Sind die Paramter eine Liste für die Antworten oder jeweils alle für alle?
+      //Sind die Paramter eine Liste fï¿½r die Antworten oder jeweils alle fï¿½r alle?
       if (ParameterIndiziert==TRUE)
       {
          //Paramterindiziert (4-Byte Parameter, das ist wichtig):
@@ -731,7 +731,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVo
       }
       else
       {
-         //Alle für alle:
+         //Alle fï¿½r alle:
          vsprintf (TmpString, DialogTexte.GetS (CurrentTextGroupId, c), Vars);
       }
 
@@ -743,7 +743,7 @@ void CStdRaum::MakeSayWindow (BOOL TextAlign, const char *GroupId, ULONG SubIdVo
       if (DialogPartner==TALKER_COMPETITOR) //Bei Dialog mit anderen Spielern rechts mehr Platz lassen
          RightBorder=70;
 
-      if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10 && TextAlign!=0) //Im Büro?
+      if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10 && TextAlign!=0) //Im Bï¿½ro?
          if (DialogPartner==TALKER_COMPETITOR)
             TextAreaSizeY[c-CurrentTextSubIdVon] = OnscreenBitmap.TryPrintAt (Optionen[c-CurrentTextSubIdVon], *pFontNormal, TEC_FONT_LEFT, BigPlayerOffset[Sim.localPlayer].x+48-15, 0, 540, 400);
          else
@@ -842,7 +842,7 @@ void CStdRaum::MakeNumberWindow (CString Text)
          }
       }
 
-      //Auf dem Bildschirm Platz für das Zahlenfeld suchen:
+      //Auf dem Bildschirm Platz fï¿½r das Zahlenfeld suchen:
       if (DisplayThisBubble) NumberBitmapPos=XY(320-NumberBitmap.Size.x/2,440-NumberBitmap.Size.y-1);
       else                   NumberBitmapPos=XY(320-NumberBitmap.Size.x/2,440-NumberBitmap.Size.y-1);
    }
@@ -855,7 +855,7 @@ void CStdRaum::MakeNumberWindow (const char *GroupId, ULONG SubId, ...)
 {
    BUFFER<char> TmpString(4096);
 
-   //Hilfskonstruktion für beliebige viele Argumente deklarieren:
+   //Hilfskonstruktion fï¿½r beliebige viele Argumente deklarieren:
    va_list  Vars;
 
    //Tabelle initialisieren:
@@ -960,7 +960,7 @@ void CStdRaum::RepaintText (BOOL RefreshAll)
             if (RefreshAll)
             {
                if (DialogPartner==TALKER_COMPETITOR) //Bei Dialog mit anderen Spielern rechts mehr Platz lassen
-                  if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Büro?
+                  if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Bï¿½ro?
                   {
                      BubbleRect = PaintTextBubble (OnscreenBitmap, XY(BigPlayerOffset[Sim.localPlayer].x, BigPlayerOffset[Sim.localPlayer].y-Size/2-10), XY(560, BigPlayerOffset[Sim.localPlayer].y+Size/2+10), BigPlayerOffset[Sim.localPlayer]);
                      TextRect   = CRect (BigPlayerOffset[Sim.localPlayer].x+48-15-48, BigPlayerOffset[Sim.localPlayer].y-Size/2-10, 540, BigPlayerOffset[Sim.localPlayer].y+Size/2+10);
@@ -971,7 +971,7 @@ void CStdRaum::RepaintText (BOOL RefreshAll)
                      TextRect   = CRect(BeraterSprechblasenOffset[12+Sim.localPlayer].x, Summe-10, 550, Summe+Size+10);
                   }
                else //Spieler
-                  if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Büro?
+                  if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Bï¿½ro?
                   {
                      BubbleRect = PaintTextBubble (OnscreenBitmap, XY(BigPlayerOffset[Sim.localPlayer].x-15, BigPlayerOffset[Sim.localPlayer].y-Size/2-10), XY(630, BigPlayerOffset[Sim.localPlayer].y+Size/2+10), BigPlayerOffset[Sim.localPlayer]);
                      TextRect   = CRect(BigPlayerOffset[Sim.localPlayer].x-15 /*!new*/, BigPlayerOffset[Sim.localPlayer].y-Size/2-10, 620, BigPlayerOffset[Sim.localPlayer].y+Size/2+10);
@@ -1017,7 +1017,7 @@ void CStdRaum::RepaintText (BOOL RefreshAll)
             if (pSmackerPartner) pSmackerPartner->SetDesiredMood (SPM_LISTENING);
             SmackerTimeToTalk = -1;
          }
-         else //oben, vom gesprächspartner
+         else //oben, vom gesprï¿½chspartner
          {
             Summe+=TextAreaSizeY[0];
             if (RefreshAll) TextRect = TextRect = PaintTextBubble (OnscreenBitmap, XY(55, Summe), XY(585, BubblePos.y), BubblePos);
@@ -1030,7 +1030,7 @@ void CStdRaum::RepaintText (BOOL RefreshAll)
    }
    else
    {
-      //Dadurch bricht die Transparenzroutine (falls sie gerade läuft) ab.
+      //Dadurch bricht die Transparenzroutine (falls sie gerade lï¿½uft) ab.
       gRoomJustLeft = TRUE;
 
       OnscreenBitmap.Destroy();
@@ -1038,7 +1038,7 @@ void CStdRaum::RepaintText (BOOL RefreshAll)
 }
 
 //--------------------------------------------------------------------------------------------
-//Schließt das TextFenster:
+//Schlieï¿½t das TextFenster:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::CloseTextWindow (void)
 {
@@ -1051,7 +1051,7 @@ void CStdRaum::CloseTextWindow (void)
    MenuDialogReEntryA = CurrentTextGroupId;
    CurrentTextGroupId = NULL;
 
-   //Alles löschen:
+   //Alles lï¿½schen:
    for (SLONG c=0; c<10; c++)
    {
       Optionen[c].Empty();
@@ -1457,14 +1457,14 @@ void CStdRaum::StartDialog (SLONG DialogPartner, BOOL Medium, SLONG DialogPar1, 
             }
 
             BubblePos     = XY(445,199);
-            BubbleStyle   = 2;              //Von Süden
+            BubbleStyle   = 2;              //Von Sï¿½den
          }
          else
          {
             pSmackerPartner = &((CWerkstatt*)this)->SP_Mann;
 
             BubblePos     = XY(200,203);
-            BubbleStyle   = 2;              //Von Süden
+            BubbleStyle   = 2;              //Von Sï¿½den
          }
 
          if (DialogPar1>=10000)
@@ -1501,14 +1501,14 @@ void CStdRaum::StartDialog (SLONG DialogPartner, BOOL Medium, SLONG DialogPar1, 
             }
 
             BubblePos     = XY(440,234);
-            BubbleStyle   = 2;              //Von Süden
+            BubbleStyle   = 2;              //Von Sï¿½den
          }
          else
          {
             pSmackerPartner = &((CMuseum*)this)->SP_Mann;
 
             BubblePos     = XY(440,234);
-            BubbleStyle   = 2;              //Von Süden
+            BubbleStyle   = 2;              //Von Sï¿½den
          }
 
          pFontPartner = &FontDialogPartner;
@@ -1839,7 +1839,7 @@ void CStdRaum::StartDialog (SLONG DialogPartner, BOOL Medium, SLONG DialogPar1, 
 
          if (Sim.Players.Players[PlayerNum].CalledCities[MouseClickPar2]==0)
          {
-            //Haben wir ein Sample dafür?
+            //Haben wir ein Sample dafï¿½r?
             if (Cities[DialogPar2].Wave!="-" && Cities[DialogPar2].Wave!="")
                MakeSayWindow (0, TOKEN_WELT, 1000, pFontPartner, (LPCTSTR)Sim.Players.Players[DialogPar1].AirlineX, (LPCTSTR)Cities[DialogPar2].Name);
             else
@@ -2037,7 +2037,7 @@ void CStdRaum::InitToolTips (void)
    {
       SetMouseLook (CURSOR_NORMAL, 0, -100, 0);
 
-      //Onscreen-Menüs:
+      //Onscreen-Menï¿½s:
       if (CurrentMenu != MENU_NONE && !CalculatorIsOpen)
       {
          CursorPos-=MenuPos;
@@ -2064,7 +2064,7 @@ void CStdRaum::InitToolTips (void)
          CursorPos+=MenuPos;
       }
 
-      //Die ToolTips für die Statuszeile: Konto, Logo, Speed, Zeit
+      //Die ToolTips fï¿½r die Statuszeile: Konto, Logo, Speed, Zeit
       if (TopWin==NULL)
       {
          if (CursorPos.IfIsWithin (80, 460, 242, 479)) SetMouseLook (CURSOR_HOT, 1002, -100, 1002);
@@ -2090,7 +2090,7 @@ void CStdRaum::InitToolTips (void)
          }
       }
 
-      //Ist der Cursor irgenwo in einem Menü?
+      //Ist der Cursor irgenwo in einem Menï¿½?
       if (MenuIsOpen())
       {
          CursorPos-=MenuPos;
@@ -2374,7 +2374,7 @@ void CStdRaum::InitToolTips (void)
                      //Feuern:
                      CheckCursorHighlight (CursorPos, CRect (40, 254+24-22, 200, 266+24-22), ColorOfFontBlack, CURSOR_HOT, 0, -103, MENU_PERSONAL, -4);
 
-                     ///Gehalt erhöhen/kürzen:
+                     ///Gehalt erhï¿½hen/kï¿½rzen:
                      if (MenuPar2!=1)
                      {
                         CheckCursorHighlight (CursorPos, CRect (40, 267+24-22, 200, 279+24-22), ColorOfFontBlack, CURSOR_HOT, 0, -103, MENU_PERSONAL, -5);
@@ -2474,7 +2474,7 @@ void CStdRaum::InitToolTips (void)
          }
          else if (CurrentHighlight==0)
          {
-            //kein gültiger Klick
+            //kein gï¿½ltiger Klick
          }
          else
          {
@@ -2515,7 +2515,7 @@ void CStdRaum::PumpToolTips (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Malt ggf. über den gesammten Raum noch den Text drüber:
+//Malt ggf. ï¿½ber den gesammten Raum noch den Text drï¿½ber:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::PostPaint (void)
 {
@@ -2602,7 +2602,7 @@ void CStdRaum::PostPaint (void)
             //hprintvar (SpeechFx.pFX->IsMouthOpen(400));
             if (pSmackerPartner && ReadyToStartSpeechFx==0 && pSmackerPartner->GetMood()==SPM_TALKING && ((timeGetTime()>DWORD(SmackerTimeToTalk) && TalkingSpeechFx==0) || (TalkingSpeechFx && !SpeechFx.pFX->IsMouthOpen(400)) || TextAlign!=0)) pSmackerPartner->SetDesiredMood (SPM_LISTENING);
 
-            //Den Cursor-Highlight überprüfen:
+            //Den Cursor-Highlight ï¿½berprï¿½fen:
             CheckHighlight (qPlayer.CursorPos);
          }
          else if (pSmackerPartner && pSmackerPartner->GetMood()==SPM_LISTENING && TalkingSpeechFx && (SpeechFx.pFX->IsMouthOpen(400) || ReadyToStartSpeechFx) && TextAlign==0)
@@ -2808,7 +2808,7 @@ void CStdRaum::PostPaint (void)
          else
             PrimaryBm.FlipBlitFromT (BeraterBms[12+DialogPar1]["\x0\x2\x1\x3\x2\x3\x0\x1\x2"[(timeGetTime()/50/3)&7]+(DialogMedium==MEDIUM_HANDY)*4], XY(640-BeraterBms[12+DialogPar1][0].Size.x, 440-BeraterSlideY[12+DialogPar1+(DialogMedium==MEDIUM_HANDY)*4]));
 
-         //Gedankenblase für nachdenkende Netzwerkspieler:
+         //Gedankenblase fï¿½r nachdenkende Netzwerkspieler:
          if (IsDialogOpen() && pSmackerPartner==NULL || TextAlign!=0 || (pSmackerPartner->GetMood()==SPM_TALKING || (pSmackerPartner->GetMood()==SPM_LISTENING && TextAlign==0)))
          {
             if (OnscreenBitmap.pBitmap==NULL)
@@ -2820,7 +2820,7 @@ void CStdRaum::PostPaint (void)
          }
       }
 
-      //Onscreen-Menüs:
+      //Onscreen-Menï¿½s:
       if (CurrentMenu != MENU_NONE)
       {
          //Menu zooming:
@@ -3079,11 +3079,11 @@ void CStdRaum::PostPaint (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Überprüft, ob der Cursor mitlerweile auf einem anderem Highlight steht:
+//ï¿½berprï¿½ft, ob der Cursor mitlerweile auf einem anderem Highlight steht:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::CheckHighlight (CPoint point)
 {
-   //Außerhalb geklickt? Dann finden wir eh' nichts!
+   //Auï¿½erhalb geklickt? Dann finden wir eh' nichts!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       if (CurrentHighlight)
@@ -3094,7 +3094,7 @@ void CStdRaum::CheckHighlight (CPoint point)
       return;
    }
 
-   //Falls wir hier ein Auswahlmenü haben:
+   //Falls wir hier ein Auswahlmenï¿½ haben:
    if (CurrentTextSubIdBis && CurrentTextSubIdVon!=CurrentTextSubIdBis)
    {
       ULONG c, Summe=1;
@@ -3104,7 +3104,7 @@ void CStdRaum::CheckHighlight (CPoint point)
          for (c=CurrentTextSubIdVon; c<=CurrentTextSubIdBis; c++)
             Summe+=TextAreaSizeY[c-CurrentTextSubIdVon]+LINE_DIST;
 
-         if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Büro?
+         if (Sim.Players.Players[PlayerNum].GetRoom()==ROOM_BURO_A+PlayerNum*10) //Im Bï¿½ro?
             Summe = BigPlayerOffset[Sim.localPlayer].y-Summe/2-10+10;
          else //normal
             if (SLONG(430-Summe/2)>BeraterSprechblasenOffset[12+Sim.localPlayer].y)
@@ -3150,7 +3150,7 @@ void CStdRaum::OnLButtonDblClk(UINT, CPoint point)
 {
    if (nOptionsOpen && Sim.bNetwork && Sim.localPlayer<Sim.Players.Players.AnzEntries() && Sim.Players.Players[Sim.localPlayer].GetRoom()!=ROOM_OPTIONS && Sim.Players.Players[Sim.localPlayer].GetRoom()!=0) return;
 
-   //Ist das Fenster hier zuständig? Ist der Klick in diesem Fenster?
+   //Ist das Fenster hier zustï¿½ndig? Ist der Klick in diesem Fenster?
    if (point.x>=WinP1.x && point.x<=WinP2.x && point.y>=WinP1.y && point.y<=WinP2.y && !Editor)
    {
       if (MenuIsOpen())
@@ -3890,7 +3890,7 @@ void CStdRaum::OnPaint(BOOL bHandyDialog)
       }
       else
       {
-         //Alten Handy-Schirm ggf. zerstören?
+         //Alten Handy-Schirm ggf. zerstï¿½ren?
          if (PlayerNum>=0 && Sim.Players.Players[PlayerNum].DialogWin &&
              ((CStdRaum*)Sim.Players.Players[PlayerNum].DialogWin)->TempScreenScrollV==0 &&
              ((CStdRaum*)Sim.Players.Players[PlayerNum].DialogWin)->TempScreenScroll>=800 &&
@@ -3931,7 +3931,7 @@ void CStdRaum::SetTip (SBBM *pBitmapSource, void *pBitmapSource2, BOOL ForceRedr
 }
 
 //--------------------------------------------------------------------------------------------
-//Mitteilung, daß Daten aktualisiert wurden. Ggf. muß der Tip neugezeichnet werden:
+//Mitteilung, daï¿½ Daten aktualisiert wurden. Ggf. muï¿½ der Tip neugezeichnet werden:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::AnnouceTipDataUpdate (SLONG TipType)
 {
@@ -4038,22 +4038,22 @@ void CStdRaum::RepaintTip (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Konvertiert die Koordinaten auf einheitlich 640x440, FALSE wenn außerhalb
+//Konvertiert die Koordinaten auf einheitlich 640x440, FALSE wenn auï¿½erhalb
 //--------------------------------------------------------------------------------------------
 BOOL CStdRaum::ConvertMousePosition (const XY &WindowsBased, XY *RoomBased)
 {
-   //Koordinaten für kleine Fenster konvertieren:
+   //Koordinaten fï¿½r kleine Fenster konvertieren:
    *RoomBased = WindowsBased + XY(-WinP1.x, -WinP1.y);
 
-   //Klick außerhalb vom Fenster?
+   //Klick auï¿½erhalb vom Fenster?
    if (WindowsBased.x<WinP1.x || WindowsBased.y<WinP1.y || WindowsBased.x>WinP2.x || WindowsBased.y>WinP2.y)
-      return (FALSE); //außerhalb?
+      return (FALSE); //auï¿½erhalb?
    else
       return (TRUE);  //innerhalb
 }
 
 //--------------------------------------------------------------------------------------------
-//Startet ein Onscreen-Menü:
+//Startet ein Onscreen-Menï¿½:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuStart (SLONG MenuType, SLONG MenuPar1, SLONG MenuPar2, SLONG MenuPar3)
 {
@@ -4081,7 +4081,7 @@ void CStdRaum::MenuStart (SLONG MenuType, SLONG MenuPar1, SLONG MenuPar2, SLONG 
       TalkingSpeechFx=FALSE;
    }
 
-   //Ein Menü unterbricht den Dialog; wenn man danach in den Dialog zurückkehrt, dann bleibt der Dialogpartner interessiert:
+   //Ein Menï¿½ unterbricht den Dialog; wenn man danach in den Dialog zurï¿½ckkehrt, dann bleibt der Dialogpartner interessiert:
    if (IsDialogOpen())
    {
       if (MenuDialogReEntryB!=-1 || MenuType==MENU_BUYPLANE || MenuType==MENU_BUYXPLANE)
@@ -4430,7 +4430,7 @@ void CStdRaum::MenuStart (SLONG MenuType, SLONG MenuPar1, SLONG MenuPar2, SLONG 
          pGfxMain->LoadLib ((char*)(LPCTSTR)FullFilename ("Konto.gli", GliPath), &pMenuLib1, L_LOCMEM);
          MenuBms.ReSize(pMenuLib1, "TIPMONEY LEFT RIGHT");
          OnscreenBitmap.ReSize (MenuBms[0].Size);
-         MenuPage=9;  //Seite 9: Einträge 90-99; Seite 8: Einträge 80-89; ...
+         MenuPage=9;  //Seite 9: Eintrï¿½ge 90-99; Seite 8: Eintrï¿½ge 80-89; ...
          break;
 
       case MENU_QUITMESSAGE:
@@ -4691,14 +4691,14 @@ void CStdRaum::MenuRepaint (void)
             {
                if (MenuPar2==1)
                {
-                  //Feuern/Gehalt erhöhen/kürzen:
+                  //Feuern/Gehalt erhï¿½hen/kï¿½rzen:
                   OnscreenBitmap.PrintAt (bprintf (StandardTexte.GetS (TOKEN_JOBS, 5055), min (100, (Workers.Workers[MenuRemapper[MenuPage-1]].Happyness+100)/2)), FontSmallBlack, TEC_FONT_LEFT, 40, 132, 250, 319);
                   OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_JOBS, 5064), FontSmallBlack, TEC_FONT_LEFT, 40, 254+26-22, 250, 319);
                   OnscreenBitmap.BlitFrom (MenuBms[3], 216, 235);
                }
                else
                {
-                  //Feuern/Gehalt erhöhen/kürzen:
+                  //Feuern/Gehalt erhï¿½hen/kï¿½rzen:
                   OnscreenBitmap.PrintAt (bprintf (StandardTexte.GetS (TOKEN_JOBS, 5055), min (100, (Workers.Workers[MenuRemapper[MenuPage-1]].Happyness+100)/2)), FontSmallBlack, TEC_FONT_LEFT, 40, 132, 250, 319);
                   OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_JOBS, 5061), FontSmallBlack, TEC_FONT_LEFT, 40, 254+26-22, 250, 319);
                   OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_JOBS, 5062), FontSmallBlack, TEC_FONT_LEFT, 40, 267+26-22, 250, 319);
@@ -4737,7 +4737,7 @@ void CStdRaum::MenuRepaint (void)
             OnscreenBitmap.ReSize (MenuBms[0].Size);
             OnscreenBitmap.BlitFrom (MenuBms[0]);
 
-            //Überschriften:
+            //ï¿½berschriften:
             OnscreenBitmap.PrintAt (MenuDataTable.ColTitle[0], FontSmallBlack, TEC_FONT_LEFT, XY(63, 40), MenuBms[0].Size);
 
             //Zustand, Ziel, Kosten
@@ -4781,7 +4781,7 @@ void CStdRaum::MenuRepaint (void)
             OnscreenBitmap.ReSize (MenuBms[0].Size);
             OnscreenBitmap.BlitFrom (MenuBms[0]);
 
-            //Überschriften:
+            //ï¿½berschriften:
             OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 8020), FontSmallBlack, TEC_FONT_LEFT, XY(63, 40), MenuBms[0].Size);
 
             //Die verschiedenen Posten:
@@ -4828,7 +4828,7 @@ void CStdRaum::MenuRepaint (void)
 
             if (MenuInfo3==-1)
             {
-               //Überschriften:
+               //ï¿½berschriften:
                OnscreenBitmap.PrintAt (MenuDataTable.ColTitle[0], FontSmallBlack, TEC_FONT_LEFT, XY(63, 40), MenuBms[0].Size);
                OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_SCHED, 1009), FontSmallBlack, TEC_FONT_LEFT, XY(265, 40), XY(346,226));
 
@@ -4902,7 +4902,7 @@ void CStdRaum::MenuRepaint (void)
          {
             CString str = StandardTexte.GetS (TOKEN_MISC, 3200+MenuPar1);
 
-            char *p = strtok ((char*)(LPCTSTR)str, "µ");
+            char *p = strtok ((char*)(LPCTSTR)str, "ï¿½");
             SLONG y = 20;
 
             while (p)
@@ -4923,7 +4923,7 @@ void CStdRaum::MenuRepaint (void)
 
                y+=21;
 
-               p = strtok (NULL, "µ");
+               p = strtok (NULL, "ï¿½");
             }
          
          }
@@ -5199,10 +5199,10 @@ void CStdRaum::MenuRepaint (void)
 
             OnscreenBitmap.BlitFrom (MenuBms[0]);
 
-            //Überschrift:
+            //ï¿½berschrift:
             OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_AKTIE, 3000+MenuPar2), qFontBankRed, TEC_FONT_LEFT, 60, 10, 325, 139);
 
-            //Tabelle mit Werten (Überschrift):
+            //Tabelle mit Werten (ï¿½berschrift):
             OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_AKTIE, 1001), qFontBankBlack, TEC_FONT_LEFT,  90, 27, 325, 139);
             OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_AKTIE, 3010), qFontBankBlack, TEC_FONT_LEFT, 140, 27, 325, 139);
             OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_AKTIE, 3011), qFontBankBlack, TEC_FONT_LEFT, 200, 27, 325, 139);
@@ -5272,11 +5272,11 @@ void CStdRaum::MenuRepaint (void)
             //Arrivals:
             for (pass=1; pass<48; pass++)
             {
-               //Für alle Spieler:
+               //Fï¿½r alle Spieler:
                for (c=0; c<Sim.Players.AnzPlayers; c++)
                   if (!Sim.Players.Players[c].IsOut)
                   {
-                     //Für alle Flugzeuge des Spielers:
+                     //Fï¿½r alle Flugzeuge des Spielers:
                      for (d=0; d<(SLONG)Sim.Players.Players[c].Planes.AnzEntries(); d++)
                      {
                         if (Sim.Players.Players[c].Planes.IsInAlbum(d))
@@ -5284,7 +5284,7 @@ void CStdRaum::MenuRepaint (void)
                            CPlane &qPlane = Sim.Players.Players[c].Planes[d];
                            Plan = &qPlane.Flugplan;
 
-                           //Für alle Flüge des Flugzeuges:
+                           //Fï¿½r alle Flï¿½ge des Flugzeuges:
                            for (e=0; e<Plan->Flug.AnzEntries(); e++)
                               if ((Plan->Flug[e].ObjectType==1 || Plan->Flug[e].ObjectType==2) && (Plan->Flug[e].Landedate-Sim.Date==((Time+1)/24) && Plan->Flug[e].Landezeit==Time+1 && ((Plan->Flug[e].Gate!=-2 && Plan->Flug[e].NachCity==(ULONG)Sim.HomeAirportId) || CheatShowAll)))
                               {
@@ -5330,10 +5330,10 @@ void CStdRaum::MenuRepaint (void)
             py=0; Time=Sim.GetHour()-1;
             for (pass=1; pass<48; pass++)
             {
-               //Für alle Spieler:
+               //Fï¿½r alle Spieler:
                for (c=0; c<Sim.Players.AnzPlayers; c++)
                {
-                  //Für alle Flugzeuge des Spielers:
+                  //Fï¿½r alle Flugzeuge des Spielers:
                   for (d=0; d<(SLONG)Sim.Players.Players[c].Planes.AnzEntries(); d++)
                   {
                      if (Sim.Players.Players[c].Planes.IsInAlbum(d))
@@ -5341,7 +5341,7 @@ void CStdRaum::MenuRepaint (void)
                         CPlane &qPlane = Sim.Players.Players[c].Planes[d];
                         Plan = &qPlane.Flugplan;
 
-                        //Für alle Flüge des Flugzeuges:
+                        //Fï¿½r alle Flï¿½ge des Flugzeuges:
                         for (e=0; e<Plan->Flug.AnzEntries(); e++)
                            if ((Plan->Flug[e].ObjectType==1 || Plan->Flug[e].ObjectType==2) && (Plan->Flug[e].Startdate-Sim.Date==(Time/24) && Plan->Flug[e].Startzeit==Time && ((Plan->Flug[e].Gate!=-2 && Plan->Flug[e].VonCity==(ULONG)Sim.HomeAirportId) || CheatShowAll)))
                            {
@@ -5524,40 +5524,34 @@ void CStdRaum::MenuRepaint (void)
                   SLONG diff=Sim.Difficulty;
                   if (diff==DIFF_FREEGAME) diff=DIFF_FIRST;
 
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 1300+diff), FontBigGrey, TEC_FONT_LEFT, p.x+51, p.y+33, 600, 340);
-
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6010), FontBigGrey, TEC_FONT_LEFT, p.x+51, p.y+15+51, 600, 340);
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6011), FontBigGrey, TEC_FONT_LEFT, p.x+51, p.y+15+69, 600, 340);
-                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6012), FontBigGrey, TEC_FONT_LEFT, p.x+51, p.y+15+87, 600, 360);
-
-                  //Missionsfortschritt:
-                  if (diff==DIFF_EASY)        OnscreenBitmap.PrintAt (Einheiten[EINH_XDM].bString (qPlayer.GetMissionRating()), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 340);
-                  else if (diff==DIFF_HARD)   OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (qPlayer.GetMissionRating()), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 340);
-                  else if (diff==DIFF_ATFS07) OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.GetMissionRating())+"/"+Insert1000erDots(qPlayer.GetMissionRating(true)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 340);
+                  //Row 1: Passengers (mission progress)
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 1300+diff), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+33, 600, 360);
+                  if (diff==DIFF_EASY)        OnscreenBitmap.PrintAt (Einheiten[EINH_XDM].bString (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
+                  else if (diff==DIFF_HARD)   OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString   (qPlayer.GetMissionRating()),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
+                  else if (diff==DIFF_ATFS07) OnscreenBitmap.PrintAt (Insert1000erDots(qPlayer.GetMissionRating())+"/"+Insert1000erDots(qPlayer.GetMissionRating(true)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
                   else
                   {
                      SLONG r=qPlayer.GetMissionRating();
-                     if (r<10000000)
-                        OnscreenBitmap.PrintAt (Insert1000erDots(r), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 340);
-                     else
-                        OnscreenBitmap.PrintAt (Insert1000erDots64 (r/1000000)+ETexte.GetS (1000, 1000+EINH_MIO), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 340);
+                     if (r<10000000) OnscreenBitmap.PrintAt (Insert1000erDots(r),                                            FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
+                     else            OnscreenBitmap.PrintAt (Insert1000erDots64(r/1000000)+ETexte.GetS(1000,1000+EINH_MIO), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+33, p.x+240, 360);
                   }
 
-                  //Äußerung zu den Flugzeugen:
-                  SLONG d, tmp, tmp2;
-                  for (d=tmp=tmp2=0; d<(SLONG)qPlayer.Planes.AnzEntries(); d++)
-                     if (qPlayer.Planes.IsInAlbum(d))
-                     {
-                        tmp+=qPlayer.Planes[d].Zustand;
-                        tmp2++;
-                     }
+                  //Row 2: Total cargo tons (all-time)
+                  OnscreenBitmap.PrintAt ("Cargo (t):", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+51, 600, 360);
+                  OnscreenBitmap.PrintAt (Insert1000erDots (qPlayer.NumFracht),    FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+51, p.x+240, 360);
 
-                  OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (qPlayer.Image/10), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+15+51, p.x+240, 340);
+                  //Row 3: Total flights (all-time)
+                  OnscreenBitmap.PrintAt ("Flights:", FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+69, 600, 360);
+                  OnscreenBitmap.PrintAt (Insert1000erDots (qPlayer.NumFlights),   FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+69, p.x+240, 360);
 
-                  if (qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay (0))
-                     OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString64 (qPlayer.Statistiken[STAT_ZUFR_PERSONAL].GetAtPastDay (0)*100/qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay (0)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+15+69, p.x+240, 340);
+                  //Row 4: Image
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6010), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+87, 600, 360);
+                  OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (qPlayer.Image/10),          FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+87, p.x+240, 360);
 
-                  if (tmp2) OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString (tmp/tmp2), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+15+87, p.x+240, 360);
+                  //Row 5: Personnel satisfaction
+                  OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_MISC, 6011), FontBigGrey, TEC_FONT_LEFT,  p.x+51, p.y+105, 600, 360);
+                  if (qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay(0))
+                     OnscreenBitmap.PrintAt (Einheiten[EINH_P].bString64 (qPlayer.Statistiken[STAT_ZUFR_PERSONAL].GetAtPastDay(0)*100/qPlayer.Statistiken[STAT_MITARBEITER].GetAtPastDay(0)), FontBigGrey, TEC_FONT_RIGHT, p.x, p.y+105, p.x+240, 360);
 
                   bool Important=false;
 
@@ -5575,7 +5569,7 @@ void CStdRaum::MenuRepaint (void)
                   if (Important)
                   {
                      MenuPar1 = 1;
-                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+13+70+18+4);
+                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
                   }
 
             #ifdef DEMO
@@ -5585,7 +5579,7 @@ void CStdRaum::MenuRepaint (void)
                   if (Sim.Overtake && Sim.OvertakenAirline==c)
                   {
                      MenuPar1 = 1;
-                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+13+70+18+4);
+                     OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
                   }
                }
 
@@ -5601,7 +5595,7 @@ void CStdRaum::MenuRepaint (void)
                         MenuPar1 = 1;
                         XY p=XY(15+46+(Sim.SabotageActs[d].Player&1)*(282-8), 15+68+(Sim.SabotageActs[d].Player/2)*153);
 
-                        OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+13+70+18+4);
+                        OnscreenBitmap.BlitFromT (MenuBms[9], p.x+37+36-65, p.y+120);
                      }
                   }
                }
@@ -5657,7 +5651,7 @@ bool CStdRaum::MenuIsPlain (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Nachträgliche Menu-Veränderungen, wie z.B. Icon Highlights
+//Nachtrï¿½gliche Menu-Verï¿½nderungen, wie z.B. Icon Highlights
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuPostPaint (void)
 {
@@ -5735,7 +5729,7 @@ void CStdRaum::MenuPostPaint (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Berichtet, ob zur Zeit ein Menü offen ist:
+//Berichtet, ob zur Zeit ein Menï¿½ offen ist:
 //--------------------------------------------------------------------------------------------
 BOOL CStdRaum::MenuIsOpen (void)
 {
@@ -5743,7 +5737,7 @@ BOOL CStdRaum::MenuIsOpen (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Reaktion auf linken Mausklick im Menü:
+//Reaktion auf linken Mausklick im Menï¿½:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuLeftClick (XY Pos)
 {
@@ -5792,7 +5786,7 @@ void CStdRaum::MenuLeftClick (XY Pos)
                }
             }
          }
-         else //Kredit zurückzahlen
+         else //Kredit zurï¿½ckzahlen
          {
             Limit ((SLONG)0, MenuPar1, (SLONG)qPlayer.Credit);
             MenuRepaint ();
@@ -5992,7 +5986,7 @@ void CStdRaum::MenuLeftClick (XY Pos)
                            MenuStart (MENU_REQUEST, MENU_REQUEST_NO_WORLD);
                            MenuSetZoomStuff (XY(320,220), 0.17, FALSE);
 
-                           //Hörer wieder auflegen:
+                           //Hï¿½rer wieder auflegen:
                            if (qPlayer.GetRoom()==ROOM_BURO_A+PlayerNum*10)
                            {
                               ((CBuero*)this)->SP_Player.SetDesiredMood (SPM_IDLE);
@@ -6304,7 +6298,7 @@ phone_busy:
                qPlayer.NetUpdateOrder (qAuftrag);
                qPlayer.Statistiken[STAT_AUFTRAEGE].AddAtPastDay (0, 1);
 
-               //Blöcke refeshen:
+               //Blï¿½cke refeshen:
                if (qPlayer.GetRoom()==ROOM_LAPTOP)
                {
 
@@ -6345,7 +6339,7 @@ phone_busy:
                qPlayer.NetUpdateFreightOrder (qFracht);
                qPlayer.Statistiken[STAT_AUFTRAEGE].AddAtPastDay (0, 1);
 
-               //Blöcke refeshen:
+               //Blï¿½cke refeshen:
                if (qPlayer.GetRoom()==ROOM_LAPTOP)
                {
 
@@ -6393,7 +6387,7 @@ phone_busy:
                qPlayer.MapWorkers (TRUE);
                qPlayer.UpdateWalkSpeed();
             }
-            //Gehalt erhöhen/kürzen:
+            //Gehalt erhï¿½hen/kï¿½rzen:
             else if (MouseClickPar1==-5) Workers.Workers[MenuRemapper[MenuPage-1]].Gehaltsaenderung (1);
             else if (MouseClickPar1==-6) Workers.Workers[MenuRemapper[MenuPage-1]].Gehaltsaenderung (0);
             else if (MouseClickPar1==-7)
@@ -6728,7 +6722,7 @@ phone_busy:
 
                MenuStop ();
 
-               //Das Flugzeug kann nur verkauft werden, wenn keine Flüge darauf gebucht sind:
+               //Das Flugzeug kann nur verkauft werden, wenn keine Flï¿½ge darauf gebucht sind:
                if (qPlayer.Planes[MenuPar1].CanBeSold())
                   StartDialog (TALKER_MUSEUM, MEDIUM_AIR, 100+qPlayer.Planes[MenuPar1].Sponsored*2, MenuPar1);
                else
@@ -7355,7 +7349,7 @@ phone_busy:
 
               if (Sim.Difficulty==DIFF_FINAL   && MenuPar1==0) Sim.Gamestate = UBYTE(GAMESTATE_OUTRO);
          else if (Sim.Difficulty==DIFF_ADDON10 && MenuPar1==0) Sim.Gamestate = UBYTE(GAMESTATE_OUTRO2);
-                                                          else Sim.Gamestate = GAMESTATE_BOOT;      //Ins Hauptmenü!
+                                                          else Sim.Gamestate = GAMESTATE_BOOT;      //Ins Hauptmenï¿½!
          break;
 
       case MENU_SETRENDITE:
@@ -7555,7 +7549,7 @@ phone_busy:
 }
 
 //--------------------------------------------------------------------------------------------
-//Reaktion auf rechten Mausklick im Menü:
+//Reaktion auf rechten Mausklick im Menï¿½:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuRightClick (XY)
 {
@@ -7566,7 +7560,7 @@ void CStdRaum::MenuRightClick (XY)
    if (CurrentMenu==MENU_AKTIE && (MenuDialogReEntryB==2030 || MenuDialogReEntryB==2130) && !CalculatorIsOpen)
       MenuDialogReEntryB++;
 
-   //Fraglich wozu das gut war; Führte aber zu problemen mit dem Sabotage-Dialog
+   //Fraglich wozu das gut war; Fï¿½hrte aber zu problemen mit dem Sabotage-Dialog
    if ((CurrentMenu==MENU_SABOTAGEPLANE || CurrentMenu==MENU_SABOTAGEROUTE) && MenuDialogReEntryB!=1090 && MenuDialogReEntryB!=1091)
       MenuDialogReEntryB++;
 
@@ -7648,7 +7642,7 @@ void CStdRaum::MenuRightClick (XY)
       Sim.bNoTime   = FALSE;
       Sim.DayState  = 2;
       if (Sim.Difficulty==DIFF_FINAL && MenuPar1==0) Sim.Gamestate = UBYTE(GAMESTATE_OUTRO);
-                                                else Sim.Gamestate = GAMESTATE_BOOT;      //Ins Hauptmenü!
+                                                else Sim.Gamestate = GAMESTATE_BOOT;      //Ins Hauptmenï¿½!
 
       return;
    }
@@ -7658,7 +7652,7 @@ void CStdRaum::MenuRightClick (XY)
 }
 
 //--------------------------------------------------------------------------------------------
-//Beendet das Menü:
+//Beendet das Menï¿½:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuStop (void)
 {
@@ -7763,7 +7757,7 @@ void CStdRaum::MenuStop (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Öffnet den Taschenrechner:
+//ï¿½ffnet den Taschenrechner:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::CalcOpen (XY Position, SLONG Value)
 {
@@ -7895,7 +7889,7 @@ void CStdRaum::CalcStop (BOOL Cancel)
 
          if (MenuPar2==1)
             Limit ((SLONG)0, MenuPar1, (SLONG)Sim.Players.Players[(SLONG)PlayerNum].CalcCreditLimit());
-         else //Kredit zurückzahlen
+         else //Kredit zurï¿½ckzahlen
             Limit ((SLONG)0, MenuPar1, (SLONG)Sim.Players.Players[(SLONG)PlayerNum].Credit);
 
          MenuRepaint ();
@@ -7999,7 +7993,7 @@ void CStdRaum::CalcKey (SLONG Key)
 }
 
 //--------------------------------------------------------------------------------------------
-//Übergibt die Daten für das Zoommenü:
+//ï¿½bergibt die Daten fï¿½r das Zoommenï¿½:
 //--------------------------------------------------------------------------------------------
 void CStdRaum::MenuSetZoomStuff (const XY &MenuStartPos, double MinimumZoom, BOOL ZoomFromAirport, SLONG ZoomSpeed)
 {
@@ -8021,7 +8015,7 @@ void CStdRaum::OnChar(UINT nChar, UINT, UINT)
    }
    else if (MenuIsOpen() && (CurrentMenu==MENU_RENAMEPLANE || CurrentMenu==MENU_RENAMEEDITPLANE || CurrentMenu==MENU_ENTERTCPIP || CurrentMenu==MENU_ENTERPROTECT || CurrentMenu==MENU_BROADCAST || CurrentMenu==MENU_CHAT))
    {
-      if (nChar==' ' || nChar==':' || nChar==',' || nChar==';' || nChar=='!' || nChar=='?' || nChar=='\'' || nChar=='-' || nChar=='+' || nChar=='(' || nChar==')' || (nChar>='0' && nChar<='9') || (nChar>='A' && nChar<='Z') || (nChar>='a' && nChar<='z') || nChar==UBYTE('Ä') || nChar==UBYTE('Ö') || nChar==UBYTE('Ü') || nChar==UBYTE('ä') || nChar==UBYTE('ö') || nChar==UBYTE('ü') || nChar=='.' || nChar==UBYTE('ß'))
+      if (nChar==' ' || nChar==':' || nChar==',' || nChar==';' || nChar=='!' || nChar=='?' || nChar=='\'' || nChar=='-' || nChar=='+' || nChar=='(' || nChar==')' || (nChar>='0' && nChar<='9') || (nChar>='A' && nChar<='Z') || (nChar>='a' && nChar<='z') || nChar==UBYTE('ï¿½') || nChar==UBYTE('ï¿½') || nChar==UBYTE('ï¿½') || nChar==UBYTE('ï¿½') || nChar==UBYTE('ï¿½') || nChar==UBYTE('ï¿½') || nChar=='.' || nChar==UBYTE('ï¿½'))
       {
          if (Optionen[0].GetLength()<20 || CurrentMenu==MENU_BROADCAST || CurrentMenu==MENU_CHAT)
          {
@@ -8170,7 +8164,7 @@ void CStdRaum::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 //--------------------------------------------------------------------------------------------
-//Der Raum der als nächstes geladen wird, übernimmt die Roomlib; sie wird nicht vernichtet!
+//Der Raum der als nï¿½chstes geladen wird, ï¿½bernimmt die Roomlib; sie wird nicht vernichtet!
 //--------------------------------------------------------------------------------------------
 void CStdRaum::KeepRoomLib (void)
 {

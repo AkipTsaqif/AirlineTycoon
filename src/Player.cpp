@@ -520,6 +520,45 @@ void PLAYER::BookSalary (void)
 
       if (Money!=0) ChangeMoney (-Money/30, 2070, "");
    }
+   else if (Owner==1)
+   {
+      //AI pays simulated salaries based on fleet requirements (same logic as STAT_GEHALT)
+      SLONG d, e=0;
+      SLONG NumIgnore=PlayerNum*2;
+
+      for (c=d=0; c<(SLONG)Planes.AnzEntries(); c++)
+         if (Planes.IsInAlbum(c))
+            d+=Planes[c].ptAnzPiloten;
+
+      for (c=0; c<Workers.Workers.AnzEntries(); c++)
+         if (Workers.Workers[c].Typ==WORKER_PILOT)
+         {
+            NumIgnore--;
+            if (NumIgnore<0)
+            {
+               d--; if (d<0) break;
+               e+=Workers.Workers[c].OriginalGehalt;
+            }
+         }
+
+      NumIgnore=PlayerNum*2;
+      for (c=d=0; c<(SLONG)Planes.AnzEntries(); c++)
+         if (Planes.IsInAlbum(c))
+            d+=Planes[c].ptAnzBegleiter;
+
+      for (c=0; c<Workers.Workers.AnzEntries(); c++)
+         if (Workers.Workers[c].Typ==WORKER_STEWARDESS)
+         {
+            NumIgnore--;
+            if (NumIgnore<0)
+            {
+               d--; if (d<0) break;
+               e+=Workers.Workers[c].OriginalGehalt;
+            }
+         }
+
+      if (e>0) ChangeMoney (-(e+e/4)/30, 2070, "");
+   }
 }
 
 //------------------------------------------------------------------------------

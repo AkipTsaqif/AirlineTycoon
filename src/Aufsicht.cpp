@@ -1,5 +1,5 @@
 //============================================================================================
-// Aufsicht.cpp : Das Büro der Flugaufsicht
+// Aufsicht.cpp : Das Bï¿½ro der Flugaufsicht
 //============================================================================================
 #include "stdafx.h"
 #include "glauf.h"
@@ -50,7 +50,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
    LeereZettelBms.ReSize (pRoomLib, "ZETTELK04", 3);
    PostcardBm.ReSize (pRoomLib, "NOCARD");
 
-   //Morgends verhindern, daß jemand rausgeht, noch bevor alle da sind:
+   //Morgends verhindern, daï¿½ jemand rausgeht, noch bevor alle da sind:
    bOkayToAct = TRUE;
    if (bIsMorning) bOkayToAct = FALSE;
    if (!Sim.bNetwork) bOkayToAct=true;
@@ -65,7 +65,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
       Sim.Players.Players[Sim.SabotageActs[c].Opfer].DaysWithoutSabotage = 0;
    }
 
-   //Prüfen wer, welche Routen hat (wg. Spielziel):
+   //Prï¿½fen wer, welche Routen hat (wg. Spielziel):
    if (Sim.GetHour()==9 && Sim.GetMinute()==0 && Sim.Difficulty==DIFF_NORMAL)
    {
       ULONG CityIds[7];
@@ -172,7 +172,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
                                NULL, SMACKER_CLIP_SET, 0, NULL,
                                "A1", 1);
 
-   //Für Sabotage:
+   //Fï¿½r Sabotage:
    SP_Boss.Clips[2].ReSize (2, "bb_fing.smk", "", XY (344, 105), SPM_TALKING,  CRepeat(1,1), CPostWait(0,0), SMACKER_CLIP_DONTCANCEL,
                                &ExitFromMiddle, SMACKER_CLIP_SET|SMACKER_CLIP_PRE, -1, &ExitFromMiddle,
                                "A1", 1);
@@ -277,7 +277,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
                                      "A1", 0);
      }
 
-      if (!IsOut[1]) //Grün:
+      if (!IsOut[1]) //Grï¿½n:
       {
          SP_Player[1].ReSize(7);
          SP_Player[1].Clips[0].ReSize (0, "Pv_wait.smk", "", XY (165, 110), SPM_IDLE,  CRepeat(1,1), CPostWait(15,45), SMACKER_CLIP_CANCANCEL,
@@ -377,7 +377,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
      }
    }
 
-   //Das Briefing machen wir später & erlösen die Figuren sofort:
+   //Das Briefing machen wir spï¿½ter & erlï¿½sen die Figuren sofort:
    if (Sim.DayState==1 && !Sim.IsTutorial)
    {
       #ifdef DEMO
@@ -386,7 +386,7 @@ CAufsicht::CAufsicht (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNu
          else 
       #endif
 
-      //Uhrig's Aufträge:
+      //Uhrig's Auftrï¿½ge:
       if (Sim.Difficulty==DIFF_ADDON09)
       {
          for (SLONG c=0; c<4; c++)
@@ -521,7 +521,7 @@ CAufsicht::~CAufsicht()
                      qOpfer.LaptopVirus=1;
                   break;
 
-               case 3: //Bombe im Büro
+               case 3: //Bombe im Bï¿½ro
                   bAnyBombs=true;
                   if (!bFremdsabotage) qPlayer.ArabHints+=25;
                   qOpfer.Sympathie[c]-=50;
@@ -535,7 +535,7 @@ CAufsicht::~CAufsicht()
                   break;
             }
 
-            //Für's nächste Briefing vermerken:
+            //Fï¿½r's nï¿½chste Briefing vermerken:
             Sim.SabotageActs.ReSize (Sim.SabotageActs.AnzEntries()+1);
             Sim.SabotageActs[Sim.SabotageActs.AnzEntries()-1].Player   = bFremdsabotage?-2:c;
             Sim.SabotageActs[Sim.SabotageActs.AnzEntries()-1].ArabMode = 2075+qPlayer.ArabMode2-1;
@@ -559,7 +559,7 @@ CAufsicht::~CAufsicht()
 
             switch (qPlayer.ArabMode3)
             {
-               case 1: //Fremde Broschüren
+               case 1: //Fremde Broschï¿½ren
                   if (!bFremdsabotage) qPlayer.ArabHints+=8;
                   qOpfer.WerbeBroschuere = qPlayer.PlayerNum;
                   qOpfer.NetSynchronizeFlags();
@@ -571,7 +571,7 @@ CAufsicht::~CAufsicht()
                   qOpfer.NetSynchronizeFlags();
                   break;
 
-               case 3: //Presseerklärung
+               case 3: //Presseerklï¿½rung
                   if (!bFremdsabotage) qPlayer.ArabHints+=25;
                   qOpfer.Presseerklaerung=true;
                   qOpfer.NetSynchronizeFlags();
@@ -582,7 +582,7 @@ CAufsicht::~CAufsicht()
                      qOpfer.Messages.AddMessage (BERATERTYP_GIRL, StandardTexte.GetS (TOKEN_ADVICE, 2020));
 
                   {
-                     //Für alle Flugzeuge die er besitzt, die Passagierzahl aktualisieren:
+                     //Fï¿½r alle Flugzeuge die er besitzt, die Passagierzahl aktualisieren:
                      for (long d=0; d<(SLONG)qOpfer.Planes.AnzEntries(); d++)
                         if (qOpfer.Planes.IsInAlbum (d))
                         {
@@ -624,7 +624,7 @@ CAufsicht::~CAufsicht()
                   break;
             }
 
-            //Für's nächste Briefing vermerken:
+            //Fï¿½r's nï¿½chste Briefing vermerken:
             Sim.SabotageActs.ReSize (Sim.SabotageActs.AnzEntries()+1);
             Sim.SabotageActs[Sim.SabotageActs.AnzEntries()-1].Player   = bFremdsabotage?-2:c;
             Sim.SabotageActs[Sim.SabotageActs.AnzEntries()-1].ArabMode = 2090+qPlayer.ArabMode3;
@@ -655,7 +655,7 @@ CAufsicht::~CAufsicht()
       {
          PLAYER &qPlayer = Sim.Players.Players[c];
 
-         //Für alle Flugzeuge die er besitzt
+         //Fï¿½r alle Flugzeuge die er besitzt
          for (SLONG d=0; d<(SLONG)qPlayer.Planes.AnzEntries(); d++)
          {
             if (qPlayer.Planes.IsInAlbum (d))
@@ -962,7 +962,7 @@ void CAufsicht::OnRButtonDown(UINT nFlags, CPoint point)
       if (Sim.Overtake) CanCancel=FALSE;
    }
 
-   //Außerhalb geklickt? Dann Default-Handler!
+   //Auï¿½erhalb geklickt? Dann Default-Handler!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       return;

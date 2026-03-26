@@ -2711,7 +2711,13 @@ void SIM::CreateRandomUsedPlane (SLONG Index)
       //UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
       UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-UsedPlanes[0x1000000+Index].ptErstbaujahr);
    else
-      UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (1996-UsedPlanes[0x1000000+Index].ptErstbaujahr);
+   {
+      SLONG range = 1996-UsedPlanes[0x1000000+Index].ptErstbaujahr;
+      if (range > 0)
+         UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (range);
+      else
+         UsedPlanes[0x1000000+Index].Baujahr = UsedPlanes[0x1000000+Index].ptErstbaujahr;
+   }
       //UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (1996-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
 
    UsedPlanes[0x1000000+Index].Zustand = UBYTE((UsedPlanes[0x1000000+Index].Baujahr-1950)+25+rnd.Rand(40)-20);

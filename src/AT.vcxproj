@@ -107,8 +107,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "$(SolutionDir)BUILD\Deployment\AT.exe"</Command>
-      <Message>Copying AT.exe to Deployment folder</Message>
+      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
+      <Message>Copying AT.exe to game folder</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,8 +157,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "$(SolutionDir)BUILD\Deployment\AT.exe"</Command>
-      <Message>Copying AT.exe to Deployment folder</Message>
+      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
+      <Message>Copying AT.exe to game folder</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

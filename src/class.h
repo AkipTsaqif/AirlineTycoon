@@ -473,7 +473,7 @@ class /**/CPlaneTypes : public ALBUM<CPlaneType>
       CPlaneTypes () : ALBUM<CPlaneType> (PlaneTypes, "PlaneTypes") {}
       CPlaneTypes (const CString &TabFilename);
       void    ReInit (const CString &TabFilename);
-      ULONG   GetRandomExistingType (TEAKRAND *pRand);
+      ULONG   GetRandomExistingType (TEAKRAND *pRand, SLONG maxErstbaujahr=9999);
       void    BlitPlaneAt (SBPRIMARYBM &TargetBm, SLONG PlaneType, SLONG Size, XY Pos, SLONG OwningPlayer);
 };
 

@@ -2696,81 +2696,163 @@ void SIM::NewDay (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Sucht ein zuf�lliges Flugzeug f�r heute aus:
+//Gibt das Gewicht (0-100) f�r das Auftauchen eines Flugzeugtyps im Museum zur�ck:
 //--------------------------------------------------------------------------------------------
-void SIM::CreateRandomUsedPlane (SLONG Index)
+static SLONG MuseumAgeWeight (SLONG Erstbaujahr)
+{
+   if (Erstbaujahr < 1950) return 5;
+   if (Erstbaujahr < 1960) return 12;
+   if (Erstbaujahr < 1970) return 22;
+   if (Erstbaujahr < 1980) return 32;
+   if (Erstbaujahr < 1990) return 35;
+   return 15; // 1990-1999
+}
+
+//--------------------------------------------------------------------------------------------
+//Erstellt ein Flugzeug des angegebenen Typs f�r einen Museumsslot:
+//--------------------------------------------------------------------------------------------
+void SIM::CreateRandomUsedPlane (SLONG Index, ULONG TypeId)
 {
    TEAKRAND rnd;
+   rnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31 + ULONG(Index));
 
-   rnd.SRand (Sim.Date+Index);
+   UsedPlanes[0x1000000+Index] = CPlane (PlaneNames.GetUnused(&rnd), TypeId, UBYTE(rnd.Rand(80)+11), 1900);
 
-   UsedPlanes[0x1000000+Index]=CPlane (PlaneNames.GetUnused(&rnd), PlaneTypes.GetRandomExistingType(&rnd, 1999), UBYTE(rnd.Rand(80)+11), 1900);
-
-   //if (PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr<1990)
-   if (UsedPlanes[0x1000000+Index].ptErstbaujahr<1990)
-      //UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
-      UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-UsedPlanes[0x1000000+Index].ptErstbaujahr);
+   if (UsedPlanes[0x1000000+Index].ptErstbaujahr < 1990)
+      UsedPlanes[0x1000000+Index].Baujahr = 1990 - rnd.Rand (1990 - UsedPlanes[0x1000000+Index].ptErstbaujahr);
    else
    {
-      SLONG range = 1999-UsedPlanes[0x1000000+Index].ptErstbaujahr;
+      SLONG range = 1999 - UsedPlanes[0x1000000+Index].ptErstbaujahr;
       if (range > 0)
-         UsedPlanes[0x1000000+Index].Baujahr = 1999-rnd.Rand (range);
+         UsedPlanes[0x1000000+Index].Baujahr = 1999 - rnd.Rand (range);
       else
          UsedPlanes[0x1000000+Index].Baujahr = UsedPlanes[0x1000000+Index].ptErstbaujahr;
    }
-      //UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (1996-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
 
    UsedPlanes[0x1000000+Index].Zustand = UBYTE((UsedPlanes[0x1000000+Index].Baujahr-1950)+25+rnd.Rand(40)-20);
-   if (UsedPlanes[0x1000000+Index].Zustand<20 || UsedPlanes[0x1000000+Index].Zustand>200) UsedPlanes[0x1000000+Index].Zustand=20;
-   if (UsedPlanes[0x1000000+Index].Zustand>100) UsedPlanes[0x1000000+Index].Zustand=100;
+   if (UsedPlanes[0x1000000+Index].Zustand < 20 || UsedPlanes[0x1000000+Index].Zustand > 200) UsedPlanes[0x1000000+Index].Zustand = 20;
+   if (UsedPlanes[0x1000000+Index].Zustand > 100) UsedPlanes[0x1000000+Index].Zustand = 100;
 
    UsedPlanes[0x1000000+Index].TargetZustand = UsedPlanes[0x1000000+Index].Zustand;
 }
 
 //--------------------------------------------------------------------------------------------
-//Sucht drei zuf�llige Flugzeuge f�r heute aus:
+//Baut einen Pool aus Flugzeugtypen auf, die den Altersgewichts-Roll bestanden haben.
+//Gibt die Anzahl der Eintr�ge zur�ck. excludeCount TypeIds aus excluded[] werden ausgelassen.
+//Falls der Pool leer ist, werden alle f�higen Typen ohne Roll aufgenommen (Fallback).
+//--------------------------------------------------------------------------------------------
+static SLONG BuildMuseumPool (BUFFER<ULONG> &pool, const ULONG *excluded, SLONG excludeCount)
+{
+   SLONG poolSize = 0;
+
+   // Pass 1: age-weighted roll
+   for (SLONG c = 0; c < (SLONG)PlaneTypes.AnzEntries(); c++)
+   {
+      if (!PlaneTypes.IsInAlbum (c)) continue;
+      ULONG typeId = PlaneTypes.GetIdFromIndex (c);
+      if (PlaneTypes[typeId].Erstbaujahr > 1999) continue;
+      if (!(PlaneTypes[typeId].FirstMissions < Sim.Difficulty ||
+           ((PlaneTypes[typeId].FirstMissions == Sim.Difficulty || Sim.Difficulty == -1) &&
+            PlaneTypes[typeId].FirstDay <= Sim.Date))) continue;
+
+      bool dup = false;
+      for (SLONG j = 0; j < excludeCount; j++)
+         if (typeId == excluded[j]) { dup = true; break; }
+      if (dup) continue;
+
+      TEAKRAND typeRnd;
+      typeRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 1009 + ULONG(c));
+      if (typeRnd.Rand (100) < MuseumAgeWeight (PlaneTypes[typeId].Erstbaujahr))
+         pool[poolSize++] = typeId;
+   }
+
+   if (poolSize > 0) return poolSize;
+
+   // Fallback: no types passed the roll, take all eligible (minus excluded)
+   for (SLONG c = 0; c < (SLONG)PlaneTypes.AnzEntries(); c++)
+   {
+      if (!PlaneTypes.IsInAlbum (c)) continue;
+      ULONG typeId = PlaneTypes.GetIdFromIndex (c);
+      if (PlaneTypes[typeId].Erstbaujahr > 1999) continue;
+      if (!(PlaneTypes[typeId].FirstMissions < Sim.Difficulty ||
+           ((PlaneTypes[typeId].FirstMissions == Sim.Difficulty || Sim.Difficulty == -1) &&
+            PlaneTypes[typeId].FirstDay <= Sim.Date))) continue;
+
+      bool dup = false;
+      for (SLONG j = 0; j < excludeCount; j++)
+         if (typeId == excluded[j]) { dup = true; break; }
+      if (!dup) pool[poolSize++] = typeId;
+   }
+
+   return poolSize;
+}
+
+//--------------------------------------------------------------------------------------------
+//Sucht drei zuf�llige Flugzeuge f�r heute aus (mit Altersgewichtung und Deduplizierung):
 //--------------------------------------------------------------------------------------------
 void SIM::CreateRandomUsedPlanes (void)
 {
-   SLONG c;
+   ULONG chosen[3] = {ULONG(-1), ULONG(-1), ULONG(-1)};
+   BUFFER<ULONG> pool (PlaneTypes.AnzEntries());
 
    UsedPlanes.Planes.ReSize (3);
    UsedPlanes.ClearAlbum ();
-   UsedPlanes.RepairReferences();
+   UsedPlanes.RepairReferences ();
 
-   for (c=0; c<3; c++)
+   for (SLONG slot = 0; slot < 3; slot++)
    {
-      UsedPlanes += 0x1000000+c;
-      CreateRandomUsedPlane (c);
+      UsedPlanes += 0x1000000 + slot;
+
+      SLONG poolSize = BuildMuseumPool (pool, chosen, slot);
+
+      TEAKRAND slotRnd;
+      slotRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 31 + ULONG(slot));
+      chosen[slot] = pool[slotRnd.Rand (poolSize)];
+
+      CreateRandomUsedPlane (slot, chosen[slot]);
    }
 
-   if (Sim.Difficulty==DIFF_ATFS10 && Sim.Date>=40 && Sim.Date<=50)
+   if (Sim.Difficulty == DIFF_ATFS10 && Sim.Date >= 40 && Sim.Date <= 50)
    {
-      for (c=0; c<SLONG(UsedPlanes.AnzEntries()); c++)
-         UsedPlanes[0x1000000+c].Name="";
+      for (SLONG c = 0; c < SLONG(UsedPlanes.AnzEntries()); c++)
+         UsedPlanes[0x1000000+c].Name = "";
    }
 }
 
 //--------------------------------------------------------------------------------------------
-//F�llt nach einiger Zeit die Flieger wieder auf:
+//F�llt nach einiger Zeit die Flieger wieder auf (mit Deduplizierung gegen bestehende Slots):
 //--------------------------------------------------------------------------------------------
 void SIM::UpdateUsedPlanes (void)
 {
    SLONG c;
    SLONG Anz = min (SLONG(UsedPlanes.AnzEntries()), Sim.TickMuseumRefill/20); //Normalerweise war das fr�her Time-Last / 5000, hier aber /100000, also effektiv /20
 
-   for (c=0; c<SLONG(UsedPlanes.AnzEntries()) && Anz>0; c++)
-      if (UsedPlanes[0x1000000+c].Name.GetLength()==0)
+   for (c = 0; c < SLONG(UsedPlanes.AnzEntries()) && Anz > 0; c++)
+      if (UsedPlanes[0x1000000+c].Name.GetLength() == 0)
       {
-         CreateRandomUsedPlane (c);
+         // Collect TypeIds already present in other slots
+         ULONG existing[3] = {ULONG(-1), ULONG(-1), ULONG(-1)};
+         SLONG existingCount = 0;
+         for (SLONG j = 0; j < SLONG(UsedPlanes.AnzEntries()); j++)
+            if (j != c && UsedPlanes[0x1000000+j].Name.GetLength() > 0)
+               existing[existingCount++] = UsedPlanes[0x1000000+j].TypeId;
+
+         BUFFER<ULONG> pool (PlaneTypes.AnzEntries());
+         SLONG poolSize = BuildMuseumPool (pool, existing, existingCount);
+
+         TEAKRAND slotRnd;
+         slotRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 31 + ULONG(c));
+         ULONG typeId = pool[slotRnd.Rand (poolSize)];
+
+         CreateRandomUsedPlane (c, typeId);
          Anz--;
          Sim.TickMuseumRefill = 0;
       }
 
-   if (Sim.Difficulty==DIFF_ATFS10 && Sim.Date>=40 && Sim.Date<=50)
+   if (Sim.Difficulty == DIFF_ATFS10 && Sim.Date >= 40 && Sim.Date <= 50)
    {
-      for (c=0; c<SLONG(UsedPlanes.AnzEntries()); c++)
-         UsedPlanes[0x1000000+c].Name="";
+      for (c = 0; c < SLONG(UsedPlanes.AnzEntries()); c++)
+         UsedPlanes[0x1000000+c].Name = "";
    }
 }
 

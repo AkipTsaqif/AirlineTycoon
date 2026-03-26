@@ -2495,7 +2495,7 @@ class SIM //Die Simulationswelt; alles was zur aktuellen Partie geh�rt
       SLONG   GetWeekday (void);
       CString GetTimeString (void);
       void    NewDay (void);
-      void    CreateRandomUsedPlane (SLONG Index);
+      void    CreateRandomUsedPlane (SLONG Index, ULONG TypeId);
       void    CreateRandomUsedPlanes (void);
       void    UpdateUsedPlanes (void);
       void    ReformGates (void);

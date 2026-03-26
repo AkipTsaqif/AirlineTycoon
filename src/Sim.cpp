@@ -3872,6 +3872,7 @@ void SIM::NetRefill (SLONG Type, SLONG City)
       case 2: Delta = Sim.TickReisebueroRefill;  break;
       case 3: Delta = Sim.TickFrachtRefill;      break;
       case 4: Delta = AuslandsRefill[City];      break;
+      case 5: Delta = AuslandsFRefill[City];     break;
    }
 
    Time = Sim.Time-Delta;

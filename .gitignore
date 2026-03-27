@@ -9,3 +9,4 @@ CMakeSettings.json
 /cmake/sdl2-mixer
 /cmake/sdl2-ttf
 tools/sprites/
+src/git_version.h

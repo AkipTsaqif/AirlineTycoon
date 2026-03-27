@@ -106,6 +106,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
+    <PreBuildEvent>
+      <Command>echo #define GIT_COMMIT_ID "unknown" &gt; "$(ProjectDir)git_version.h"
+"C:\Program Files\Git\cmd\git.exe" -C "$(SolutionDir)." rev-parse --short HEAD &gt; "%TEMP%\at_gitver.txt" 2&gt;nul
+set /p _GITVER=&lt;"%TEMP%\at_gitver.txt"
+if NOT "%_GITVER%"=="" echo #define GIT_COMMIT_ID "%_GITVER%" &gt; "$(ProjectDir)git_version.h"</Command>
+      <Message>Generating git_version.h</Message>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
       <Message>Copying AT.exe to game folder</Message>
@@ -156,6 +163,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
+    <PreBuildEvent>
+      <Command>echo #define GIT_COMMIT_ID "unknown" &gt; "$(ProjectDir)git_version.h"
+"C:\Program Files\Git\cmd\git.exe" -C "$(SolutionDir)." rev-parse --short HEAD &gt; "%TEMP%\at_gitver.txt" 2&gt;nul
+set /p _GITVER=&lt;"%TEMP%\at_gitver.txt"
+if NOT "%_GITVER%"=="" echo #define GIT_COMMIT_ID "%_GITVER%" &gt; "$(ProjectDir)git_version.h"</Command>
+      <Message>Generating git_version.h</Message>
+    </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
       <Message>Copying AT.exe to game folder</Message>

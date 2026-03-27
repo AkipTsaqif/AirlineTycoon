@@ -2451,18 +2451,18 @@ void SIM::NewDay (void)
    for (c=0; c<KerosinPast.AnzEntries()-1; c++)
       KerosinPast[c]=KerosinPast[c+1];
 
-   TEAKRAND KerosinRand (Sim.Date);
-   Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(41))-20) + SLONG(sin ((Date+KerosinRand.Rand(6))/3.0)*20) + SLONG(sin (Date*1.7)*20);
+   TEAKRAND KerosinRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31u);
+   Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(201))-100) + SLONG(sin ((Date+KerosinRand.Rand(6))/3.0)*20) + SLONG(sin (Date*1.7)*20) + (500-Kerosin)/20;
    if (Sim.Difficulty==DIFF_ATFS09 || (Sim.Difficulty==DIFF_ATFS10 && ((Sim.Date>=3 && Sim.Date<=10) || (Sim.Date>=35 && Sim.Date<=55))))
    {
       if (KerosinRand.Rand(20)>2) Kerosin += Kerosin/4;
       else if (KerosinPast[8]>550 && KerosinPast[7]>550 && KerosinPast[6]>550)
          Kerosin -= Kerosin/2;
-      Limit (SLONG(300), Kerosin, SLONG(700));
+      Limit (SLONG(1), Kerosin, SLONG(2000));
       for (c=0; c<20; c++) Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(41))-20);
    }
 
-   Limit (SLONG(300), Kerosin, SLONG(700));
+   Limit (SLONG(1), Kerosin, SLONG(2000));
    KerosinPast[9]=Kerosin;
 
    for (c=0; c<Sim.Players.AnzPlayers; c++)

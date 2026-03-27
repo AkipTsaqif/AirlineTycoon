@@ -3882,8 +3882,8 @@ void PLAYER::RobotExecuteAction(void)
          if (RobotUse(ROBOT_USE_TANKS) && Sim.Kerosin<500 && Money>5000000)
          {
             __int64 Menge = (Money-12500000)/Sim.Kerosin;
-            if (Sim.Kerosin<400) Menge = (Money-10000000)/Sim.Kerosin;
-            if (Sim.Kerosin<350) Menge = (Money-7500000)/Sim.Kerosin;
+            if (Sim.Kerosin<300) Menge = (Money-10000000)/Sim.Kerosin;
+            if (Sim.Kerosin<200) Menge = (Money-7500000)/Sim.Kerosin;
 
             if (Menge>0)
             {
@@ -5328,17 +5328,17 @@ void PLAYER::RandomBeraterMessage (void)
    }
    else if (HasBerater(BERATERTYP_KEROSIN) && Which==1)
    {
-      if (Sim.Kerosin>600 && !TankOpen && TankInhalt>0)
+      if (Sim.Kerosin>700 && !TankOpen && TankInhalt>0)
       {
          //Tank aufmachen!
          Messages.AddMessage (BERATERTYP_KEROSIN, StandardTexte.GetS (TOKEN_ADVICE, 3011));
       }
-      else if (Sim.Kerosin<400 && TankInhalt>Tank/2 && Money>20000 && Tank<SLONG(Planes.GetNumUsed()*4000))
+      else if (Sim.Kerosin<300 && TankInhalt>Tank/2 && Money>20000 && Tank<SLONG(Planes.GetNumUsed()*4000))
       {
          //Tanks kaufen:
          Messages.AddMessage (BERATERTYP_KEROSIN, StandardTexte.GetS (TOKEN_ADVICE, 3012));
       }
-      else if (Sim.Kerosin<470 && Sim.KerosinPast[9]>Sim.KerosinPast[8] && Sim.KerosinPast[7]>Sim.KerosinPast[8] && Sim.KerosinPast[6]>Sim.KerosinPast[7] && Sim.KerosinPast[5]>Sim.KerosinPast[6] && TankInhalt<Tank/3 && Money>20000)
+      else if (Sim.Kerosin<450 && Sim.KerosinPast[9]>Sim.KerosinPast[8] && Sim.KerosinPast[7]>Sim.KerosinPast[8] && Sim.KerosinPast[6]>Sim.KerosinPast[7] && Sim.KerosinPast[5]>Sim.KerosinPast[6] && TankInhalt<Tank/3 && Money>20000)
       {
          //Kerosin kaufen:
          Messages.AddMessage (BERATERTYP_KEROSIN, StandardTexte.GetS (TOKEN_ADVICE, 3010));

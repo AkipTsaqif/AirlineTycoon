@@ -38,11 +38,15 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="do_not_import_user.props" Condition="exists('do_not_import_user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LocalPaths.props" Condition="exists('LocalPaths.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="Project.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GameInstallDir Condition="'$(GameInstallDir)'==''">C:\Games\Airline Tycoon Deluxe</GameInstallDir>
+  </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">P:/Projekte/Major Games/BASE/AirlineTycoon/src/../BUILD/</LocalDebuggerWorkingDirectory>
@@ -114,7 +118,7 @@ if NOT "%_GITVER%"=="" echo #define GIT_COMMIT_ID "%_GITVER%" &gt; "$(ProjectDir
       <Message>Generating git_version.h</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
+      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "$(GameInstallDir)\At.exe"</Command>
       <Message>Copying AT.exe to game folder</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -171,7 +175,7 @@ if NOT "%_GITVER%"=="" echo #define GIT_COMMIT_ID "%_GITVER%" &gt; "$(ProjectDir
       <Message>Generating git_version.h</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "C:\Games\Airline Tycoon Deluxe\At.exe"</Command>
+      <Command>copy /Y "$(SolutionDir)BUILD\AT\$(Configuration)\AT.exe" "$(GameInstallDir)\At.exe"</Command>
       <Message>Copying AT.exe to game folder</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

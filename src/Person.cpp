@@ -1,5 +1,5 @@
 //============================================================================================
-// Person.Cpp - Verwaltung von Clans und Personen (Clan-Ausprägungen)
+// Person.Cpp - Verwaltung von Clans und Personen (Clan-Ausprï¿½gungen)
 //============================================================================================
 #include "stdafx.h"
 #include "AtNet.h"
@@ -19,7 +19,7 @@ extern SLONG SaveVersion;
 extern SLONG SaveVersionSub;
 
 //--------------------------------------------------------------------------------------------
-//Gibt das Vorzeichen (-1, 0 oder 1) des Parameters zurück:
+//Gibt das Vorzeichen (-1, 0 oder 1) des Parameters zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 SLONG sign (SLONG Value)
 {
@@ -75,7 +75,7 @@ void CLANS::ReInit (const CString &TabFilename)
          //Tab.ReadLine (Line, 5000);
          TeakStrRemoveEndingCodes (Line, "\xd\xa\x1a\r");
 
-         //Tabellenzeile hinzufügen:
+         //Tabellenzeile hinzufï¿½gen:
          if (ShadowPass==0) 
          {
             Id=(*this).GetUniqueId();
@@ -153,7 +153,7 @@ void CLANS::ReInit (const CString &TabFilename)
 
          for (c=0; c<10+4; c++)
          {
-            SLONG d;  //Böser Patch, damit das Laufen erst ab Index 10 kommt, obwohl es in der Excel-Tabelle schon viel eher steht:
+            SLONG d;  //Bï¿½ser Patch, damit das Laufen erst ab Index 10 kommt, obwohl es in der Excel-Tabelle schon viel eher steht:
             if (c<4) d=c;
             else if (c<8) d=10+c-4;
             else d=c-4;
@@ -248,7 +248,7 @@ void CLANS::LoadBitmaps (void)
 
          for (c=0; c<10+4; c++)
          {
-            /*SLONG d;  //Böser Patch, damit das Laufen erst ab Index 10 kommt, obwohl es in der Excel-Tabelle schon viel eher steht:
+            /*SLONG d;  //Bï¿½ser Patch, damit das Laufen erst ab Index 10 kommt, obwohl es in der Excel-Tabelle schon viel eher steht:
             if (c<4) d=c;
             else if (c<8) d=10+c-4;
             else d=c-4; */
@@ -466,7 +466,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CLAN &Clan)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt den Zustand, welche Clans aktiv sind:
+//Lï¿½dt den Zustand, welche Clans aktiv sind:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CLAN &Clan)
 {
@@ -493,7 +493,7 @@ TEAKFILE &operator >> (TEAKFILE &File, CLAN &Clan)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt den Id eines Kunden zurück:  0=nur weiße; 1=beide; 2=nur braune
+//Gibt den Id eines Kunden zurï¿½ck:  0=nur weiï¿½e; 1=beide; 2=nur braune
 //--------------------------------------------------------------------------------------------
 UBYTE CLANS::GetCustomerId (SLONG Browned, SLONG Koffer, TEAKRAND *pRand)
 {
@@ -530,7 +530,7 @@ UBYTE CLANS::GetCustomerId (SLONG Browned, SLONG Koffer, TEAKRAND *pRand)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt den Index einer entsprechenden Figur zurück:
+//Gibt den Index einer entsprechenden Figur zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 UBYTE CLANS::GetCustomerIdByGroup (SLONG Group)
 {
@@ -563,7 +563,7 @@ UBYTE CLANS::GetCustomerIdByGroup (SLONG Group)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt den Index des entsprechenden koffers zurück:
+//Gibt den Index des entsprechenden koffers zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 UBYTE CLANS::GetSuitcaseId (SLONG Koffer)
 {
@@ -576,7 +576,7 @@ UBYTE CLANS::GetSuitcaseId (SLONG Koffer)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt den Index des erstbesten Clans mit diesem Typ zurück (gut für Player)
+//Gibt den Index des erstbesten Clans mit diesem Typ zurï¿½ck (gut fï¿½r Player)
 //--------------------------------------------------------------------------------------------
 UBYTE CLANS::GetPlayerId (ULONG PlayerType)
 {
@@ -625,7 +625,7 @@ again:
                {
                   if (((*this)[c].TodayInGame && AnzRemoved>=5) || ((*this)[c].TodayInGame==FALSE && AnzAdded>=5))
                   {
-                     n--;     //Wir haben schon genug Personen gelöscht/hinzugefügt
+                     n--;     //Wir haben schon genug Personen gelï¿½scht/hinzugefï¿½gt
                      break;
                   }
                }
@@ -710,7 +710,7 @@ PERSON::PERSON ()
 {
    ClanId=255;
 
-   //15.11.2001: Hat aus irgendeineinem Grund Asynchronitäten im Spiel verursacht. Darf zwar eigentlich nicht sein. War aber so:
+   //15.11.2001: Hat aus irgendeineinem Grund Asynchronitï¿½ten im Spiel verursacht. Darf zwar eigentlich nicht sein. War aber so:
    //PersonalRand.SRand (Sim.TimeSlice);
    //PersonalRandWalk.SRand (Sim.TimeSlice);
 
@@ -728,7 +728,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
       Mood=(UBYTE)MoodPersonNone;
 
    PERSON::ClanId           = ClanId;
-   PERSON::Dir              = 2;          //Geht nach Süden
+   PERSON::Dir              = 2;          //Geht nach Sï¿½den
    PERSON::LookDir          = 0;
    PERSON::Phase            = 0;
    PERSON::WaitCount        = 0;
@@ -745,7 +745,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
    PERSON::FirstClass       = FirstClass;
    PERSON::FloorOffset      = Clans[SLONG(ClanId)].FloorOffset;
 
-   //15.11.2001: Hat aus irgendeineinem Grund Asynchronitäten im Spiel verursacht. Darf zwar eigentlich nicht sein. War aber so:
+   //15.11.2001: Hat aus irgendeineinem Grund Asynchronitï¿½ten im Spiel verursacht. Darf zwar eigentlich nicht sein. War aber so:
    //PERSON::PersonalRand.SRand (Sim.TimeSlice);
    //PERSON::PersonalRandWalk.SRand (Sim.TimeSlice);
 
@@ -756,7 +756,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
    ScreenPos.y = Position.y+220;
 
    //Die Person ist aus einem bestimmten Grund am Flughafen. Und daraus ergibt sich ein
-   switch (PERSON::Reason)  //Sekundärziel
+   switch (PERSON::Reason)  //Sekundï¿½rziel
    {            
       case 0:
          if (Clans[(SLONG)ClanId].Type<CLAN_PLAYER1 || Clans[(SLONG)ClanId].Type>CLAN_PLAYER4)
@@ -792,7 +792,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
          }
          break;
 
-      //Der Koffer fährt so durch die Gegend:
+      //Der Koffer fï¿½hrt so durch die Gegend:
       case REASON_SUITCASE_EXIT:
          {
             PERSON::Dir    = 0;
@@ -818,7 +818,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
    {
       PERSON::State=UBYTE(Clans[(SLONG)ClanId].Type-CLAN_PLAYER1);
 
-      //Außerdem werden die IQ-Walk Variablen initialisiert:
+      //Auï¿½erdem werden die IQ-Walk Variablen initialisiert:
       Sim.Players.Players[(SLONG)PERSON::State].iWalkActive = FALSE;
    }
 }
@@ -915,12 +915,18 @@ void PERSON::DoOneCustomerStep (void)
 {
    CLAN &qClan = Clans[(SLONG)ClanId];
    XY    StepSize (qClan.WalkSpeed,qClan.WalkSpeed);
+   // Scale walk speed for gates beyond the original 8-gate airport (gate 8+ starts at x=2629)
+   if (Target.x > 2629) {
+      SLONG boost = min(Target.x / 2629, SLONG(7));
+      StepSize.x  = min(StepSize.x * boost, SLONG(22));
+      StepSize.y  = min(StepSize.y * boost, SLONG(22));
+   }
    XY    ArrayPos, NewArrayPos;
    XY    NewPos;
 
    UBYTE LastPhase=Phase;
 
-   //Serge's Alte Sau (TM) steht nicht früh auf.
+   //Serge's Alte Sau (TM) steht nicht frï¿½h auf.
    if (qClan.Group==70 && Sim.GetHour()<10) return;
 
    //Die Post kommt um 11:
@@ -980,7 +986,7 @@ void PERSON::DoOneCustomerStep (void)
 
    State &= (~PERSON_WAITFLAG);
 
-   //Ist die Person am Ziel ihrer Träume? Dann weiter zum nächsten Checkpoint!
+   //Ist die Person am Ziel ihrer Trï¿½ume? Dann weiter zum nï¿½chsten Checkpoint!
    if (abs (Position.x-Target.x)<=StepSize.x && abs (Position.y-Target.y)<=StepSize.y)
       if ((State & (~PERSON_WAITFLAG) & (~PERSON_BROWSEFLAG))!=PERSON_WAITING)
       {
@@ -991,7 +997,7 @@ void PERSON::DoOneCustomerStep (void)
          else if ((State & (~PERSON_WAITFLAG) & (~PERSON_BROWSEFLAG)) != PERSON_CHECKINGIN)
          {
             PersonReachedTarget ();
-            if (LookDir==4) //Gimmick-Animation für WayPoint-Figur?
+            if (LookDir==4) //Gimmick-Animation fï¿½r WayPoint-Figur?
             {
                ArrayPos.x = (Position.x+4400)/44-100;
                ArrayPos.y = (Position.y+2200)/22-100;
@@ -1065,14 +1071,14 @@ void PERSON::DoOneCustomerStep (void)
       case 3: NewPos.x = Position.x - StepSize.x; break;
    }
 
-   //Hoppla! Sind wir etwa just über die Mittelline einer Bodenplatte gelaufen?
+   //Hoppla! Sind wir etwa just ï¿½ber die Mittelline einer Bodenplatte gelaufen?
    if ((NewPos.x+4422)/44!=(Position.x+4422)/44 || (NewPos.y+2211)/22!=(Position.y+2211)/22 || Dir==4)
    {
       //Sind wir! Und deshalb ist es Zeit sich umzuschauen und eine Entscheidung zu treffen.
-      //Welche Möglichkeiten hat der Kunde dieses Feld zu verlassen?
+      //Welche Mï¿½glichkeiten hat der Kunde dieses Feld zu verlassen?
       UBYTE NewPossibleDirs;
       
-      //Müssen wir erst einmal eine Tür aufstoßen?
+      //Mï¿½ssen wir erst einmal eine Tï¿½r aufstoï¿½en?
       if (ArrayPos.y<2) Airport.TryDoor (XY(ArrayPos.x,ArrayPos.y+5), 0, 0);
 
       if (ArrayPos.y>=0 && ArrayPos.y<=9)
@@ -1095,7 +1101,7 @@ void PERSON::DoOneCustomerStep (void)
          {
             if ((Airport.SeatsTaken[ArrayPos.x]&(1<<((ArrayPos.y-1)*2+1)))==0)
             {
-               //Person setzt sich und schaut nach Süden:
+               //Person setzt sich und schaut nach Sï¿½den:
                Airport.SeatsTaken[ArrayPos.x]|=(1<<((ArrayPos.y-1)*2+1));
                State=PERSON_SITWAITING|PERSON_WAITFLAG;
 
@@ -1132,7 +1138,7 @@ void PERSON::DoOneCustomerStep (void)
          Dir=4;
          if (PersonalRandWalk.Rand(100)==0) PersonReachedTarget();
       }
-      //Gibt es außer der Herkunft nur einen Ausgang? Dann gehen wir dahin!
+      //Gibt es auï¿½er der Herkunft nur einen Ausgang? Dann gehen wir dahin!
       else if (AnzPossibleDirs==1)
       {
          switch (NewPossibleDirs)
@@ -1168,7 +1174,7 @@ void PERSON::DoOneCustomerStep (void)
 
          switch (State & (~PERSON_WAITFLAG) & (~PERSON_BROWSEFLAG))
          {
-            //Frisch aus der Nervenheilanstalt läuft dieser Typ nur herum wie doof:
+            //Frisch aus der Nervenheilanstalt lï¿½uft dieser Typ nur herum wie doof:
             case PERSON_BROWSING:
                do
                {
@@ -1177,7 +1183,7 @@ void PERSON::DoOneCustomerStep (void)
                while ((NewPossibleDirs & (128>>Dir))==0);
                break;
 
-            //Person läuft nervös im Warteraum hin und her:
+            //Person lï¿½uft nervï¿½s im Warteraum hin und her:
             case PERSON_WAITING:
                if (ArrayPos.y==4 && (NewPossibleDirs&64) && !(Airport.SeatsTaken[ArrayPos.x+3]&(1<<((ArrayPos.y-1)*2+1)))) Dir=1;
                else if (ArrayPos.y==2 && (NewPossibleDirs&64) && (!(Airport.SeatsTaken[ArrayPos.x+3]&(1<<((ArrayPos.y+1)*2))) || (!(Airport.SeatsTaken[ArrayPos.x+2]&(1<<((ArrayPos.y+1)*2))))) ) Dir=1;
@@ -1192,7 +1198,7 @@ void PERSON::DoOneCustomerStep (void)
                if (ArrayPos.y==0 && Dir==0) goto waiting_again;
                break;
 
-            //Eine Person läuft innerhalb eines Ladens nur in x-richtung:
+            //Eine Person lï¿½uft innerhalb eines Ladens nur in x-richtung:
             case PERSON_SHOPPING:
                if (Position.y==Target.y && abs(Position.x-Target.x)<=44*3)
                {
@@ -1239,7 +1245,7 @@ void PERSON::DoOneCustomerStep (void)
                }
                break;
 
-            //Person will zum nächsten Waypoint:
+            //Person will zum nï¿½chsten Waypoint:
             case PERSON_WAYPOINTING:
                if (FlightPlaneId>1)
                {
@@ -1318,39 +1324,39 @@ void PERSON::DoOneCustomerStep (void)
                      BOOL  bAussenErlaubt = (Airport.iPlate[14+(ArrayPos.x<<4)]&64) && (Airport.iPlate[14+((ArrayPos.x+1)<<4)]&64) && (Airport.iPlate[14+((ArrayPos.x-1)<<4)]&64);
 
                      if (bFast && bAussenErlaubt && (ArrayPos.y+5==14 || (Airport.iPlate[13+((ArrayPos.x+1)<<4)]&2) && Target.x-Position.x>88))
-                        ty = 209;    //Schnelle Clans überholen außen, wenn jemand vor ihnen ist...
+                        ty = 209;    //Schnelle Clans ï¿½berholen auï¿½en, wenn jemand vor ihnen ist...
                      else
                      {
                         if (Airport.iPlateDir[13+((ArrayPos.x)<<4)]==8 || Airport.iPlateDir[13+((ArrayPos.x+1)<<4)]==8 || (bFast && Airport.iPlate[13+((ArrayPos.x+1)<<4)]&2 && Target.x-Position.x>88) || (StepSize.x>1 && (Airport.iPlateDir[13+((ArrayPos.x)<<4)]==254 || Airport.iPlateDir[13+((ArrayPos.x+1)<<4)]==254))) //Falls der Weg blockiert ist....
                         {
                            if (bAussenErlaubt)
-                              ty = 209; //Jeder überholt hier außen...
+                              ty = 209; //Jeder ï¿½berholt hier auï¿½en...
                            else
                            {
-                              //Prüfen, ob auf der gemeinsamen Innenspur Platz ist...
+                              //Prï¿½fen, ob auf der gemeinsamen Innenspur Platz ist...
                               for (c=0; c<5; c++)
                                  if (((Airport.iPlateDir[12+((ArrayPos.x+c)<<4)]==3 || Airport.iPlateDir[12+((ArrayPos.x+c)<<4)]==254) && (Airport.iPlate[12+((ArrayPos.x+c)<<4)]&2)) || (Airport.iPlate[12+((ArrayPos.x+c)<<4)]&64)==0)
                                     break;
 
                               if (c==5)
-                                 ty = 165; //alles frei, wir überholen innen
+                                 ty = 165; //alles frei, wir ï¿½berholen innen
                               else
                                  ty = 187; //normale Spur, weil jemand kommt
                            }
                         }
-                        else //Nein, der Weg ist nicht blockiert, Aber ggf. behalten wir unsere Überholspur noch ein wenig...
+                        else //Nein, der Weg ist nicht blockiert, Aber ggf. behalten wir unsere ï¿½berholspur noch ein wenig...
                         {
                            if (ArrayPos.y+5==14 && Dir==1 && bAussenErlaubt && (Airport.iPlate[14+((ArrayPos.x+1)<<4)]&2)==0)
-                              ty = 209; //Es ist Platz, also überholen wir außen...
+                              ty = 209; //Es ist Platz, also ï¿½berholen wir auï¿½en...
                            else if (ArrayPos.y+5==12 && (Dir==1 || Dir==0))
                            {
-                              //Prüfen, ob auf der gemeinsamen Innenspur Platz ist...
+                              //Prï¿½fen, ob auf der gemeinsamen Innenspur Platz ist...
                               for (c=0; c<5; c++)
                                  if ((Airport.iPlateDir[12+((ArrayPos.x+c)<<4)]==3 && (Airport.iPlate[12+((ArrayPos.x+c)<<4)]&2)) || (Airport.iPlate[12+((ArrayPos.x+c)<<4)]&64)==0)
                                     break;
 
                               if (c==5 && (bFast || Dir==0))
-                                 ty = 165; //alles frei, wir überholen innen
+                                 ty = 165; //alles frei, wir ï¿½berholen innen
                               else
                                  ty = 187; //normale Spur, weil jemand kommt
                            }
@@ -1365,39 +1371,39 @@ void PERSON::DoOneCustomerStep (void)
                      BOOL  bAussenErlaubt = (Airport.iPlate[10+(ArrayPos.x<<4)]&64) && (Airport.iPlate[10+((ArrayPos.x-1)<<4)]&64) && (Airport.iPlate[10+((ArrayPos.x+1)<<4)]&64);
 
                      if (bFast && bAussenErlaubt && (ArrayPos.y+5==10 || (Airport.iPlate[11+((ArrayPos.x-1)<<4)]&2) && Position.x-Target.x>88))
-                        ty = 121;    //Schnelle Clans überholen außen, wenn jemand vor ihnen ist...
+                        ty = 121;    //Schnelle Clans ï¿½berholen auï¿½en, wenn jemand vor ihnen ist...
                      else
                      {
                         if (Airport.iPlateDir[11+((ArrayPos.x)<<4)]==8 || Airport.iPlateDir[11+((ArrayPos.x-1)<<4)]==8 || (bFast && Airport.iPlate[11+((ArrayPos.x-1)<<4)]&2 && Position.x-Target.x>88) || (StepSize.x>1 && (Airport.iPlateDir[11+((ArrayPos.x)<<4)]==254 || Airport.iPlateDir[11+((ArrayPos.x-1)<<4)]==254))) //Falls der Weg blockiert ist....
                         {
                            if (bAussenErlaubt)
-                              ty = 121; //Jeder überholt hier außen...
+                              ty = 121; //Jeder ï¿½berholt hier auï¿½en...
                            else
                            {
-                              //Prüfen, ob auf der gemeinsamen Innenspur Platz ist...
+                              //Prï¿½fen, ob auf der gemeinsamen Innenspur Platz ist...
                               for (SLONG c=0; c<5; c++)
                                  if (((Airport.iPlateDir[12+((ArrayPos.x-c)<<4)]==1 || Airport.iPlateDir[12+((ArrayPos.x-c)<<4)]==254) && (Airport.iPlate[12+((ArrayPos.x-c)<<4)]&2)) || (Airport.iPlate[12+((ArrayPos.x-c)<<4)]&16)==0)
                                     break;
 
                               if (c==5)
-                                 ty = 165; //alles frei, wir überholen innen
+                                 ty = 165; //alles frei, wir ï¿½berholen innen
                               else
                                  ty = 143; //normale Spur, weil jemand kommt
                            }
                         }
-                        else //Nein, der Weg ist nicht blockiert, Aber ggf. behalten wir unsere Überholspur noch ein wenig...
+                        else //Nein, der Weg ist nicht blockiert, Aber ggf. behalten wir unsere ï¿½berholspur noch ein wenig...
                         {
                            if (ArrayPos.y+5==10 && Dir==3 && bAussenErlaubt && (Airport.iPlate[10+((ArrayPos.x-1)<<4)]&2)==0)
-                              ty = 209; //Es ist Platz, also überholen wir außen...
+                              ty = 209; //Es ist Platz, also ï¿½berholen wir auï¿½en...
                            else if (ArrayPos.y+5==12 && (Dir==3 || Dir==2))
                            {
-                              //Prüfen, ob auf der gemeinsamen Innenspur Platz ist...
+                              //Prï¿½fen, ob auf der gemeinsamen Innenspur Platz ist...
                               for (SLONG c=0; c<5; c++)
                                  if ((Airport.iPlateDir[12+((ArrayPos.x-c)<<4)]==1 && (Airport.iPlate[12+((ArrayPos.x-c)<<4)]&2)) || (Airport.iPlate[12+((ArrayPos.x-c)<<4)]&16)==0)
                                     break;
 
                               if (c==5 && (bFast || Dir==2))
-                                 ty = 165; //alles frei, wir überholen innen
+                                 ty = 165; //alles frei, wir ï¿½berholen innen
                               else
                                  ty = 143; //normale Spur, weil jemand kommt
                            }
@@ -1449,14 +1455,14 @@ void PERSON::DoOneCustomerStep (void)
                else
                   NewPossibleDirs = 128+32;
 
-               //Versuchen wir nach unten zu gehen, obwohl wir nur nach links können?
+               //Versuchen wir nach unten zu gehen, obwohl wir nur nach links kï¿½nnen?
                if (Dir==2 && (NewPossibleDirs&48)==16) Dir=3;
 
-               //Versuchen wir nach links zu gehen, obwohl wir nur nach unten können?
+               //Versuchen wir nach links zu gehen, obwohl wir nur nach unten kï¿½nnen?
                if (Dir==3 && (NewPossibleDirs&48)==32) Dir=2;
                break;
 
-            //Person will nur raus aus dem Check-In Bereich und rennt dafür auch andere über den Haufen...
+            //Person will nur raus aus dem Check-In Bereich und rennt dafï¿½r auch andere ï¿½ber den Haufen...
             case PERSON_2CHECKIN_EXIT:
                Dir=1;
                break;
@@ -1583,7 +1589,7 @@ void PERSON::DoOneCustomerStep (void)
 DirtyLabel:
       NewPos = Position;
 
-      //Spätenstens jetzt stimmt die Richtung:
+      //Spï¿½tenstens jetzt stimmt die Richtung:
       switch (Dir)
       {
          case 0: NewPos.y = Position.y - StepSize.y; break;
@@ -1605,7 +1611,7 @@ DirtyLabel:
          //Steht auf der Zielkachel schon jemand? Ist vielleicht Stau?
          if ((Airport.iPlate[Index]&2)==0 || WaitCount>=200 || (State & (~PERSON_WAITFLAG) & (~PERSON_BROWSEFLAG))==PERSON_2CHECKIN_EXIT || (Dir==1 && Airport.iPlateDir[Index]==3) || (Dir==3 && Airport.iPlateDir[Index]==1))
          {
-            //Nö. Aber jetzt! (evtl. war da auch ein Mega-Stau...)
+            //Nï¿½. Aber jetzt! (evtl. war da auch ein Mega-Stau...)
             Position = NewPos;
 
             if ((State & (~PERSON_WAITFLAG) & (~PERSON_BROWSEFLAG))!=PERSON_BOARDING &&
@@ -1621,7 +1627,7 @@ DirtyLabel:
          }
          else
          {
-            //Da ist schon wer; können wir ggf. nach links ausweichen?
+            //Da ist schon wer; kï¿½nnen wir ggf. nach links ausweichen?
             if (ArrayPos.y>=1+2 && ArrayPos.y<9 && Dir==2 && Position.x>Target.x && (Airport.iPlate[ArrayPos.y+5+((ArrayPos.x-1)<<4)]&2)==0 && (Airport.iPlate[ArrayPos.y+5+(ArrayPos.x<<4)]&16) && abs (Position.x-Target.x)>StepSize.x*4)
             {
                Dir=3; //Wir weichen nach links aus
@@ -1635,7 +1641,7 @@ DirtyLabel:
                StepSize.x+=4;
                goto DirtyLabel;
             }
-            //Falls Frontalzusammenstoß und wir nicht ausweichen können, dann gehen wir skrupellos durch den anderen durch:
+            //Falls Frontalzusammenstoï¿½ und wir nicht ausweichen kï¿½nnen, dann gehen wir skrupellos durch den anderen durch:
             else if (Dir<0 || Dir>3 || Airport.iPlateDir[Index]!=(Dir+2)%4)
             {
                State |= PERSON_WAITFLAG;
@@ -1732,7 +1738,7 @@ void PERSON::DoOnePlayerStep (void)
 
    if (LookDir==4)
    {
-      //Während einer Explosion wird der Spieler ans Geländer gedrückt und kann sich nicht bewegen
+      //Wï¿½hrend einer Explosion wird der Spieler ans Gelï¿½nder gedrï¿½ckt und kann sich nicht bewegen
       return;
    }
    else if (LookDir==8)
@@ -1797,7 +1803,7 @@ void PERSON::DoOnePlayerStep (void)
       //oben!
       Position.y -= 5000;
       ArrayPos.x = Position.x/44;
-      ArrayPos.y = (Position.y+2200)/22-100;  //21.2.02: war mal "Position.y/22", wegen Eingang Security-Raum geändert
+      ArrayPos.y = (Position.y+2200)/22-100;  //21.2.02: war mal "Position.y/22", wegen Eingang Security-Raum geï¿½ndert
       Upfloor    = TRUE;
    }
 
@@ -1826,7 +1832,7 @@ void PERSON::DoOnePlayerStep (void)
          if (ArrayPos.y+1<14) Airport.iPlate[ArrayPos.y+2+((ArrayPos.x+x)<<4)] &= ~1;
       }
 
-   //Hoppla! Sind wir etwa just über die Mittelline einer Bodenplatte gelaufen?
+   //Hoppla! Sind wir etwa just ï¿½ber die Mittelline einer Bodenplatte gelaufen?
    if ((NewPos.x+4422)/44!=(Position.x+4422)/44 || (NewPos.y+2211)/22!=(Position.y+2211)/22 || Dir==8)
    {
       //Klebstoff?
@@ -1855,10 +1861,10 @@ void PERSON::DoOnePlayerStep (void)
          }
 
       //Sind wir! Und deshalb ist es Zeit sich umzuschauen und eine Entscheidung zu treffen.
-      //Welche Möglichkeiten hat der Kunde dieses Feld zu verlassen?
+      //Welche Mï¿½glichkeiten hat der Kunde dieses Feld zu verlassen?
       UBYTE NewPossibleDirs;
 
-      //Müssen wir erst einmal eine Tür aufstoßen?
+      //Mï¿½ssen wir erst einmal eine Tï¿½r aufstoï¿½en?
       Airport.TryDoor (ArrayPos, 1, State);
       if (LookDir==4)
       {
@@ -1870,7 +1876,7 @@ void PERSON::DoOnePlayerStep (void)
       if (Dir!=1 && Dir!=3 && Dir!=5 && Dir!=7)
       {
          Position.x = Position.x / 44 * 44 + 22;
-         Position.y = ((Position.y+2200) / 22) * 22 - 2200 + 11; //21.2.02: war mal "Position.y / 22 * 22 + 11", wegen Eingang Security-Raum geändert
+         Position.y = ((Position.y+2200) / 22) * 22 - 2200 + 11; //21.2.02: war mal "Position.y / 22 * 22 + 11", wegen Eingang Security-Raum geï¿½ndert
       }
 
       if (ArrayPos.y>=0 && ArrayPos.y<=14)
@@ -1878,7 +1884,7 @@ void PERSON::DoOnePlayerStep (void)
       else
          NewPossibleDirs = 128+32;
 
-      //Sind einige womöglich für Spieler verboten?
+      //Sind einige womï¿½glich fï¿½r Spieler verboten?
       if (ArrayPos.y>=0 && ArrayPos.y<15)
       {
          if (ArrayPos.y>0  && (Airport.iPlate[ArrayPos.y-1+(ArrayPos.x<<4)]&4)==0) NewPossibleDirs&=(~128);
@@ -1887,7 +1893,7 @@ void PERSON::DoOnePlayerStep (void)
          if ((Airport.iPlate[ArrayPos.y+((ArrayPos.x+1)<<4)]&4)==0) NewPossibleDirs&=(~64);
       }
 
-      //Läuft der Spieler zur Zeit automatisch oder vom Mensch gesteuert?
+      //Lï¿½uft der Spieler zur Zeit automatisch oder vom Mensch gesteuert?
       if (StatePar)
       {
          //Und suchen wir ein Ziel oder laufen wir nur in einem Treppengang?
@@ -1941,7 +1947,7 @@ void PERSON::DoOnePlayerStep (void)
                       (Airport.iPlate[ArrayPos.y+(ArrayPos.x<<4)]&4) &&
                       (Airport.iPlate[ArrayPos.y+1+(ArrayPos.x<<4)]&4) &&
                       (Airport.iPlate[ArrayPos.y+((ArrayPos.x+1)<<4)]&4))
-                      Dir=3; //Süd-Ost
+                      Dir=3; //Sï¿½d-Ost
                   break;
 
                case 6:
@@ -1964,7 +1970,7 @@ void PERSON::DoOnePlayerStep (void)
                       (Airport.iPlate[ArrayPos.y+(ArrayPos.x<<4)]&4) &&
                       (Airport.iPlate[ArrayPos.y+1+(ArrayPos.x<<4)]&4) &&
                       (Airport.iPlate[ArrayPos.y+((ArrayPos.x-1)<<4)]&4))
-                      Dir=5; //Süd-West
+                      Dir=5; //Sï¿½d-West
                   break;
             }
          }
@@ -1973,7 +1979,7 @@ void PERSON::DoOnePlayerStep (void)
             Target = Position+XY(0, Upfloor*5000);
       }
 
-      //Ja geht das denn mit der Richtung überhaupt? (Bei Werkstatt übersehen wir das 'mal)
+      //Ja geht das denn mit der Richtung ï¿½berhaupt? (Bei Werkstatt ï¿½bersehen wir das 'mal)
       if (((128>>(Dir>>1)) & NewPossibleDirs)==0 && !(StatePar==ROOM_FRACHT || StatePar==ROOM_WERKSTATT || StatePar==ROOM_NASA || qPlayer.ExRoom==ROOM_WERKSTATT || qPlayer.ExRoom==ROOM_FRACHT))
       {
          if (qPlayer.Owner==0 && Dir!=8)
@@ -2014,7 +2020,7 @@ void PERSON::DoOnePlayerStep (void)
                      ty = 11;
                   }
 
-                  //Würde in der Std-Ebene überhaupt Platz sein?
+                  //Wï¿½rde in der Std-Ebene ï¿½berhaupt Platz sein?
                   if (UBYTE((Airport.iPlate[ty+(ArrayPos.x<<4)] & (128>>(Dir>>1))))==0 ||
                       UBYTE((Airport.iPlate[ty+(ArrayPos.x<<4)] & 4))==0)
                      ty=Target.y/22+5;
@@ -2045,7 +2051,7 @@ void PERSON::DoOnePlayerStep (void)
          else Dir = 8;
       }
 
-      //Haben wir eine Raumankündigung betreten?
+      //Haben wir eine Raumankï¿½ndigung betreten?
       if (StatePar == 0)
       {
          c=Airport.GetRuneParNear (XY(NewPos.x,NewPos.y+Upfloor*5000), XY(StepSize.x,StepSize.y*2), RUNE_2SHOP);
@@ -2146,7 +2152,7 @@ void PERSON::DoOnePlayerStep (void)
             qPlayer.ExRoom=-1;
             StatePar = c;
 
-            //Für 'echte' Räume schauen wir auch das nächste Ziel nach:
+            //Fï¿½r 'echte' Rï¿½ume schauen wir auch das nï¿½chste Ziel nach:
             if (StatePar<ROOM_STAIRSVON || StatePar>ROOM_STAIRSBIS)
             {
                //Raum (wenn keine Toilette) als besetzt markieren:
@@ -2190,7 +2196,7 @@ void PERSON::DoOnePlayerStep (void)
 
                   Dir=4; StatePar=0; qPlayer.ExRoom=0;
                }
-               //Doch nicht in einen Raum gehen, falls Dialog offen ist oder eröffnet wird:
+               //Doch nicht in einen Raum gehen, falls Dialog offen ist oder erï¿½ffnet wird:
                else if (qPlayer.LocationWin && ((*(CStdRaum*)qPlayer.LocationWin).IsDialogOpen() || qPlayer.IsWalking2Player!=-1))
                {
                   //Raum (wenn keine Toilette) als besetzt entmarkieren:
@@ -2222,7 +2228,7 @@ void PERSON::DoOnePlayerStep (void)
                   //Raum (wenn keine Toilette) als besetzt entmarkieren:
                   if (StatePar!=ROOM_WC_F && StatePar!=ROOM_WC_M && Sim.RoomBusy[StatePar]>0) Sim.RoomBusy[StatePar]--;
 
-                  //Nein, Standard-Raum, d.h. jetzt müssen wir vor die Tür:
+                  //Nein, Standard-Raum, d.h. jetzt mï¿½ssen wir vor die Tï¿½r:
                   if (StatePar==ROOM_NASA || StatePar==ROOM_FRACHT)
                   {
                      Target.x=Position.x+44;
@@ -2277,7 +2283,7 @@ void PERSON::DoOnePlayerStep (void)
                   {
                      SLONG e;
 
-                     //Roboter: Raum schon besetzt? Erst zweite Priorität ausführen:
+                     //Roboter: Raum schon besetzt? Erst zweite Prioritï¿½t ausfï¿½hren:
                      for (e=qPlayer.RobotActions.AnzEntries()-1; e>=1; e--)
                         qPlayer.RobotActions[e]=qPlayer.RobotActions[e-1];
                      qPlayer.RobotActions[1]=qPlayer.RobotActions[2];
@@ -2305,7 +2311,7 @@ void PERSON::DoOnePlayerStep (void)
 
    if (!(StatePar == 0 && qPlayer.GetRoom()==ROOM_AIRPORT && c!=0 && (c<ROOM_REISE_X1 || c>ROOM_MONITOR9) && c!=ROOM_ELECTRO && c!=ROOM_ROUTEBOX && c!=ROOM_RICKS))
    {
-      //Spätenstens jetzt stimmt die Richtung:
+      //Spï¿½tenstens jetzt stimmt die Richtung:
       switch (Dir)
       {
          case 0: Position.y -= StepSize.y*2; break;
@@ -2326,9 +2332,9 @@ void PERSON::DoOnePlayerStep (void)
       if (StatePar>=ROOM_STAIRSVON && StatePar<=ROOM_STAIRSBIS)
       {
          //Ja! Und dieser wird etwas anders behandelt!
-         if (Upfloor) //AI für "oben sein"
+         if (Upfloor) //AI fï¿½r "oben sein"
          {
-            //AI für "oben sein" & oben raus wollen
+            //AI fï¿½r "oben sein" & oben raus wollen
             if (StatePar==ROOM_STAIRS1UP || StatePar==ROOM_STAIRS2UP || StatePar==ROOM_STAIRS3UP)
             {
                Dir = 6;
@@ -2339,7 +2345,7 @@ void PERSON::DoOnePlayerStep (void)
                   qPlayer.ExRoom=0;
                }
             }
-            //AI für "oben sein" & nach unten wollen
+            //AI fï¿½r "oben sein" & nach unten wollen
             else if (StatePar==ROOM_STAIRS1DOWN || StatePar==ROOM_STAIRS2DOWN || StatePar==ROOM_STAIRS3DOWN)
             {
                Dir = 2;
@@ -2353,9 +2359,9 @@ void PERSON::DoOnePlayerStep (void)
                }
             }
          }
-         else //AI für "unten sein"
+         else //AI fï¿½r "unten sein"
          {
-            //AI für "unten sein" & nach oben wollen
+            //AI fï¿½r "unten sein" & nach oben wollen
             if (StatePar==ROOM_STAIRS1UP || StatePar==ROOM_STAIRS2UP || StatePar==ROOM_STAIRS3UP)
             {
                Dir = 1;
@@ -2367,7 +2373,7 @@ void PERSON::DoOnePlayerStep (void)
                   Dir=6;
                }
             }
-            //AI für "unten sein" & unten raus wollen
+            //AI fï¿½r "unten sein" & unten raus wollen
             else if (StatePar==ROOM_STAIRS1DOWN || StatePar==ROOM_STAIRS2DOWN || StatePar==ROOM_STAIRS3DOWN)
             {
                Dir = 5;
@@ -2382,13 +2388,13 @@ void PERSON::DoOnePlayerStep (void)
       }
       else
       {
-         //Wir laufen autom. zu einem normalen Raum & daher müssen wir ggf. d. Position runden!
+         //Wir laufen autom. zu einem normalen Raum & daher mï¿½ssen wir ggf. d. Position runden!
          if (abs(Position.x-Target.x)<=StepSize.x) Position.x=Target.x;
          if (abs(Position.y-Target.y)<=StepSize.y*2) Position.y=Target.y;
 
          Dir = 8;
 
-         //Und die Richtung anschließend überprüfen:
+         //Und die Richtung anschlieï¿½end ï¿½berprï¿½fen:
          if (Position.x>Target.x && (StatePar==ROOM_WERKSTATT || (StatePar==-1 && Position.x>Airport.RightEnd-600))) Dir = 6;
          else if (Position.x>Target.x && (StatePar==ROOM_FRACHT || (StatePar==-1 && Position.x<Airport.LeftEnd+600))) Dir = 6;
          else if ((Position.y+1000)>((Target.y+1000)%5000)) Dir = 0;
@@ -2409,7 +2415,7 @@ void PERSON::DoOnePlayerStep (void)
             if (Dir==6 && (Airport.iPlate[ArrayPos.y+(ArrayPos.x<<4)]&16)==0) Dir=7;
          }
 
-         //Und natürlich überprüfen, ob wir angekommen sind (und nicht gerade raus wollen):
+         //Und natï¿½rlich ï¿½berprï¿½fen, ob wir angekommen sind (und nicht gerade raus wollen):
          if (StatePar!=-1)
          {
             c=Airport.GetRuneParNear (XY(NewPos.x,NewPos.y+Upfloor*5000), XY(StepSize.x,StepSize.y*2), RUNE_SHOP);
@@ -2474,7 +2480,7 @@ void PERSON::DoOnePlayerStep (void)
          {
             UBYTE RunePar = Airport.GetRuneParNear (XY(Position.x,Position.y+Upfloor*5000), XY(StepSize.x,StepSize.y*2), RUNE_SHOP);
 
-            //Nein, Standard-Raum, d.h. jetzt müssen wir vor die Tür:
+            //Nein, Standard-Raum, d.h. jetzt mï¿½ssen wir vor die Tï¿½r:
             if (RunePar==ROOM_NASA || RunePar==ROOM_FRACHT)
             {
                SLONG Room = RunePar;
@@ -2636,11 +2642,11 @@ void PERSON::LookAt (SLONG Dir)
 }
 
 //--------------------------------------------------------------------------------------------
-//Eine Person hat einen Checkpunkt (Sekundärziel) erreicht und braucht neue Anweisungen:
+//Eine Person hat einen Checkpunkt (Sekundï¿½rziel) erreicht und braucht neue Anweisungen:
 //--------------------------------------------------------------------------------------------
 void PERSON::PersonReachedTarget (void)
 {
-   //Das hängt davon ab, warum sie am Flughafen ist:
+   //Das hï¿½ngt davon ab, warum sie am Flughafen ist:
    switch (Reason)
    {
       //Die Person geht nur einkaufen:
@@ -2866,7 +2872,7 @@ void PERSON::PersonReachedTarget (void)
                                    else Target  = Airport.GetRandomTypedRune (RUNE_2WAIT, (UBYTE)fpe->Gate, false, &PersonalRand);
                      break;
 
-               //Ist am Warteraum angekommen und läuft dort ein bischen umher, steigt direkt ein oder geht wieder:
+               //Ist am Warteraum angekommen und lï¿½uft dort ein bischen umher, steigt direkt ein oder geht wieder:
                case PERSON_2WAITROOM:
                   {
                      if (FlightAirline==Sim.localPlayer && Sim.Tutorial==1603 && Sim.IsTutorial)
@@ -2946,14 +2952,14 @@ void PERSON::PersonReachedTarget (void)
                   }
                   else
                   {
-                     //Nö!
+                     //Nï¿½!
                      Mood   = (UBYTE)(FirstClass?MoodPersonMissedFC:MoodPersonMissed);
                      State  = PERSON_2EXIT;
                      Target = Airport.GetRandomExit(&PersonalRand);
                   }
                   break;
 
-               //Person ist jetzt am Flugzeug und völlig verdeckt
+               //Person ist jetzt am Flugzeug und vï¿½llig verdeckt
                case PERSON_ENTERINGPL:
                   State = PERSON_LEAVING;
                   break;
@@ -3018,7 +3024,7 @@ void PERSON::PersonReachedTarget (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt eine Referenz auf den aktuellen Flugplan zurück:
+//Gibt eine Referenz auf den aktuellen Flugplan zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 const CFlugplanEintrag *PERSON::GetFlugplanEintrag (void)
 {
@@ -3039,7 +3045,7 @@ PERSONS::PERSONS () : ALBUM<PERSON> (Persons, "Persons")
 }
 
 //--------------------------------------------------------------------------------------------
-//Sortiert alle Personen gemäß ihrer Tiefe:
+//Sortiert alle Personen gemï¿½ï¿½ ihrer Tiefe:
 //--------------------------------------------------------------------------------------------
 void PERSONS::DepthSort (void)
 {
@@ -3106,7 +3112,7 @@ void PERSONS::DoOneStep (void)
 
    if (!Sim.CallItADay)
    {
-      //Personen, die warten werden nur berücksichtigt wenn Ostern auf Pfingsten fällt:
+      //Personen, die warten werden nur berï¿½cksichtigt wenn Ostern auf Pfingsten fï¿½llt:
       UBYTE Waiting = UBYTE(Sim.TimeSlice);
 
       if (Sim.Gamestate&GAMESTATE_QUIT)
@@ -3145,7 +3151,7 @@ void PERSONS::DoOneStep (void)
                         {
                            if (qPerson.State == (PERSON_EXSHOP | PERSON_BROWSEFLAG | PERSON_WAITFLAG))
                            {
-                              //Im Geschäft warten
+                              //Im Geschï¿½ft warten
                               qPerson.WaitCount-=5;
                               if (qPerson.WaitCount<20) qPerson.State = (PERSON_EXSHOP | PERSON_BROWSEFLAG);
                            }
@@ -3258,7 +3264,7 @@ void PERSONS::DoOneStep (void)
          Bench.SortTime.Stop();
       }
    }
-   else //schnelle Version tür Tagesabbruch
+   else //schnelle Version tï¿½r Tagesabbruch
    {
       for (c=0; c<Sim.Players.AnzPlayers; c++)
          if (!Sim.Players.Players[c].IsOut)
@@ -3303,7 +3309,7 @@ SLONG PERSONS::GetNumShoppers (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Schaut, ob Stimmungen angezeigt werden müssen:
+//Schaut, ob Stimmungen angezeigt werden mï¿½ssen:
 //--------------------------------------------------------------------------------------------
 void PERSONS::TryMoods (void)
 {
@@ -3472,7 +3478,7 @@ TEAKFILE &operator << (TEAKFILE &File, const PERSON &Person)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein PERSON-Objekt:
+//Lï¿½dt ein PERSON-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, PERSON &Person)
 {
@@ -3526,7 +3532,7 @@ TEAKFILE &operator << (TEAKFILE &File, const PERSONS &Persons)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein PERSONS-Objekt:
+//Lï¿½dt ein PERSONS-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, PERSONS &Persons)
 {
@@ -3539,7 +3545,7 @@ TEAKFILE &operator >> (TEAKFILE &File, PERSONS &Persons)
 //--------------------------------------------------------------------------------------------
 //Person-Queues:
 //--------------------------------------------------------------------------------------------
-//Fügt eine Person in die Queue ein:
+//Fï¿½gt eine Person in die Queue ein:
 //--------------------------------------------------------------------------------------------
 void CPersonQueue::AddPerson (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SLONG FlightPlaneId, UBYTE FlightPlaneIndex, UBYTE Mood, UBYTE FirstClass)
 {
@@ -3557,7 +3563,7 @@ void CPersonQueue::AddPerson (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE Fli
 
    Sim.AnyPersonsInAirport=TRUE;
 
-   //Suchen, ob an der Stelle erst kürzlich jemand erschaffen wurde:
+   //Suchen, ob an der Stelle erst kï¿½rzlich jemand erschaffen wurde:
    for (c=0; c<Spots.AnzEntries(); c++)
    {
       if (Spots[c].TimeSlice==-1)
@@ -3568,7 +3574,7 @@ void CPersonQueue::AddPerson (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE Fli
          //Die Personenliste nach einem freien Platz durchsuchen
          for (d=0; d<Person.AnzEntries(); d++)
          {
-            if (d==Person.AnzEntries()-2) //Ggf. Array vergrößern
+            if (d==Person.AnzEntries()-2) //Ggf. Array vergrï¿½ï¿½ern
                Person.ReSize (Person.AnzEntries()+10);
 
             //Wenn das zutrifft, dann haben wir einen freien Platz gefunden:
@@ -3584,7 +3590,7 @@ void CPersonQueue::AddPerson (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE Fli
                }
                else
                {
-                  Spots[c].TimeSlice+=20;  //eine Sekunde später
+                  Spots[c].TimeSlice+=20;  //eine Sekunde spï¿½ter
                   Person[d].TimeSlice = Spots[c].TimeSlice;
                }
 
@@ -3618,7 +3624,7 @@ void CPersonQueue::SetSpotTime (XY Position, SLONG TimeSlice)
 
    if (Sim.CallItADay || Sim.Time>18*60000 || Sim.Time<8*60000) return;
 
-   //Suchen, ob an der Stelle erst kürzlich jemand erschaffen wurde:
+   //Suchen, ob an der Stelle erst kï¿½rzlich jemand erschaffen wurde:
    for (c=0; c<Spots.AnzEntries(); c++)
    {
       if (Spots[c].TimeSlice==-1)
@@ -3633,7 +3639,7 @@ void CPersonQueue::SetSpotTime (XY Position, SLONG TimeSlice)
 }
 
 //--------------------------------------------------------------------------------------------
-//Überwacht die Queue:
+//ï¿½berwacht die Queue:
 //--------------------------------------------------------------------------------------------
 void CPersonQueue::Pump (void)
 {
@@ -3645,7 +3651,7 @@ void CPersonQueue::Pump (void)
       Anz=0;
       //MinPriority=2147483647;
 
-      //Die Personenliste nach einer fälligen Person durchsuchen:
+      //Die Personenliste nach einer fï¿½lligen Person durchsuchen:
       /*for (c=Person.AnzEntries()-1; c>=0; c--)
       {
          if (Person[c].TimeSlice!=-1 && Person[c].TimeSlice<=Sim.TimeSlice)
@@ -3657,14 +3663,14 @@ void CPersonQueue::Pump (void)
          }
       } */
 
-      //Die Personenliste nach einer fälligen Person durchsuchen:
+      //Die Personenliste nach einer fï¿½lligen Person durchsuchen:
       for (c=Person.AnzEntries()-1; c>=0; c--)
       {
          if (Person[c].TimeSlice!=-1 && Person[c].TimeSlice<=Sim.TimeSlice /*&& Person[c].Priority==MinPriority*/)
          {
             Person[c].TimeSlice=-1;
 
-            if (Sim.Persons.GetNumFree()<2) //Ggf. Array vergrößern
+            if (Sim.Persons.GetNumFree()<2) //Ggf. Array vergrï¿½ï¿½ern
                Sim.Persons.Persons.ReSize (Sim.Persons.Persons.AnzEntries()+10);
 
             //log: hprintf ("CPersonQueue::Pump (%li, %li|%li...", Person[c].ClanId, Person[c].Position.x, Person[c].Position.y);
@@ -3741,7 +3747,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CQueuedPerson &p)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein CQueuedPerson-Objekt:
+//Lï¿½dt ein CQueuedPerson-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CQueuedPerson &p)
 {
@@ -3782,7 +3788,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CQueueSpot &s)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein CQueueSpot-Objekt:
+//Lï¿½dt ein CQueueSpot-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CQueueSpot &s)
 {
@@ -3802,7 +3808,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPersonQueue &q)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein CPersonQueue-Objekt:
+//Lï¿½dt ein CPersonQueue-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPersonQueue &q)
 {

@@ -38,7 +38,7 @@ extern SLONG  WasLButtonDownMouseClickPar1;
 extern SLONG  WasLButtonDownMouseClickPar2;
 
 //--------------------------------------------------------------------------------------------
-//Vor allem anderen einen Klick auf den Berater prüfen:
+//Vor allem anderen einen Klick auf den Berater prï¿½fen:
 //--------------------------------------------------------------------------------------------
 BOOL CStdRaum::PreLButtonDown (CPoint point)
 {
@@ -84,7 +84,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
    }
    else if (DialogPartner!=TALKER_NONE)
    {
-      //Klick ignorieren, wenn er erst anfängt zu reden:
+      //Klick ignorieren, wenn er erst anfï¿½ngt zu reden:
       if (pSmackerPartner!=NULL && TextAlign==0 && pSmackerPartner->GetMood()!=SPM_TALKING && timeGetTime()<=(DWORD)SmackerTimeToTalk)
       {
          //Hack, damit leerer Sprach-Text weggeklickt werden kann:
@@ -92,7 +92,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
             return (TRUE);
       }
 
-      //Verhindern, daß ein Doppelklick ein Thema zweimal aufbringt:
+      //Verhindern, daï¿½ ein Doppelklick ein Thema zweimal aufbringt:
       static SLONG LastClickTime, LastClickId=-1;
       if (LastClickId==MouseClickPar1 && timeGetTime()-LastClickTime<1000) return (TRUE);
       LastClickId=MouseClickPar1;
@@ -127,12 +127,12 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
       }
       else
       {
-         return (TRUE);  //kein gültiger Klick
+         return (TRUE);  //kein gï¿½ltiger Klick
       }
 
       BOOL bIsNetworkDialog = (DialogPartner==TALKER_COMPETITOR && Sim.Players.Players[DialogPar1].Owner==2);
 
-      //Bei Netzwerkdialogen wird ein Klick ignoriert, wenn der andere Spieler gerade etwas auswählt:
+      //Bei Netzwerkdialogen wird ein Klick ignoriert, wenn der andere Spieler gerade etwas auswï¿½hlt:
       if (bIsNetworkDialog && OnscreenBitmap.Size.y==0 && bJustDeletedTextWindow==false) return (TRUE);
       
       //if (CurrentTextSubIdVon!=CurrentTextSubIdBis && CurrentTextSubIdBis!=0 && TextAlign==1 && (Sim.Options.OptionTalking*Sim.Options.OptionDigiSound || bIsNetworkDialog) && gLanguage==LANGUAGE_D)
@@ -170,7 +170,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   MakeSayWindow (1, TOKEN_ARAB, 201, 203, FALSE, &FontDialog, &FontDialogLight);
                   break;
 
-               case 200: //Allgem Infos gewünscht: (evtl Verweis zu 251)
+               case 200: //Allgem Infos gewï¿½nscht: (evtl Verweis zu 251)
                   MakeSayWindow (0, TOKEN_ARAB, 250, pFontPartner);
                   break;
 
@@ -190,7 +190,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   MakeSayWindow (1, TOKEN_ARAB, 400, 403, TRUE, &FontDialog, &FontDialogLight, Sim.Kerosin*2, Sim.Kerosin, Sim.Kerosin/2);
                   break;
 
-               case 400: //Spieler kann sich für Kerosinpreis entschieden:
+               case 400: //Spieler kann sich fï¿½r Kerosinpreis entschieden:
                case 401:
                case 402:  //Arab-Mann fragt Menge:
                   MakeSayWindow (0, TOKEN_ARAB, 500, pFontPartner);
@@ -199,7 +199,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                      qPlayer.Messages.AddMessage (BERATERTYP_KEROSIN, StandardTexte.GetS (TOKEN_ADVICE, 3020+qPlayer.KerosinKind));
                   break;
 
-               case 202: //etwas über die Tanks erzählen
+               case 202: //etwas ï¿½ber die Tanks erzï¿½hlen
                   MakeSayWindow (0, TOKEN_ARAB, 800, pFontPartner);
                   break; 
 
@@ -207,7 +207,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   MakeSayWindow (1, TOKEN_ARAB, 201, 203, FALSE, &FontDialog, &FontDialogLight);
                   break; 
 
-               case 500: //Spieler muß Menge auswählen
+               case 500: //Spieler muï¿½ Menge auswï¿½hlen
                case 620:
                   MenuDialogReEntryB=650;
                   MenuStart (MENU_BUYKEROSIN, qPlayer.KerosinKind);
@@ -717,7 +717,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   else MenuStart (MENU_BANK, tmp, 1);
                   break;
 
-               case 102: //Will Kredit zurückzahlen:
+               case 102: //Will Kredit zurï¿½ckzahlen:
                   MenuDialogReEntryB=-1;
                   tmp = long(min(0x7fffffff, qPlayer.Credit/2));
                   if (qPlayer.Credit==0) MakeSayWindow (0, TOKEN_BANK, 140, pFontPartner);
@@ -982,7 +982,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                      qPlayer.Kurse[0] = (qPlayer.Kurse[0]*__int64(qPlayer.AnzAktien)+__int64(DialogPar2)*MarktAktien) / (qPlayer.AnzAktien+MarktAktien);
                      if (qPlayer.Kurse[0]<0) qPlayer.Kurse[0]=0;
 
-                     //Entschädigung +/-
+                     //Entschï¿½digung +/-
                      qPlayer.ChangeMoney (-SLONG((qPlayer.AnzAktien-qPlayer.OwnsAktien[PlayerNum])*(AlterKurs-qPlayer.Kurse[0])), 3161, "");
                      for (c=0; c<Sim.Players.Players.AnzEntries(); c++)
                         if (c!=PlayerNum)
@@ -1013,7 +1013,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   }
                   break;
 
-               case 102: //Will Kredit zurückzahlen:
+               case 102: //Will Kredit zurï¿½ckzahlen:
                   break;
 
                default:
@@ -1030,7 +1030,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   MenuStart (MENU_GAMEOVER, 1);
                   break;
 
-               //Eröffnungsdialog
+               //Erï¿½ffnungsdialog
                case 700: MakeSayWindow (0, TOKEN_BOSS, 701, pFontPartner); break;
                case 701:
                   if (Sim.Difficulty>=DIFF_ATFS)
@@ -1094,7 +1094,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                case 2081:
                   DialogPar1=0;   //Spieler, der jetzt besprochen wird
                   DialogPar2=0;
-                  DialogPar3=0;   //Der wievielte Spieler ist das? (Für Eröffnungssatz) Wenn Spieler 0 rausfliegt, bekommt Spieler 1 den Eröffnungssatz.
+                  DialogPar3=0;   //Der wievielte Spieler ist das? (Fï¿½r Erï¿½ffnungssatz) Wenn Spieler 0 rausfliegt, bekommt Spieler 1 den Erï¿½ffnungssatz.
 
                   while (DialogPar1<4 && Sim.Players.Players[DialogPar1].IsOut)
                      DialogPar1++;
@@ -1122,7 +1122,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            //TmpStr+="[[*]] ";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=bitoa (Sim.Players.Players[c].NumAuftraege);
@@ -1238,7 +1238,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            //TmpStr+="[[*]] ";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=bitoa (Sim.Players.Players[c].NumPassengers);
@@ -1327,7 +1327,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
 
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Einheiten[EINH_DM].bString64 (Sim.Players.Players[c].Gewinn);
@@ -1415,7 +1415,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
 
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=bitoa (Sim.Players.Players[c].ConnectFlags);
@@ -1504,7 +1504,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
 
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=bitoa (Sim.Players.Players[c].Image/10);
@@ -1594,7 +1594,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
 
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=bitoa (GetAnzBits (Sim.Players.Players[c].RocketFlags));
@@ -1674,7 +1674,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -1757,7 +1757,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].NumFracht);
 
@@ -1839,7 +1839,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].NumFrachtFree);
 
@@ -1921,7 +1921,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].NumMiles);
 
@@ -2003,7 +2003,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2087,7 +2087,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2171,7 +2171,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2255,7 +2255,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2338,7 +2338,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2423,7 +2423,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2496,7 +2496,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2577,7 +2577,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2661,7 +2661,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2745,7 +2745,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2829,7 +2829,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2910,7 +2910,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -2991,7 +2991,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating())+"/"+Insert1000erDots (Sim.Players.Players[c].GetMissionRating(true));
 
@@ -3075,7 +3075,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -3156,7 +3156,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -3237,7 +3237,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                         if (!Sim.Players.Players[c].IsOut)
                         {
                            if (TmpStr.GetLength()>0) TmpStr+=", "; else TmpStr+="[[BO\\6001]]";
-                           if (TmpStr2.GetLength()>0) TmpStr2+="µ";
+                           if (TmpStr2.GetLength()>0) TmpStr2+="ï¿½";
                            TmpStr+=Sim.Players.Players[c].AirlineX+": ";
                            TmpStr+=Insert1000erDots (Sim.Players.Players[c].GetMissionRating());
 
@@ -3362,7 +3362,7 @@ _und_jetzt_weiter_mit_etc:
                      MakeSayWindow (0, TOKEN_BOSS, 3000, pFontPartner, (LPCTSTR)Sim.Players.Players[DialogPar1].AirlineX);
                   else
                   {
-                     //Äußerung zu den Flugzeugen:
+                     //ï¿½uï¿½erung zu den Flugzeugen:
                      for (c=tmp=tmp2=0; c<(SLONG)Sim.Players.Players[DialogPar1].Planes.AnzEntries(); c++)
                         if (Sim.Players.Players[DialogPar1].Planes.IsInAlbum(c))
                         {
@@ -3400,7 +3400,7 @@ _und_jetzt_weiter_mit_etc:
                      else
                         TmpStr+=bprintf (DialogTexte.GetS (TOKEN_BOSS, 2035))+Space;
 
-                     //Äußerung zum Personal:
+                     //ï¿½uï¿½erung zum Personal:
                      /*for (c=tmp=tmp2=0; c<Workers.Workers.AnzEntries(); c++)
                         if (Workers.Workers[c].Employer==DialogPar1)
                         {
@@ -3483,15 +3483,15 @@ _und_jetzt_weiter_mit_etc:
                         Sim.Players.Players[DialogPar1].OwnsAktien[c]=0;
                      }
                   }
-                  //absichtlich kein break, sondern nächster Spieler:
+                  //absichtlich kein break, sondern nï¿½chster Spieler:
 
-               //Nächster Spieler:
+               //Nï¿½chster Spieler:
                case 2040: case 2041: case 2042: case 2043: case 2044:
                case 3002:
                   do
                   {
-                     DialogPar1++;  //Nächster Spieler
-                     DialogPar3++;  //Nächster Eröffnungssatz
+                     DialogPar1++;  //Nï¿½chster Spieler
+                     DialogPar3++;  //Nï¿½chster Erï¿½ffnungssatz
                   }
                   while (DialogPar1<4 && Sim.Players.Players[DialogPar1].IsOut);
 
@@ -3573,7 +3573,7 @@ _ehemals_2080:
                   {
                      SLONG count=1000;
 
-                     ((CAufsicht*)this)->ExitFromMiddle=12; //Alle einmal böse anblicken
+                     ((CAufsicht*)this)->ExitFromMiddle=12; //Alle einmal bï¿½se anblicken
                      ((CAufsicht*)this)->SP_Boss.ForceNextClip ();
                      while (((CAufsicht*)this)->SP_Boss.GetMood()!=SPM_IDLE && count>0)
                      {
@@ -3635,7 +3635,7 @@ _ehemals_2080:
                   }
                   else
                   {
-                     if (Sim.CheckIn>=5 || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
+                     if (Sim.CheckIn>=6 || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
                         MakeSayWindow (0, TOKEN_BOSS, 4111, pFontPartner);
                      else
                      {
@@ -3710,7 +3710,7 @@ _ehemals_2080:
                   StopDialog ();
                   break;
 
-               //Übernamedialog:
+               //ï¿½bernamedialog:
                case 5000:
                   MakeSayWindow (0, TOKEN_BOSS, 5001, pFontPartner, (LPCTSTR)Sim.Players.Players[Sim.OvertakerAirline].AirlineX, (LPCTSTR)(Sim.Players.Players[Sim.OvertakenAirline].AirlineX));
                   break;
@@ -3740,7 +3740,7 @@ _ehemals_2080:
                      {
                         SLONG Piloten=0, Begleiter=0;
 
-                        //Arbeiter übernehmen:
+                        //Arbeiter ï¿½bernehmen:
                         for (c=0; c<Workers.Workers.AnzEntries(); c++)
                            if (Workers.Workers[c].Employer==Sim.OvertakenAirline)
                            {
@@ -3748,7 +3748,7 @@ _ehemals_2080:
                               Workers.Workers[c].PlaneId=-1;
                            }
 
-                        //Flugzeuge übernehmen, Flugpläne löschen, alle nach Berlin setzen, ggf. Leute dafür einstellen
+                        //Flugzeuge ï¿½bernehmen, Flugplï¿½ne lï¿½schen, alle nach Berlin setzen, ggf. Leute dafï¿½r einstellen
                         for (c=0; c<(SLONG)Overtaken.Planes.AnzEntries(); c++)
                            if (Overtaken.Planes.IsInAlbum(c))
                            {
@@ -3808,7 +3808,7 @@ _ehemals_2080:
                         Overtaker.MapWorkers (FALSE);
                         Sim.bNetwork=bOldNetwork;
 
-                        //Geld und Aktien übernehmen:
+                        //Geld und Aktien ï¿½bernehmen:
                         Overtaker.ChangeMoney (Overtaken.Money, 3180, "");
                         Overtaker.Credit+=Overtaken.Credit;
                         Overtaker.AnzAktien+=Overtaken.AnzAktien;
@@ -3831,11 +3831,11 @@ _ehemals_2080:
                               Sim.Players.Players[c].AktienWert[Sim.OvertakenAirline]=0;
                            }
 
-                        //Von dem Übernommenen hat keiner mehr Aktien:
+                        //Von dem ï¿½bernommenen hat keiner mehr Aktien:
                         for (c=0; c<Sim.Players.Players.AnzEntries(); c++)
                            Sim.Players.Players[c].OwnsAktien[Sim.OvertakenAirline]=0;
 
-                        //Gates übernehmen:
+                        //Gates ï¿½bernehmen:
                         for (c=0; c<Overtaken.Gates.Gates.AnzEntries(); c++)
                            if (Overtaken.Gates.Gates[c].Miete!=-1)
                            {
@@ -3851,7 +3851,7 @@ _ehemals_2080:
                               Overtaken.Gates.Gates[c].Miete=-1;
                            }
 
-                        //Routen übernehmen:
+                        //Routen ï¿½bernehmen:
                         for (c=0; c<Overtaker.RentRouten.RentRouten.AnzEntries(); c++)
                         {
                            if (Overtaker.RentRouten.RentRouten[c].Rang==0 && Overtaken.RentRouten.RentRouten[c].Rang!=0)
@@ -3871,7 +3871,7 @@ _ehemals_2080:
                            }
                         }
 
-                        //Städte übernehmen:
+                        //Stï¿½dte ï¿½bernehmen:
                         for (c=0; c<Overtaker.RentCities.RentCities.AnzEntries(); c++)
                         {
                            if (Overtaker.RentCities.RentCities[c].Rang==0 && Overtaken.RentCities.RentCities[c].Rang!=0)
@@ -3952,9 +3952,9 @@ _ehemals_2080:
                         for (c=0; c<4; c++)
                            if (!Sim.Players.Players[c].IsOut && Sim.Players.Players[c].OwnsAktien[Sim.OvertakenAirline])
                               Sim.Players.Players[c].ChangeMoney (__int64((Overtaken.Money-Overtaken.Credit)*(__int64)Sim.Players.Players[c].OwnsAktien[Sim.OvertakenAirline]/d), 3181, (LPCTSTR)Overtaken.AirlineX);
-                              //                            Changed: ^ war SLONG und damit vermutlich für einen Bug verantwortlich
+                              //                            Changed: ^ war SLONG und damit vermutlich fï¿½r einen Bug verantwortlich
 
-                        //Von dem Übernommenen hat keiner mehr Aktien:
+                        //Von dem ï¿½bernommenen hat keiner mehr Aktien:
                         for (c=0; c<Sim.Players.Players.AnzEntries(); c++)
                            Sim.Players.Players[c].OwnsAktien[Sim.OvertakenAirline]=0;
                      }
@@ -4031,7 +4031,7 @@ _ehemals_2080:
                   break;
 
                case 2001:
-               case 2101: //Modus auswählen:
+               case 2101: //Modus auswï¿½hlen:
                   MakeSayWindow (0, TOKEN_MECH, 4000+qPlayer.MechMode, pFontPartner); break;
                   break;
                case 4000: case 4001: case 4002: case 4003:
@@ -4200,10 +4200,10 @@ _ehemals_2080:
             switch (id)
             {
                case 102:
-               case 100: //Begrüssung-Spruch
+               case 100: //Begrï¿½ssung-Spruch
                   MakeSayWindow (1, TOKEN_MUSEUM, 201+((Sim.DialogOvertureFlags&DIALOG_MUSEUM2)!=0)*10, 203+((Sim.DialogOvertureFlags&DIALOG_MUSEUM2)!=0)*10, FALSE, &FontDialog, &FontDialogLight);
                   break;
-               case 101: //Begrüssung-Spruch
+               case 101: //Begrï¿½ssung-Spruch
                   MakeSayWindow (1, TOKEN_MUSEUM, 201+((Sim.DialogOvertureFlags&DIALOG_MUSEUM2)!=0)*10, 203+((Sim.DialogOvertureFlags&DIALOG_MUSEUM2)!=0)*10, FALSE, &FontDialog, &FontDialogLight);
                   break;
 
@@ -4474,8 +4474,8 @@ _ehemals_2080:
                   break;
 
                case 960:
-                  qPlayer.StrikeNotified = FALSE;   //Dem Spieler bei nächster Gelegenheit bescheid sagen
-                  qPlayer.StrikeEndType  = 2;       //Streik beendet durch Gehaltserhöhunh
+                  qPlayer.StrikeNotified = FALSE;   //Dem Spieler bei nï¿½chster Gelegenheit bescheid sagen
+                  qPlayer.StrikeEndType  = 2;       //Streik beendet durch Gehaltserhï¿½hunh
                   qPlayer.StrikeEndCountdown = 2;
                   Workers.Gehaltsaenderung (1, PlayerNum);
                   MakeSayWindow (0, TOKEN_JOBS, 970, pFontPartner);
@@ -4485,7 +4485,7 @@ _ehemals_2080:
                   break;
 
                case 961:
-                  qPlayer.StrikeNotified = FALSE;   //Dem Spieler bei nächster Gelegenheit bescheid sagen
+                  qPlayer.StrikeNotified = FALSE;   //Dem Spieler bei nï¿½chster Gelegenheit bescheid sagen
                   qPlayer.StrikeEndType  = 1;       //Streik beendet durch Drohung
                   qPlayer.StrikeEndCountdown = 4;
                   Workers.AddHappiness (PlayerNum, -20);
@@ -4913,7 +4913,7 @@ _ehemals_2080:
                      }
                      else if (bIsRobot)
                      {
-                        //Was will der Computerspieler? Kooperation verändern!
+                        //Was will der Computerspieler? Kooperation verï¿½ndern!
                         if (qOther.Kooperation[Sim.localPlayer] && qOther.Sympathie[Sim.localPlayer]<-20)
                            MakeSayWindow (0, TOKEN_PLAYER, 20211, pFontPartner);
                         else
@@ -4984,7 +4984,7 @@ _ehemals_2080:
                      MenuStart (MENU_CHAT, DialogPar1);
                      break;
 
-                  case 20200: //Einer schlägt Kooperation vor:
+                  case 20200: //Einer schlï¿½gt Kooperation vor:
                      DialogPar2^=1;
                      if (DialogPar2)
                         MakeSayWindow (1, TOKEN_PLAYER, 20400, 20401, FALSE, &FontDialog, &FontDialogLight);
@@ -5018,7 +5018,7 @@ _ehemals_2080:
                      }
                      else if (bIsRobot)
                      {
-                        //Was will der Computerspieler? Tschüss!
+                        //Was will der Computerspieler? Tschï¿½ss!
                         MakeSayWindow (0, TOKEN_PLAYER, 2003, pFontPartner);
                      }
                      else if (point!=CPoint(0,0))
@@ -5044,7 +5044,7 @@ _ehemals_2080:
                         Sim.SendSimpleMessage (ATNET_DIALOG_NEXT, qOther.NetworkID);
                      break;
 
-                  case 20210: //Kooperation kündigen (brutal):
+                  case 20210: //Kooperation kï¿½ndigen (brutal):
                      qOther.Sympathie[Sim.localPlayer]-=200;
                      Limit ((SLONG)-1000, qOther.Sympathie[Sim.localPlayer], (SLONG)1000);
 
@@ -5069,7 +5069,7 @@ _ehemals_2080:
                         Sim.SendSimpleMessage (ATNET_DIALOG_NEXT, qOther.NetworkID);
                      break;
 
-                  case 20211: //Kooperation kündigen (sanft):
+                  case 20211: //Kooperation kï¿½ndigen (sanft):
                      qOther.Kooperation[Sim.localPlayer]=FALSE;
                      qPlayer.Kooperation[DialogPar1]=FALSE;
 
@@ -5484,7 +5484,7 @@ label_maindialog_players_again:
                   break;
 
                case 2000:
-                  //Neue Räume:
+                  //Neue Rï¿½ume:
                   if (Sim.Difficulty==DIFF_FINAL && Sim.Date==1) MakeSayWindow (0, TOKEN_RICK, 2100, pFontPartner);
                   else if (Sim.Difficulty==DIFF_NORMAL && Sim.Date==1) MakeSayWindow (0, TOKEN_RICK, 2101, pFontPartner);
                   else

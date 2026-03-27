@@ -178,6 +178,7 @@ inline bool operator!=(const CPoint& lhs, const CPoint& rhs)
 #define MAX_CITIES     320
 #define MAX_CLANS      90
 #define MAX_SPECIALS   128             //Zahl der Gates, Rooms, Check-Ins
+#define MAX_AIRPORT_LEVEL 69          //Max WaitZone level (128 gates via cheat, 16 gates normal)
 #define MAX_ROUTES     1500            //Zahl der vordefinierten Flugrouten
 #define MAX_PNAMES1    1000
 #define MAX_PNAMES2    500

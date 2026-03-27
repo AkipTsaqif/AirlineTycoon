@@ -206,7 +206,7 @@ void CTafel::RepaintZettel (SLONG n)
                          FontSmallBlack, TEC_FONT_CENTERED,
                          XY(3, 56+6), XY(ZettelBms[n].Size.x-3, 202));
 
-         //Bisheriger Höchstbieter & Gebot:
+         //Bisheriger Hï¿½chstbieter & Gebot:
          if (TafelData.Route[n].Player!=-1)
          {
             ZettelBms[n].PrintAt (Sim.Players.Players[(SLONG)TafelData.Route[n].Player].Airline,
@@ -236,7 +236,7 @@ void CTafel::RepaintZettel (SLONG n)
                          FontSmallBlack, TEC_FONT_CENTERED,
                          XY(3, 28+30), XY(ZettelBms[n].Size.x-3, 132));
 
-         //Bisheriger Höchstbieter & Gebot:
+         //Bisheriger Hï¿½chstbieter & Gebot:
          if (TafelData.City[n-7].Player!=-1)
          {
             ZettelBms[n].PrintAt (Sim.Players.Players[(SLONG)TafelData.City[n-7].Player].Airline,
@@ -263,7 +263,7 @@ void CTafel::RepaintZettel (SLONG n)
                          FontSmallBlack, TEC_FONT_CENTERED,
                          XY(3, 18+15), XY(ZettelBms[n].Size.x-3, 102));
 
-         //Bisheriger Höchstbieter & Gebot:
+         //Bisheriger Hï¿½chstbieter & Gebot:
          if (TafelData.Gate[n-14].Player!=-1)
          {
             ZettelBms[n].PrintAt (Sim.Players.Players[(SLONG)TafelData.Gate[n-14].Player].Airline,
@@ -365,7 +365,7 @@ void CTafel::OnRButtonDown(UINT nFlags, CPoint point)
 {
    DefaultOnRButtonDown ();
 
-   //Außerhalb geklickt? Dann Default-Handler!
+   //Auï¿½erhalb geklickt? Dann Default-Handler!
    if (point.x<WinP1.x || point.y<WinP1.y || point.x>WinP2.x || point.y>WinP2.y)
    {
       return;
@@ -388,7 +388,7 @@ void CTafel::OnRButtonDown(UINT nFlags, CPoint point)
 //--------------------------------------------------------------------------------------------
 //CTafelData::
 //--------------------------------------------------------------------------------------------
-//Daten alle löschen ==> keine Zettel
+//Daten alle lï¿½schen ==> keine Zettel
 //--------------------------------------------------------------------------------------------
 void CTafelData::Clear (void)
 {
@@ -406,7 +406,7 @@ void CTafelData::Clear (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Zettel für n Tage auslosen:
+//Zettel fï¿½r n Tage auslosen:
 //--------------------------------------------------------------------------------------------
 void CTafelData::Randomize (SLONG Day)
 {
@@ -451,7 +451,7 @@ void CTafelData::Randomize (SLONG Day)
       {
          if ((localRand.Rand(100))<30 && NumCities<3)
          {
-            //Stadt raussuchen, fünf Anläufe:
+            //Stadt raussuchen, fï¿½nf Anlï¿½ufe:
             for (e=0; e<5; e++)
             {
                ObjId = Cities(Cities.GetRandomUsedIndex (&localRand));
@@ -485,10 +485,10 @@ void CTafelData::Randomize (SLONG Day)
             }
          }
 
-         //Für die Routenmission:
+         //Fï¿½r die Routenmission:
          if (Sim.Difficulty==DIFF_NORMAL && NumCities<4)
          {
-            //Stadt raussuchen, zehn Anläufe:
+            //Stadt raussuchen, zehn Anlï¿½ufe:
             for (e=0; e<10; e++)
             {
                ObjId = Cities(Cities.GetRandomUsedIndex (&localRand));
@@ -547,7 +547,7 @@ void CTafelData::Randomize (SLONG Day)
       {
          Gate[NumGates].ZettelId = c;
          Gate[NumGates].Player   = -1;
-         Gate[NumGates].Preis    = 3000-c*100;
+         Gate[NumGates].Preis    = max(500L, 3000-c*100);
          Gate[NumGates].Rang     = 0;
          f++;
 
@@ -569,7 +569,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CTafelZettel &TafelZettel)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein TafelZettel-Objekt:
+//Lï¿½dt ein TafelZettel-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CTafelZettel &TafelZettel)
 {
@@ -594,7 +594,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CTafelData &TafelData)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein TafelData-Objekt:
+//Lï¿½dt ein TafelData-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CTafelData &TafelData)
 {

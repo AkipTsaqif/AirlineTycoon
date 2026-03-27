@@ -2092,7 +2092,7 @@ void GameFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
           TypeBuffer[26]=='N' &&
           TypeBuffer[27]=='D' &&
           TypeBuffer[28]=='E' &&
-          TypeBuffer[29]=='R' && Sim.CheckIn<5 && !Sim.bNetwork)
+          TypeBuffer[29]=='R' && Sim.CheckIn<69 && !Sim.bNetwork)
       {
          Sim.ExpandAirport=TRUE;
          CheatSound ();

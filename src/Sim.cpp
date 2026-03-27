@@ -1978,15 +1978,29 @@ void SIM::DoTimeStep (void)
       //Aktienkurse anpassen:
       for (c=0; c<Sim.Players.Players.AnzEntries(); c++)
       {
+         // TrustedDividende now converges toward Dividende in both directions
          if (Sim.Players.Players[c].TrustedDividende>Sim.Players.Players[c].Dividende)
             Sim.Players.Players[c].TrustedDividende=(Sim.Players.Players[c].TrustedDividende+Sim.Players.Players[c].Dividende)/2;
+         else if (Sim.Players.Players[c].TrustedDividende<Sim.Players.Players[c].Dividende)
+            Sim.Players.Players[c].TrustedDividende=(Sim.Players.Players[c].TrustedDividende+Sim.Players.Players[c].Dividende+1)/2;
 
-         TEAKRAND LocalRand (Sim.Date+GetMinute()+GetHour());
-         Sim.Players.Players[c].Kurse[0] = (Sim.Players.Players[c].Kurse[0]*29 + 10*Sim.Players.Players[c].TrustedDividende)/30.0;
+         // Performance-based equilibrium: 3-day avg company net worth per share / 5
+         // All arithmetic in __int64 before converting to double to guard against overflow
+         __int64 fw0 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(0);
+         __int64 fw1 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(1);
+         __int64 fw2 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(2);
+         SLONG   daysAvail = (Sim.Date>=2) ? 3 : (Sim.Date>=1 ? 2 : 1);
+         __int64 fwAvg = (fw0 + (daysAvail>1 ? fw1 : 0LL) + (daysAvail>2 ? fw2 : 0LL)) / daysAvail;
+         __int64 shares = max((__int64)1, (__int64)Sim.Players.Players[c].AnzAktien);
+         double  Equilibrium = max(1.0, (double)(fwAvg / shares) / 5.0);
+
+         TEAKRAND LocalRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31u + ULONG(GetHour()) + ULONG(c)*1009u);
+         Sim.Players.Players[c].Kurse[0] = (Sim.Players.Players[c].Kurse[0]*29 + Equilibrium)/30.0;
          Sim.Players.Players[c].Kurse[0] += sin((Date*24+GetHour())/50.0)*Sim.Players.Players[c].Kurse[0]/180.0;
          Sim.Players.Players[c].Kurse[0] += sin((Date*24+100+GetHour())/(c+30.0))*Sim.Players.Players[c].Kurse[0]/150.0;
          Sim.Players.Players[c].Kurse[0] += sin(LocalRand.Rand(1000))*Sim.Players.Players[c].Kurse[0]/50.0;
-         if (Sim.Players.Players[c].Kurse[0]<0) Sim.Players.Players[c].Kurse[0]=0;
+         if (Sim.Players.Players[c].Kurse[0]<1.0)      Sim.Players.Players[c].Kurse[0]=1.0;
+         if (Sim.Players.Players[c].Kurse[0]>10000.0)  Sim.Players.Players[c].Kurse[0]=10000.0;
       }
 
       //Flugzeuge von allen Spielern:

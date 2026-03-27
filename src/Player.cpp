@@ -1074,9 +1074,9 @@ void PLAYER::NewDay (void)
       Kurse[c]=Kurse[c-1];
 
    //Firma macht Verlust? Dann Kurse verschlechtern:
-   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2))         Kurse[c]*=0.97;
-   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2)-1000000) Kurse[c]*=0.97;
-   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2)-5000000) Kurse[c]*=0.95;
+   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2))           Kurse[c]*=0.97;
+   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2)-5000000)  Kurse[c]*=0.97;
+   if (Statistiken[STAT_FIRMENWERT].GetAtPastDay(1)<Statistiken[STAT_FIRMENWERT].GetAtPastDay(2)-25000000) Kurse[c]*=0.95;
 
    //Mit der Zeit kann man mehr Aktien emittieren
    MaxAktien= min ((MaxAktien*105/100), 250000000);
@@ -1105,14 +1105,12 @@ void PLAYER::NewDay (void)
    if (tmp) ChangeMoney (tmp/365, 3141, "");
    Statistiken[STAT_E_SONSTIGES].AddAtPastDay (0, tmp);
 
-   if (Bilanz.GetSumme()>0 && SLONG(Sim.Date)&1)
+   if (Bilanz.GetSumme()>0)
       if (TrustedDividende<Dividende) TrustedDividende++;
 
    if (Bilanz.GetSumme()<0)
       if (TrustedDividende<Dividende/2)
-      {
-         if (SLONG(Sim.Date)&1) TrustedDividende++;
-      }
+         TrustedDividende++;
       else TrustedDividende--;
 
    //Die Nachrichten verwalten:
@@ -4020,14 +4018,10 @@ void PLAYER::RobotExecuteAction(void)
 
       //Umschulden, Aktien kaufen:
       case ACTION_VISITBANK:
-         if (PlayerNum==1 || RobotUse(ROBOT_USE_HIGHSHAREPRICE)) Dividende=25;
-         else if (LocalRandom.Rand(10)==0)
+         if (Owner==1)
          {
-            if (LocalRandom.Rand(5)==0) Dividende++;
-            if (LocalRandom.Rand(10)==0) Dividende++;
-
-            if (Dividende<5)  Dividende=5;
-            if (Dividende>25) Dividende=25;
+            if (Bilanz.GetSumme()>0) { if (Dividende<25) Dividende++; }
+            else                     { if (Dividende>5)  Dividende--; }
          }
 
          if (RobotUse (ROBOT_USE_PAYBACK_CREDIT) && Money>3750000 && Sim.Date>1 && !RobotUse(ROBOT_USE_MAXKREDIT))
@@ -4079,6 +4073,11 @@ void PLAYER::RobotExecuteAction(void)
                   {
                      OwnsAktien[c]-=Sells;
                      Money+=SLONG(Kurse[0]*Sells);
+                     // Selling pressure deflates the target company's stock, capped at -20% per action
+                     SLONG targetShares = max(1, Sim.Players.Players[c].AnzAktien);
+                     double newKurs = Sim.Players.Players[c].Kurse[0] * (targetShares - Sells/2) / (double)targetShares;
+                     if (newKurs < Sim.Players.Players[c].Kurse[0] * 0.8) newKurs = Sim.Players.Players[c].Kurse[0] * 0.8;
+                     Sim.Players.Players[c].Kurse[0] = max(1.0, newKurs);
                   }
                }
                if (Money>10000000) break;

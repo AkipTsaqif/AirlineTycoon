@@ -3907,11 +3907,13 @@ void PLAYER::RobotExecuteAction(void)
                   }
             }
             if (dislike==PlayerNum || Sim.Players.Players[dislike].IsOut) dislike=-1;
+            // Don't sabotage a friendly target via random fallback (EXTREME bots ignore this)
+            if (dislike!=-1 && !RobotUse(ROBOT_USE_EXTREME_SABOTAGE) && Sympathie[dislike]>=0) dislike=-1;
          }
 
          if (ArabHints<100 && Image>-500 && ArabMode==0 && ArabMode2==0 && ArabMode3==0)
          {
-            if (((Sim.Date+PlayerNum)%3!=0 || RobotUse(ROBOT_USE_EXTREME_SABOTAGE) || LocalRandom.Rand(4)==0 || (PlayerNum==0 && LocalRandom.Rand(2)==0)) && dislike!=-1 && dislike!=PlayerNum && (ArabHints<80 || (ArabHints<90 && Credit<5000000 && Money>15000000 && PlayerNum==1 && (Sim.Date&3)==0)) && (Sim.Players.Players[dislike].Owner==1 || RobotUse(ROBOT_USE_MUCH_SABOTAGE)))
+            if (((Sim.Date+PlayerNum)%3!=0 || RobotUse(ROBOT_USE_EXTREME_SABOTAGE) || LocalRandom.Rand(4)==0 || (PlayerNum==0 && LocalRandom.Rand(2)==0)) && dislike!=-1 && dislike!=PlayerNum && Sympathie[dislike]<0 && (ArabHints<80 || (ArabHints<90 && Credit<5000000 && Money>15000000 && PlayerNum==1 && (Sim.Date&3)==0)) && (Sim.Players.Players[dislike].Owner==1 || RobotUse(ROBOT_USE_MUCH_SABOTAGE)))
             {
                long SecurityAnnoiance=0;
 
@@ -3998,7 +4000,7 @@ void PLAYER::RobotExecuteAction(void)
                }
 
                TEAKRAND temp;
-               if (Sim.ItemZange && (Sim.Date&1)==0 && ArabMode==0 && ArabMode2==0 && ArabMode3==0 && SecurityAnnoiance>=2 && Airport.GetRandomTypedRune(RUNE_2SHOP, ROOM_SECURITY, true, &temp)!=XY(-9999, -9999))
+               if (Sim.ItemZange && (Sim.Date&1)==0 && ArabMode==0 && ArabMode2==0 && ArabMode3==0 && SecurityAnnoiance>=2 && Sympathie[dislike]<0 && Airport.GetRandomTypedRune(RUNE_2SHOP, ROOM_SECURITY, true, &temp)!=XY(-9999, -9999))
                {
                   BuyItem (ITEM_ZANGE);
                   if (HasItem (ITEM_ZANGE))

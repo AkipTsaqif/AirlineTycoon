@@ -8,10 +8,12 @@
 #include "nasa.h"
 #include "Atnet.h"
 
-static SLONG TankInfo [] = {  10000,  10000,
-                              30000,  20000,
-                              50000,  40000,
-                             100000,  60000 };
+static SLONG TankInfo [] = {   10000,   10000,
+                               30000,   20000,
+                               50000,   40000,
+                              100000,   60000,
+                              300000,  150000,
+                             1000000,  400000 };
 
 static SLONG SabotagePrice[]  = {   1000,   5000,   10000,   50000, 100000 };
 static SLONG SabotagePrice2[] = {  10000,  25000,   50000,  250000 };
@@ -222,18 +224,20 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   break;
 
                case 800:
-                  MakeSayWindow (1, TOKEN_ARAB, 900, 904, TRUE, &FontDialog, &FontDialogLight);
+                  MakeSayWindow (1, TOKEN_ARAB, 900, 906, TRUE, &FontDialog, &FontDialogLight);
                   break;
 
                case 900: //Spieler kauft Tank
                case 901:
                case 902:
                case 903:
+               case 904:
+               case 905:
                   DialogPar1=id;
                   MakeSayWindow (0, TOKEN_ARAB, 680, pFontPartner);
                   break;
 
-               case 904:
+               case 906:
                   MakeSayWindow (1, TOKEN_ARAB, 201, 203, FALSE, &FontDialog, &FontDialogLight);
                   break;
 
@@ -241,7 +245,7 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                   {
                      SLONG tmp=TankInfo[(DialogPar1-900)*2+1];
 
-                     MakeSayWindow (1, TOKEN_ARAB, 690, 695, TRUE, &FontDialog, &FontDialogLight, "", (LPCTSTR)Insert1000erDots64 (tmp), (LPCTSTR)Insert1000erDots (tmp*2), (LPCTSTR)Insert1000erDots (tmp*3), (LPCTSTR)Insert1000erDots (tmp*5), (LPCTSTR)Insert1000erDots (tmp*10));
+                     MakeSayWindow (1, TOKEN_ARAB, 690, 698, TRUE, &FontDialog, &FontDialogLight, "", (LPCTSTR)Insert1000erDots64 (tmp), (LPCTSTR)Insert1000erDots (tmp*2), (LPCTSTR)Insert1000erDots (tmp*3), (LPCTSTR)Insert1000erDots (tmp*5), (LPCTSTR)Insert1000erDots (tmp*10), (LPCTSTR)Insert1000erDots (tmp*25), (LPCTSTR)Insert1000erDots (tmp*50), (LPCTSTR)Insert1000erDots (tmp*100));
                   }
                   break;
 
@@ -256,6 +260,28 @@ BOOL CStdRaum::PreLButtonDown (CPoint point)
                case 695:
                   {
                      SLONG Anzahl="\x1\x2\x3\x5\xa"[id-691];
+
+                     if (qPlayer.Money-TankInfo[(DialogPar1-900)*2+1]*Anzahl<DEBT_LIMIT)
+                        MakeSayWindow (0, TOKEN_ARAB, 6000, pFontPartner);
+                     else
+                     {
+                        qPlayer.Tank+= TankInfo[(DialogPar1-900)*2]/1000*Anzahl;
+                        qPlayer.NetUpdateKerosin();
+
+                        qPlayer.ChangeMoney (-TankInfo[(DialogPar1-900)*2+1]*Anzahl, 2091, (CString)bitoa(TankInfo[(DialogPar1-900)*2]), (char*)(LPCTSTR)(CString)bitoa(Anzahl));
+                        Sim.SendSimpleMessage (ATNET_CHANGEMONEY, NULL, Sim.localPlayer, -TankInfo[(DialogPar1-900)*2+1]*Anzahl, -1);
+
+                        qPlayer.DoBodyguardRabatt (TankInfo[(DialogPar1-900)*2+1]*Anzahl);
+                        MakeSayWindow (0, TOKEN_ARAB, 700, pFontPartner);
+                     }
+                  }
+                  break;
+
+               case 696:
+               case 697:
+               case 698:
+                  {
+                     SLONG Anzahl = (id==696) ? 25 : (id==697) ? 50 : 100;
 
                      if (qPlayer.Money-TankInfo[(DialogPar1-900)*2+1]*Anzahl<DEBT_LIMIT)
                         MakeSayWindow (0, TOKEN_ARAB, 6000, pFontPartner);

@@ -1,5 +1,5 @@
 //============================================================================================
-//DataTable.cpp - Die allgemeine Struktur für die Tabellendaten
+//DataTable.cpp - Die allgemeine Struktur fï¿½r die Tabellendaten
 //============================================================================================
 #include "stdafx.h"
 
@@ -12,7 +12,7 @@ static char THIS_FILE[] = __FILE__;
 static const char FileId[] = "Data";
 
 //--------------------------------------------------------------------------------------------
-//Löscht eine Tabelle:
+//Lï¿½scht eine Tabelle:
 //--------------------------------------------------------------------------------------------
 void CDataTable::Destroy (void)
 {
@@ -32,7 +32,7 @@ void CDataTable::Sort (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Angaben zu den Flugzeugen, die als Parameter beiliegen:
+//Fï¿½llt die Tabelle mit den Angaben zu den Flugzeugen, die als Parameter beiliegen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithPlanes (CPlanes *Planes, BOOL Expert, SLONG FilterType, SLONG Filter1, SLONG Filter2)
 {
@@ -159,7 +159,7 @@ void CDataTable::FillWithPlanes (CPlanes *Planes, BOOL Expert, SLONG FilterType,
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Angaben zu den Flugzeugen:
+//Fï¿½llt die Tabelle mit den Angaben zu den Flugzeugen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithPlaneTypes (void)
 {
@@ -195,7 +195,7 @@ void CDataTable::FillWithPlaneTypes (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Angaben zu den Flugzeugen:
+//Fï¿½llt die Tabelle mit den Angaben zu den Flugzeugen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithXPlaneTypes (void)
 {
@@ -244,7 +244,7 @@ void CDataTable::FillWithXPlaneTypes (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Daten der Routen die als Parameter beiliegen:
+//Fï¿½llt die Tabelle mit den Daten der Routen die als Parameter beiliegen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithRouten (CRouten *Routen, CRentRouten *RentRouten, BOOL UniqueOnly)
 {
@@ -308,7 +308,7 @@ void CDataTable::FillWithRouten (CRouten *Routen, CRentRouten *RentRouten, BOOL 
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Daten aller Routen die als Parameter beiliegen:
+//Fï¿½llt die Tabelle mit den Daten aller Routen die als Parameter beiliegen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithAllRouten (CRouten *Routen, CRentRouten *RentRouten, BOOL UniqueOnly)
 {
@@ -367,7 +367,7 @@ void CDataTable::FillWithAllRouten (CRouten *Routen, CRentRouten *RentRouten, BO
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Daten der Aufträge, die als Paramter beiliegen:
+//Fï¿½llt die Tabelle mit den Daten der Auftrï¿½ge, die als Paramter beiliegen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithAuftraege (CAuftraege *Auftraege)
 {
@@ -440,7 +440,7 @@ void CDataTable::FillWithAuftraege (CAuftraege *Auftraege)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Tabelle mit den Daten der Aufträge, die als Paramter beiliegen:
+//Fï¿½llt die Tabelle mit den Daten der Auftrï¿½ge, die als Paramter beiliegen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithFracht (CFrachten *Frachten)
 {
@@ -513,7 +513,7 @@ void CDataTable::FillWithFracht (CFrachten *Frachten)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Datentabelle mit allen verfügbaren Städten:
+//Fï¿½llt die Datentabelle mit allen verfï¿½gbaren Stï¿½dten:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithCities (CRentCities *RentCities)
 {
@@ -549,7 +549,7 @@ void CDataTable::FillWithCities (CRentCities *RentCities)
 }
 
 //--------------------------------------------------------------------------------------------
-//Füllt die Datentabelle mit allen verfügbaren Expertenmeinungen:
+//Fï¿½llt die Datentabelle mit allen verfï¿½gbaren Expertenmeinungen:
 //--------------------------------------------------------------------------------------------
 void CDataTable::FillWithExperts (SLONG /*PlayerNum*/)
 {
@@ -558,7 +558,7 @@ void CDataTable::FillWithExperts (SLONG /*PlayerNum*/)
    Title = StandardTexte.GetS (TOKEN_EXPERT, 1000);
 
    AnzColums = 1;
-   AnzRows   = 4;
+   AnzRows   = 5;
    Values.ReSize (0);
    Values.ReSize (AnzColums*AnzRows);
    ValueFlags.ReSize (0);
@@ -568,10 +568,13 @@ void CDataTable::FillWithExperts (SLONG /*PlayerNum*/)
 
    ColTitle[0] = StandardTexte.GetS (TOKEN_EXPERT, 1000);
 
-   for (c=d=0; c<4; c++)
+   for (c=d=0; c<5; c++)
    {
       LineIndex[c] = c;
-      Values[d+0]  = StandardTexte.GetS (TOKEN_EXPERT, 2000+c);
+      if (c < 4)
+         Values[d+0] = StandardTexte.GetS (TOKEN_EXPERT, 2000+c);
+      else
+         Values[d+0] = "Fleet Statistics";
       d++;
    }
 }
@@ -589,7 +592,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CDataTable &d)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein DataTable-Objekt:
+//Lï¿½dt ein DataTable-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CDataTable &d)
 {

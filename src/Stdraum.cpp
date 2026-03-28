@@ -5314,16 +5314,16 @@ void CStdRaum::MenuRepaint (void)
                                     OnscreenBitmap.PrintAt (bprintf ("%li", Plan->Flug[e].Gate+1), FontSmallWhiteX, TEC_FONT_LEFT, 280, 59+py+3, 310, 255+3);
 
                                  py+=13;
-                                 if (py>=13*4) break;
+                                 if (py>=13*6) break;
                               }
                         }
-                        if (py>=13*4) break;
+                        if (py>=13*6) break;
                      }
-                     if (py>=13*4) break;
+                     if (py>=13*6) break;
                   }
 
                Time++;
-               if (py>=13*4) break;
+               if (py>=13*6) break;
             }
 
             //Departures:
@@ -5353,7 +5353,7 @@ void CStdRaum::MenuRepaint (void)
                               OnscreenBitmap.PrintAt (bprintf ("%2li:00", Plan->Flug[e].Startzeit+1), FontSmallWhiteX, TEC_FONT_LEFT, 2+55, 164+py+3, 310, 255+3);
                               OnscreenBitmap.BlitFromT (MenuBms[3+c], 90, 165+py+3);
                               OnscreenBitmap.PrintAt (bprintf ("%s", (LPCTSTR)Sim.Players.Players[c].Abk), FontSmallWhiteX, TEC_FONT_LEFT, 11+90, 164+py+3, 310, 255+3);
-                              
+
                               //Rio-Rom
                               if (OnscreenBitmap.TryPrintAt (bprintf ("%s-%s", (LPCTSTR)Cities[Plan->Flug[e].VonCity].Name, (LPCTSTR)Cities[Plan->Flug[e].NachCity].Name), FontSmallWhiteX, TEC_FONT_LEFT, 8+115, 164+py+3, 290, 255+3)<13)
                                  OnscreenBitmap.PrintAt (bprintf ("%s-%s", (LPCTSTR)Cities[Plan->Flug[e].VonCity].Name, (LPCTSTR)Cities[Plan->Flug[e].NachCity].Name), FontSmallWhiteX, TEC_FONT_LEFT, 8+115, 164+py+3, 290, 255+3);
@@ -5371,15 +5371,15 @@ void CStdRaum::MenuRepaint (void)
                                  OnscreenBitmap.PrintAt (bprintf ("%li", Plan->Flug[e].Gate+1), FontSmallWhiteX, TEC_FONT_LEFT, 280, 164+py+3, 310, 255+3);
 
                               py+=13;
-                              if (py>=13*4) break;
+                              if (py>=13*6) break;
                            }
                      }
-                     if (py>=13*4) break;
+                     if (py>=13*6) break;
                   }
-                  if (py>=13*4) break;
+                  if (py>=13*6) break;
                }
                Time++;
-               if (py>=13*4) break;
+               if (py>=13*6) break;
             }
          }
          break;

@@ -329,6 +329,13 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
 
          if (SelectedId==3 && !Sim.Players.Players[(SLONG)PlayerNum].HasBerater (BERATERTYP_INFO))
             { AnzPages=1; Page=0; }
+
+         if (SelectedId==4)
+         {
+            SLONG numPlanes = Sim.Players.Players[(SLONG)PlayerNum].Planes.GetNumUsed();
+            AnzPages = max (1, (numPlanes + 12) / 13);
+            if (Page >= AnzPages) Page = 0;
+         }
       }
    }
 
@@ -492,13 +499,9 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                   Bitmap.PrintAt (Table.Values[3+c*Table.AnzColums], *f, TEC_FONT_LEFT, ClientArea+XY(0, (c-Page)*26+10), Bitmap.Size);
                   
                   // Add additional information to plane list
-                  CPlane& qPlane = qPlayer.Planes[c];
-                  // check if plane name is correct, some are mixed up
-                  if (qPlayer.Planes[c].Name == Table.Values[0 + c * Table.AnzColums])
-                  { 
-                      Bitmap.PrintAt(bprintf("%li (%li)", qPlane.MaxPassagiere, qPlane.MaxPassagiereFC), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(70, (c - Page) * 26 + 10), Bitmap.Size);
-                      Bitmap.PrintAt(Einheiten[EINH_KM].bString(qPlane.ptReichweite), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(123, (c - Page) * 26 + 10), Bitmap.Size);
-                  }
+                  CPlane& qPlane = qPlayer.Planes[Table.LineIndex[c]];
+                  Bitmap.PrintAt(bprintf("%li (%li)", qPlane.MaxPassagiere, qPlane.MaxPassagiereFC), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(70, (c - Page) * 26 + 10), Bitmap.Size);
+                  Bitmap.PrintAt(Einheiten[EINH_KM].bString(qPlane.ptReichweite), FontSmallGrey, TEC_FONT_LEFT, ClientArea + XY(123, (c - Page) * 26 + 10), Bitmap.Size);
                   
                }
                break;
@@ -847,6 +850,8 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
             case 5:
                if (SelectedId==1)
                   Bitmap.PrintAt (CString(StandardTexte.GetS (TOKEN_EXPERT, 2100))+" "+CString(StandardTexte.GetS (TOKEN_SCHED, 3010+(Sim.Date+Sim.StartWeekday)%7)), TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
+               else if (SelectedId==4)
+                  Bitmap.PrintAt ("Fleet Statistics", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
                else
                   Bitmap.PrintAt (StandardTexte.GetS (TOKEN_EXPERT, 2000+SelectedId), TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
 
@@ -1061,6 +1066,35 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                         }
                      }
                      break;
+
+                  //Fleet Statistics (km flown + passengers per plane):
+                  case 4:
+                  {
+                     SLONG row = 0;
+                     CPlanes &qPlanes = qPlayer.Planes;
+
+                     for (SLONG cc = 0; cc < (SLONG)qPlanes.AnzEntries(); cc++)
+                     {
+                        if (!qPlanes.IsInAlbum (cc))
+                           continue;
+
+                        SLONG pageRow = row - Page * 13;
+                        row++;
+
+                        if (pageRow < 0 || pageRow >= 13)
+                           continue;
+
+                        CPlane &qPlane = qPlanes[cc];
+
+                        Bitmap.PrintAt (qPlane.Name, FontSmallBlack, TEC_FONT_LEFT,
+                                        ClientArea+XY(0, pageRow*13), ClientArea+XY(80, pageRow*13+13));
+                        Bitmap.PrintAt (Einheiten[EINH_KM].bString (qPlane.Kilometer), FontSmallBlack, TEC_FONT_RIGHT,
+                                        ClientArea+XY(80, pageRow*13), ClientArea+XY(130, pageRow*13+13));
+                        Bitmap.PrintAt (bitoa (qPlane.SummePassagiere), FontSmallBlack, TEC_FONT_RIGHT,
+                                        ClientArea+XY(130, pageRow*13), ClientArea+XY(172, pageRow*13+13));
+                     }
+                  }
+                  break;
                }
          }
       }
@@ -1555,6 +1589,11 @@ void BLOCK::RefreshData (SLONG PlayerNum)
          {
             Table.FillWithPlanes (&Sim.Players.Players[(SLONG)PlayerNum].Planes, TRUE);
             AnzPages = max (0, (Table.AnzRows-1)/13)+2;
+         }
+         else if (Index==0 && SelectedId==4)
+         {
+            SLONG numPlanes = Sim.Players.Players[(SLONG)PlayerNum].Planes.GetNumUsed();
+            AnzPages = max (1, (numPlanes + 12) / 13);
          }
          break;
    }

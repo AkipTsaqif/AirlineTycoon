@@ -12,34 +12,34 @@
 
                             //F�r Menschen     F�r Computer
                             //Money   Credit   Money    Credit
-static long InitMoney [] = { 1500000,        0, 2000000,        0,   //DIFF_FREEGAME
-                             5000000,        0,  200000,        0,   //DIFF_TUTORIAL
-                             5000000,        0,  500000,        0,   //FIRST
-                             3000000,        0, 1000000,        0,   //DIFF_EASY    
-                             2000000,        0, 3000000,        0,   //DIFF_NORMAL  
-                             1800000,        0, 4000000,        0,   //DIFF_HARD    
-                             1500000,        0, 6000000,        0,   //DIFF_FINAL
+static long InitMoney [] = {  7500000,        0, 10000000,        0,   //DIFF_FREEGAME
+                             25000000,        0,  1000000,        0,   //DIFF_TUTORIAL
+                             25000000,        0,  2500000,        0,   //FIRST
+                             15000000,        0,  5000000,        0,   //DIFF_EASY
+                             10000000,        0, 15000000,        0,   //DIFF_NORMAL
+                              9000000,        0, 20000000,        0,   //DIFF_HARD
+                              7500000,        0, 30000000,        0,   //DIFF_FINAL
                              0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, //Nada
-                             3000000, 10000000, 1000000, 10000000,   //DIFF_ADDON01
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON02
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON03
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON04
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON05
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON06
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON07
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON08
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON09
-                             3000000,        0, 1000000,        0,   //DIFF_ADDON10
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS01
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS02
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS03
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS04
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS05
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS06
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS07
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS08
-                             3000000,        0, 3000000,        0,   //DIFF_ATFS09
-                             3000000,        0, 3000000,        0 }; //DIFF_ATFS10
+                             15000000, 50000000,  5000000, 50000000,   //DIFF_ADDON01
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON02
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON03
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON04
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON05
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON06
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON07
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON08
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON09
+                             15000000,        0,  5000000,        0,   //DIFF_ADDON10
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS01
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS02
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS03
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS04
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS05
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS06
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS07
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS08
+                             15000000,        0, 15000000,        0,   //DIFF_ATFS09
+                             15000000,        0, 15000000,        0 }; //DIFF_ATFS10
 
 
 static long MonthLength [] = { 31, 28, 31, 30, 31, 30, 30, 31, 30, 31, 30, 31 };
@@ -662,7 +662,13 @@ void SIM::ChooseStartup (BOOL GameModeQuick)
          qPlayer.Statistiken[d].Init();
 
       qPlayer.IsOut=FALSE;
-      qPlayer.NumFlights = 0;
+      qPlayer.NumFlights        = 0;
+      qPlayer.NumFlightsTotal   = 0;
+      qPlayer.NumFlightsYday    = 0;
+      qPlayer.NumPassengersYday = 0;
+      qPlayer.NumFrachtYday     = 0;
+      qPlayer.NumPassengersSnap = 0;
+      qPlayer.NumFrachtSnap     = 0;
       qPlayer.RoutePage  = 0;
       qPlayer.StandCount = 0;
       qPlayer.ImageGotWorse=FALSE;
@@ -687,7 +693,7 @@ void SIM::ChooseStartup (BOOL GameModeQuick)
       }
       qPlayer.DisplayPlanes[c]=TRUE;
 
-      qPlayer.Gates.Gates.ReSize (30);
+      qPlayer.Gates.Gates.ReSize (128);
       qPlayer.Gates.NumRented=0;
       for (d=0; d<qPlayer.Gates.Gates.AnzEntries(); d++)
          qPlayer.Gates.Gates[d].Miete=-1;
@@ -1972,15 +1978,29 @@ void SIM::DoTimeStep (void)
       //Aktienkurse anpassen:
       for (c=0; c<Sim.Players.Players.AnzEntries(); c++)
       {
+         // TrustedDividende now converges toward Dividende in both directions
          if (Sim.Players.Players[c].TrustedDividende>Sim.Players.Players[c].Dividende)
             Sim.Players.Players[c].TrustedDividende=(Sim.Players.Players[c].TrustedDividende+Sim.Players.Players[c].Dividende)/2;
+         else if (Sim.Players.Players[c].TrustedDividende<Sim.Players.Players[c].Dividende)
+            Sim.Players.Players[c].TrustedDividende=(Sim.Players.Players[c].TrustedDividende+Sim.Players.Players[c].Dividende+1)/2;
 
-         TEAKRAND LocalRand (Sim.Date+GetMinute()+GetHour());
-         Sim.Players.Players[c].Kurse[0] = (Sim.Players.Players[c].Kurse[0]*29 + 10*Sim.Players.Players[c].TrustedDividende)/30.0;
+         // Performance-based equilibrium: 3-day avg company net worth per share / 5
+         // All arithmetic in __int64 before converting to double to guard against overflow
+         __int64 fw0 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(0);
+         __int64 fw1 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(1);
+         __int64 fw2 = Sim.Players.Players[c].Statistiken[STAT_FIRMENWERT].GetAtPastDay(2);
+         SLONG   daysAvail = (Sim.Date>=2) ? 3 : (Sim.Date>=1 ? 2 : 1);
+         __int64 fwAvg = (fw0 + (daysAvail>1 ? fw1 : 0LL) + (daysAvail>2 ? fw2 : 0LL)) / daysAvail;
+         __int64 shares = max((__int64)1, (__int64)Sim.Players.Players[c].AnzAktien);
+         double  Equilibrium = max(1.0, (double)(fwAvg / shares) / 5.0);
+
+         TEAKRAND LocalRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31u + ULONG(GetHour()) + ULONG(c)*1009u);
+         Sim.Players.Players[c].Kurse[0] = (Sim.Players.Players[c].Kurse[0]*29 + Equilibrium)/30.0;
          Sim.Players.Players[c].Kurse[0] += sin((Date*24+GetHour())/50.0)*Sim.Players.Players[c].Kurse[0]/180.0;
          Sim.Players.Players[c].Kurse[0] += sin((Date*24+100+GetHour())/(c+30.0))*Sim.Players.Players[c].Kurse[0]/150.0;
          Sim.Players.Players[c].Kurse[0] += sin(LocalRand.Rand(1000))*Sim.Players.Players[c].Kurse[0]/50.0;
-         if (Sim.Players.Players[c].Kurse[0]<0) Sim.Players.Players[c].Kurse[0]=0;
+         if (Sim.Players.Players[c].Kurse[0]<1.0)      Sim.Players.Players[c].Kurse[0]=1.0;
+         if (Sim.Players.Players[c].Kurse[0]>10000.0)  Sim.Players.Players[c].Kurse[0]=10000.0;
       }
 
       //Flugzeuge von allen Spielern:
@@ -2445,18 +2465,18 @@ void SIM::NewDay (void)
    for (c=0; c<KerosinPast.AnzEntries()-1; c++)
       KerosinPast[c]=KerosinPast[c+1];
 
-   TEAKRAND KerosinRand (Sim.Date);
-   Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(41))-20) + SLONG(sin ((Date+KerosinRand.Rand(6))/3.0)*20) + SLONG(sin (Date*1.7)*20);
+   TEAKRAND KerosinRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31u);
+   Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(201))-100) + SLONG(sin ((Date+KerosinRand.Rand(6))/3.0)*20) + SLONG(sin (Date*1.7)*20) + (500-Kerosin)/20;
    if (Sim.Difficulty==DIFF_ATFS09 || (Sim.Difficulty==DIFF_ATFS10 && ((Sim.Date>=3 && Sim.Date<=10) || (Sim.Date>=35 && Sim.Date<=55))))
    {
       if (KerosinRand.Rand(20)>2) Kerosin += Kerosin/4;
       else if (KerosinPast[8]>550 && KerosinPast[7]>550 && KerosinPast[6]>550)
          Kerosin -= Kerosin/2;
-      Limit (SLONG(300), Kerosin, SLONG(700));
+      Limit (SLONG(1), Kerosin, SLONG(2000));
       for (c=0; c<20; c++) Kerosin += (KerosinRand.Rand(21))-10 + (KerosinRand.Rand(20)<3)*((KerosinRand.Rand(41))-20);
    }
 
-   Limit (SLONG(300), Kerosin, SLONG(700));
+   Limit (SLONG(1), Kerosin, SLONG(2000));
    KerosinPast[9]=Kerosin;
 
    for (c=0; c<Sim.Players.AnzPlayers; c++)
@@ -2690,75 +2710,163 @@ void SIM::NewDay (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Sucht ein zuf�lliges Flugzeug f�r heute aus:
+//Gibt das Gewicht (0-100) f�r das Auftauchen eines Flugzeugtyps im Museum zur�ck:
 //--------------------------------------------------------------------------------------------
-void SIM::CreateRandomUsedPlane (SLONG Index)
+static SLONG MuseumAgeWeight (SLONG Erstbaujahr)
+{
+   if (Erstbaujahr < 1950) return 5;
+   if (Erstbaujahr < 1960) return 12;
+   if (Erstbaujahr < 1970) return 22;
+   if (Erstbaujahr < 1980) return 32;
+   if (Erstbaujahr < 1990) return 35;
+   return 15; // 1990-1999
+}
+
+//--------------------------------------------------------------------------------------------
+//Erstellt ein Flugzeug des angegebenen Typs f�r einen Museumsslot:
+//--------------------------------------------------------------------------------------------
+void SIM::CreateRandomUsedPlane (SLONG Index, ULONG TypeId)
 {
    TEAKRAND rnd;
+   rnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date)*31 + ULONG(Index));
 
-   rnd.SRand (Sim.Date+Index);
+   UsedPlanes[0x1000000+Index] = CPlane (PlaneNames.GetUnused(&rnd), TypeId, UBYTE(rnd.Rand(80)+11), 1900);
 
-   UsedPlanes[0x1000000+Index]=CPlane (PlaneNames.GetUnused(&rnd), PlaneTypes.GetRandomExistingType(&rnd), UBYTE(rnd.Rand(80)+11), 1900);
-
-   //if (PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr<1990)
-   if (UsedPlanes[0x1000000+Index].ptErstbaujahr<1990)
-      //UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
-      UsedPlanes[0x1000000+Index].Baujahr = 1990-rnd.Rand (1990-UsedPlanes[0x1000000+Index].ptErstbaujahr);
+   if (UsedPlanes[0x1000000+Index].ptErstbaujahr < 1990)
+      UsedPlanes[0x1000000+Index].Baujahr = 1990 - rnd.Rand (1990 - UsedPlanes[0x1000000+Index].ptErstbaujahr);
    else
-      UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (1996-UsedPlanes[0x1000000+Index].ptErstbaujahr);
-      //UsedPlanes[0x1000000+Index].Baujahr = 1996-rnd.Rand (1996-PlaneTypes[UsedPlanes[0x1000000+Index].TypeId].Erstbaujahr);
+   {
+      SLONG range = 1999 - UsedPlanes[0x1000000+Index].ptErstbaujahr;
+      if (range > 0)
+         UsedPlanes[0x1000000+Index].Baujahr = 1999 - rnd.Rand (range);
+      else
+         UsedPlanes[0x1000000+Index].Baujahr = UsedPlanes[0x1000000+Index].ptErstbaujahr;
+   }
 
    UsedPlanes[0x1000000+Index].Zustand = UBYTE((UsedPlanes[0x1000000+Index].Baujahr-1950)+25+rnd.Rand(40)-20);
-   if (UsedPlanes[0x1000000+Index].Zustand<20 || UsedPlanes[0x1000000+Index].Zustand>200) UsedPlanes[0x1000000+Index].Zustand=20;
-   if (UsedPlanes[0x1000000+Index].Zustand>100) UsedPlanes[0x1000000+Index].Zustand=100;
+   if (UsedPlanes[0x1000000+Index].Zustand < 20 || UsedPlanes[0x1000000+Index].Zustand > 200) UsedPlanes[0x1000000+Index].Zustand = 20;
+   if (UsedPlanes[0x1000000+Index].Zustand > 100) UsedPlanes[0x1000000+Index].Zustand = 100;
 
    UsedPlanes[0x1000000+Index].TargetZustand = UsedPlanes[0x1000000+Index].Zustand;
 }
 
 //--------------------------------------------------------------------------------------------
-//Sucht drei zuf�llige Flugzeuge f�r heute aus:
+//Baut einen Pool aus Flugzeugtypen auf, die den Altersgewichts-Roll bestanden haben.
+//Gibt die Anzahl der Eintr�ge zur�ck. excludeCount TypeIds aus excluded[] werden ausgelassen.
+//Falls der Pool leer ist, werden alle f�higen Typen ohne Roll aufgenommen (Fallback).
+//--------------------------------------------------------------------------------------------
+static SLONG BuildMuseumPool (BUFFER<ULONG> &pool, const ULONG *excluded, SLONG excludeCount)
+{
+   SLONG poolSize = 0;
+
+   // Pass 1: age-weighted roll
+   for (SLONG c = 0; c < (SLONG)PlaneTypes.AnzEntries(); c++)
+   {
+      if (!PlaneTypes.IsInAlbum (c)) continue;
+      ULONG typeId = PlaneTypes.GetIdFromIndex (c);
+      if (PlaneTypes[typeId].Erstbaujahr > 1999) continue;
+      if (!(PlaneTypes[typeId].FirstMissions < Sim.Difficulty ||
+           ((PlaneTypes[typeId].FirstMissions == Sim.Difficulty || Sim.Difficulty == -1) &&
+            PlaneTypes[typeId].FirstDay <= Sim.Date))) continue;
+
+      bool dup = false;
+      for (SLONG j = 0; j < excludeCount; j++)
+         if (typeId == excluded[j]) { dup = true; break; }
+      if (dup) continue;
+
+      TEAKRAND typeRnd;
+      typeRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 1009 + ULONG(c));
+      if (typeRnd.Rand (100) < MuseumAgeWeight (PlaneTypes[typeId].Erstbaujahr))
+         pool[poolSize++] = typeId;
+   }
+
+   if (poolSize > 0) return poolSize;
+
+   // Fallback: no types passed the roll, take all eligible (minus excluded)
+   for (SLONG c = 0; c < (SLONG)PlaneTypes.AnzEntries(); c++)
+   {
+      if (!PlaneTypes.IsInAlbum (c)) continue;
+      ULONG typeId = PlaneTypes.GetIdFromIndex (c);
+      if (PlaneTypes[typeId].Erstbaujahr > 1999) continue;
+      if (!(PlaneTypes[typeId].FirstMissions < Sim.Difficulty ||
+           ((PlaneTypes[typeId].FirstMissions == Sim.Difficulty || Sim.Difficulty == -1) &&
+            PlaneTypes[typeId].FirstDay <= Sim.Date))) continue;
+
+      bool dup = false;
+      for (SLONG j = 0; j < excludeCount; j++)
+         if (typeId == excluded[j]) { dup = true; break; }
+      if (!dup) pool[poolSize++] = typeId;
+   }
+
+   return poolSize;
+}
+
+//--------------------------------------------------------------------------------------------
+//Sucht drei zuf�llige Flugzeuge f�r heute aus (mit Altersgewichtung und Deduplizierung):
 //--------------------------------------------------------------------------------------------
 void SIM::CreateRandomUsedPlanes (void)
 {
-   SLONG c;
+   ULONG chosen[3] = {ULONG(-1), ULONG(-1), ULONG(-1)};
+   BUFFER<ULONG> pool (PlaneTypes.AnzEntries());
 
    UsedPlanes.Planes.ReSize (3);
    UsedPlanes.ClearAlbum ();
-   UsedPlanes.RepairReferences();
+   UsedPlanes.RepairReferences ();
 
-   for (c=0; c<3; c++)
+   for (SLONG slot = 0; slot < 3; slot++)
    {
-      UsedPlanes += 0x1000000+c;
-      CreateRandomUsedPlane (c);
+      UsedPlanes += 0x1000000 + slot;
+
+      SLONG poolSize = BuildMuseumPool (pool, chosen, slot);
+
+      TEAKRAND slotRnd;
+      slotRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 31 + ULONG(slot));
+      chosen[slot] = pool[slotRnd.Rand (poolSize)];
+
+      CreateRandomUsedPlane (slot, chosen[slot]);
    }
 
-   if (Sim.Difficulty==DIFF_ATFS10 && Sim.Date>=40 && Sim.Date<=50)
+   if (Sim.Difficulty == DIFF_ATFS10 && Sim.Date >= 40 && Sim.Date <= 50)
    {
-      for (c=0; c<SLONG(UsedPlanes.AnzEntries()); c++)
-         UsedPlanes[0x1000000+c].Name="";
+      for (SLONG c = 0; c < SLONG(UsedPlanes.AnzEntries()); c++)
+         UsedPlanes[0x1000000+c].Name = "";
    }
 }
 
 //--------------------------------------------------------------------------------------------
-//F�llt nach einiger Zeit die Flieger wieder auf:
+//F�llt nach einiger Zeit die Flieger wieder auf (mit Deduplizierung gegen bestehende Slots):
 //--------------------------------------------------------------------------------------------
 void SIM::UpdateUsedPlanes (void)
 {
    SLONG c;
    SLONG Anz = min (SLONG(UsedPlanes.AnzEntries()), Sim.TickMuseumRefill/20); //Normalerweise war das fr�her Time-Last / 5000, hier aber /100000, also effektiv /20
 
-   for (c=0; c<SLONG(UsedPlanes.AnzEntries()) && Anz>0; c++)
-      if (UsedPlanes[0x1000000+c].Name.GetLength()==0)
+   for (c = 0; c < SLONG(UsedPlanes.AnzEntries()) && Anz > 0; c++)
+      if (UsedPlanes[0x1000000+c].Name.GetLength() == 0)
       {
-         CreateRandomUsedPlane (c);
+         // Collect TypeIds already present in other slots
+         ULONG existing[3] = {ULONG(-1), ULONG(-1), ULONG(-1)};
+         SLONG existingCount = 0;
+         for (SLONG j = 0; j < SLONG(UsedPlanes.AnzEntries()); j++)
+            if (j != c && UsedPlanes[0x1000000+j].Name.GetLength() > 0)
+               existing[existingCount++] = UsedPlanes[0x1000000+j].TypeId;
+
+         BUFFER<ULONG> pool (PlaneTypes.AnzEntries());
+         SLONG poolSize = BuildMuseumPool (pool, existing, existingCount);
+
+         TEAKRAND slotRnd;
+         slotRnd.SRand (ULONG(Sim.StartTime) + ULONG(Sim.Date) * 31 + ULONG(c));
+         ULONG typeId = pool[slotRnd.Rand (poolSize)];
+
+         CreateRandomUsedPlane (c, typeId);
          Anz--;
          Sim.TickMuseumRefill = 0;
       }
 
-   if (Sim.Difficulty==DIFF_ATFS10 && Sim.Date>=40 && Sim.Date<=50)
+   if (Sim.Difficulty == DIFF_ATFS10 && Sim.Date >= 40 && Sim.Date <= 50)
    {
-      for (c=0; c<SLONG(UsedPlanes.AnzEntries()); c++)
-         UsedPlanes[0x1000000+c].Name="";
+      for (c = 0; c < SLONG(UsedPlanes.AnzEntries()); c++)
+         UsedPlanes[0x1000000+c].Name = "";
    }
 }
 
@@ -3244,8 +3352,8 @@ BOOL SIM::LoadGame (SLONG Number)
    //Manchmal wird der Checkin nicht richtig gespeichert. Warum, wei� ich nicht, aber das hier korrigiert es:
    if (d-4+1>Sim.CheckIn)
    {
-      Sim.CheckIn  = d-4+1;
-      Sim.WaitZone = d-4+1;
+      Sim.CheckIn  = min(d-4+1, 69);
+      Sim.WaitZone = min(d-4+1, 69);
       goto reload_airport;
    }
 
@@ -3340,7 +3448,7 @@ void SIM::SaveGame (SLONG Number, const CString &Name)
    SLONG NumSaveGameCities=Cities.AnzEntries();
 
    SaveVersion=1;
-   SaveVersionSub=107;  //Version 1.104
+   SaveVersionSub=108;  //Version 1.104
 
    std::filesystem::create_directory (LPCSTR(AppPath+SavegamePath.Left(SavegamePath.GetLength()-3)));
 
@@ -3778,6 +3886,7 @@ void SIM::NetRefill (SLONG Type, SLONG City)
       case 2: Delta = Sim.TickReisebueroRefill;  break;
       case 3: Delta = Sim.TickFrachtRefill;      break;
       case 4: Delta = AuslandsRefill[City];      break;
+      case 5: Delta = AuslandsFRefill[City];     break;
    }
 
    Time = Sim.Time-Delta;

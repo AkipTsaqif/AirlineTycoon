@@ -473,7 +473,7 @@ class /**/CPlaneTypes : public ALBUM<CPlaneType>
       CPlaneTypes () : ALBUM<CPlaneType> (PlaneTypes, "PlaneTypes") {}
       CPlaneTypes (const CString &TabFilename);
       void    ReInit (const CString &TabFilename);
-      ULONG   GetRandomExistingType (TEAKRAND *pRand);
+      ULONG   GetRandomExistingType (TEAKRAND *pRand, SLONG maxErstbaujahr=9999);
       void    BlitPlaneAt (SBPRIMARYBM &TargetBm, SLONG PlaneType, SLONG Size, XY Pos, SLONG OwningPlayer);
 };
 
@@ -2003,7 +2003,13 @@ class PLAYER
       SLONG          xPiloten;   //So viele sind zu viel (zu wenig)
       SLONG          xBegleiter; //So viele sind zu viel (zu wenig)
       BOOL           CallItADay; //Feierabend f�r heute?
-      SLONG          NumFlights; //So viele Fl�ge hat er durchgef�hrt
+      SLONG          NumFlights;        //So viele Fl�ge hat er durchgef�hrt (daily, resets each day)
+      SLONG          NumFlightsTotal;   //All-time total flights
+      SLONG          NumFlightsYday;    //Yesterday's flight count
+      SLONG          NumPassengersYday; //Yesterday's passenger delta
+      SLONG          NumFrachtYday;     //Yesterday's cargo delta (tons)
+      SLONG          NumPassengersSnap; //End-of-day snapshot for delta calculation
+      SLONG          NumFrachtSnap;     //End-of-day snapshot for delta calculation
       SLONG          RoutePage;  //Seite in RouteBox
       SLONG          StandCount; //Solange steht der Spieler schon dumm an dieser Stelle herum
       BOOL           TalkedToNasa;     //Nasa-Mann ist nur einmal ausdringlich
@@ -2490,7 +2496,7 @@ class SIM //Die Simulationswelt; alles was zur aktuellen Partie geh�rt
       SLONG   GetWeekday (void);
       CString GetTimeString (void);
       void    NewDay (void);
-      void    CreateRandomUsedPlane (SLONG Index);
+      void    CreateRandomUsedPlane (SLONG Index, ULONG TypeId);
       void    CreateRandomUsedPlanes (void);
       void    UpdateUsedPlanes (void);
       void    ReformGates (void);

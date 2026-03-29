@@ -1,0 +1,908 @@
+#!/usr/bin/env python3
+"""
+add_planes.py  -  Add ~87 real-world airliners to planetyp.csv
+
+- Reads  tools/decoded/planetyp.csv
+- Merges new planes (AnzPhotos=0, NotizblockPhoto=0 -> zero new assets needed)
+- Skips any plane whose Bezeichnung already exists
+- Writes the merged result back to tools/decoded/planetyp.csv
+
+Run from the repo root:
+    python tools/add_planes.py
+"""
+
+import os, sys
+
+SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
+DECODED_CSV = os.path.join(SCRIPT_DIR, "decoded", "planetyp.csv")
+
+MAX_PLANETYPES = 200   # must match defines.h
+
+# ---------------------------------------------------------------------------
+# Helper: build one CSV row
+# Field order (semicolon-delimited):
+#   Id ; Hersteller ; Bezeichnung ; NotizblockPhoto ; AnzPhotos ;
+#   AbMission ; AbTag ; Erstbaujahr ;
+#   Spannweite ; Laenge ; Hoehe ; Startgewicht ;
+#   Passagiere ; Geschwindigkeit ; Reichweite ;
+#   Triebwerke ; Schub ;
+#   AnzPiloten ; AnzBegleiter ;
+#   Tankgroesse ; Verbrauch ;
+#   Preis ; Wartungsfaktor ; Kommentar
+#
+# European decimal separator used for floats (comma, not dot).
+# ---------------------------------------------------------------------------
+def mf(val):
+    """Format maintenance factor: use comma decimal if not whole number."""
+    if val == int(val):
+        return str(int(val))
+    return f"{val:.1f}".replace(".", ",")
+
+def plane_row(pid, manufacturer, name, year,
+              wingspan, length, height, mtow,
+              pax, speed, range_km,
+              engines, thrust,
+              pilots, crew,
+              fuel_cap, fuel_burn,
+              price, maint_factor, comment):
+    """Return a complete planetyp.csv row string."""
+    def fmt(v):
+        if isinstance(v, float):
+            return f"{v:.1f}".replace(".", ",")
+        return str(v) if v != "x" else "x"
+
+    return (
+        f"{pid};"
+        f"{manufacturer};"
+        f"{name};"
+        f"0;0;"           # NotizblockPhoto=0 ; AnzPhotos=0
+        f"0;0;"           # AbMission=0 ; AbTag=0
+        f"{year};"
+        f"{fmt(wingspan)};{fmt(length)};{fmt(height)};{fmt(mtow)};"
+        f"{pax};{speed};{range_km};"
+        f"{engines};{thrust};"
+        f"{pilots};{crew};"
+        f"{fuel_cap};{fuel_burn};"
+        f"{price};"
+        f"{mf(maint_factor)};"
+        f"{comment}"
+    )
+
+# ---------------------------------------------------------------------------
+# New plane definitions
+# (id, manufacturer, name, year,
+#  wingspan, length, height, mtow,
+#  pax, speed_kph, range_km,
+#  engines_str, thrust_lb,
+#  pilots, crew,
+#  fuel_cap_l, fuel_burn_lph,
+#  price_dm, maint_factor, comment)
+#
+# Prices in DM (1990s scale, consistent with existing entries).
+# Fuel consumption in l/h at cruise.
+# "x" for unknown/irrelevant dimensions.
+# ---------------------------------------------------------------------------
+NEW_PLANES = [
+
+    # =========================================================================
+    # CLASSIC NARROWBODY JETS
+    # =========================================================================
+    (200, "Boeing", "707-120", 1958,
+     39.9, 44.2, 12.7, 116818,
+     179, 918, 5790,
+     "4 Pratt & Whitney JT3C-6", 13500,
+     3, 4, 90300, 13000,
+     12600000, 1.3,
+     "The original 707 variant that launched the jet age for commercial aviation. "
+     "Powered by four JT3C turbojets, the -120 opened transcontinental US routes in 1958."),
+
+    (201, "Boeing", "727-100", 1963,
+     32.9, 40.6, 10.4, 72575,
+     131, 960, 3200,
+     "3 Pratt & Whitney JT8D-7", 14000,
+     3, 3, 18135, 12000,
+     13500000, 1.2,
+     "The original 727 variant with a shorter fuselage than the -200. "
+     "Its three rear-mounted engines and T-tail became iconic in short-haul service."),
+
+    (202, "Boeing", "737-100", 1968,
+     28.4, 28.6, 11.3, 49895,
+     107, 852, 2850,
+     "2 Pratt & Whitney JT8D-7", 14500,
+     2, 2, 13640, 4200,
+     11000000, 1.1,
+     "The original and shortest 737 variant. Only 30 were built, "
+     "making it a rare collector's item among operators."),
+
+    (203, "Boeing", "737-200", 1968,
+     28.4, 30.5, 11.3, 52390,
+     130, 852, 3440,
+     "2 Pratt & Whitney JT8D-9A", 14500,
+     2, 3, 16020, 4400,
+     13000000, 1.1,
+     "The stretched and definitive Classic 737. Over 1,000 were built and it "
+     "became the workhorse of short-haul aviation worldwide through the 1980s."),
+
+    (204, "Boeing", "737-300", 1984,
+     28.9, 33.4, 11.1, 62820,
+     149, 800, 4200,
+     "2 General Electric CFM56-3B1", 20000,
+     2, 3, 16033, 3200,
+     28000000, 1.0,
+     "First of the CFM56-powered Next Generation 737s. Quieter and more fuel-efficient "
+     "than its predecessors, it modernised short-haul fleets through the 1990s."),
+
+    (205, "Boeing", "737-500", 1987,
+     28.9, 31.0, 11.1, 60555,
+     132, 800, 4440,
+     "2 General Electric CFM56-3C1", 20000,
+     2, 3, 20100, 3100,
+     26000000, 1.0,
+     "The smallest CFM56 737, replacing the 737-200. Popular with regional carriers "
+     "needing a short-field capable narrowbody."),
+
+    (206, "Boeing", "737-700", 1997,
+     34.3, 33.6, 12.5, 70080,
+     149, 833, 6370,
+     "2 General Electric CFM56-7B24", 24200,
+     2, 3, 26020, 2830,
+     44000000, 0.9,
+     "The smallest Next Generation 737. Southwest Airlines was the launch customer. "
+     "Features winglets in later variants for extended range."),
+
+    (207, "Boeing", "737-900", 2001,
+     34.3, 42.1, 12.5, 85130,
+     177, 833, 5930,
+     "2 General Electric CFM56-7B27", 27300,
+     2, 4, 26020, 3200,
+     52000000, 0.9,
+     "The longest Next Generation 737, stretching capacity to compete with "
+     "the A321. Operated by Alaska Airlines and Lion Air among others."),
+
+    (208, "Boeing", "737 MAX 7", 2019,
+     35.9, 35.6, 12.3, 80286,
+     153, 839, 7130,
+     "2 CFM International LEAP-1B", 27300,
+     2, 3, 25817, 2500,
+     46000000, 0.8,
+     "Smallest of the 737 MAX family, replacing the 737-700. "
+     "Features LEAP-1B engines and Advanced Technology winglets for improved efficiency."),
+
+    (209, "Boeing", "737 MAX 8", 2017,
+     35.9, 39.5, 12.3, 82191,
+     189, 839, 6570,
+     "2 CFM International LEAP-1B", 28000,
+     2, 4, 25817, 2600,
+     55000000, 0.8,
+     "The best-selling MAX variant. After the 2019 grounding and software fixes, "
+     "it returned to service as one of the most efficient narrowbody jets available."),
+
+    (210, "Boeing", "737 MAX 10", 2021,
+     35.9, 43.8, 12.3, 89765,
+     230, 839, 6110,
+     "2 CFM International LEAP-1B", 29317,
+     2, 5, 25817, 2900,
+     64000000, 0.8,
+     "The longest MAX variant, maximising passenger capacity to directly "
+     "challenge the A321neo on high-density short-haul routes."),
+
+    (211, "Boeing", "757-200", 1982,
+     38.1, 47.3, 13.6, 115680,
+     200, 850, 7250,
+     "2 Rolls-Royce RB211-535E4", 40100,
+     2, 4, 43490, 4100,
+     55000000, 1.0,
+     "The narrowbody long-range workhorse that bridged short and medium-haul routes. "
+     "Popular for transatlantic flying from smaller airports."),
+
+    (212, "Airbus Industrie", "A318", 2003,
+     34.1, 31.4, 12.6, 59000,
+     107, 829, 5950,
+     "2 CFM International CFM56-5B or IAE V2500", 22000,
+     2, 2, 23860, 2700,
+     32000000, 0.9,
+     "The smallest Airbus narrowbody, seating just over 100 passengers. "
+     "Used on thin routes including the short-lived London City-New York ETOPS service."),
+
+    (213, "Airbus Industrie", "A319", 1996,
+     34.1, 33.8, 11.8, 64000,
+     124, 833, 6850,
+     "2 CFM International CFM56-5B6", 22000,
+     2, 3, 23860, 2780,
+     38000000, 0.9,
+     "A shortened A320, popular with low-cost carriers and on thinner European routes. "
+     "The A319CJ corporate jet variant is also widely operated."),
+
+    (214, "Airbus Industrie", "A321", 1994,
+     34.1, 44.5, 11.8, 83000,
+     220, 833, 5930,
+     "2 CFM International CFM56-5B3", 27000,
+     2, 5, 23700, 3300,
+     62000000, 0.9,
+     "The stretched A320 family member, offering maximum capacity on high-density "
+     "short-haul routes. Dominant in European and Asian markets."),
+
+    (215, "Airbus Industrie", "A319neo", 2018,
+     35.8, 33.8, 11.8, 75500,
+     120, 833, 8700,
+     "2 CFM International LEAP-1A or Pratt & Whitney PW1100G", 24000,
+     2, 3, 26730, 2600,
+     43000000, 0.8,
+     "The new-engine option version of the A319, offering 15% fuel savings. "
+     "Features Sharklet wingtip devices and an updated cabin."),
+
+    (216, "Airbus Industrie", "A320neo", 2014,
+     35.8, 37.6, 11.8, 79000,
+     165, 833, 6300,
+     "2 CFM International LEAP-1A or Pratt & Whitney PW1100G", 27000,
+     2, 4, 26730, 2750,
+     51000000, 0.8,
+     "The best-selling airliner of all time. The neo (new engine option) cut fuel "
+     "burn by 20% over the original A320 and became the industry standard narrowbody."),
+
+    (217, "Airbus Industrie", "A321neo", 2017,
+     35.8, 44.5, 11.8, 97000,
+     220, 833, 7400,
+     "2 CFM International LEAP-1A or Pratt & Whitney PW1100G", 31000,
+     2, 5, 32940, 3200,
+     68000000, 0.8,
+     "Extended range A321 with new engines. The A321LR variant enables transatlantic "
+     "operations, opening new point-to-point possibilities for narrowbody jets."),
+
+    (218, "Airbus Industrie", "A321XLR", 2024,
+     35.8, 44.5, 11.8, 101000,
+     200, 833, 8700,
+     "2 CFM International LEAP-1A or Pratt & Whitney PW1100G", 31000,
+     2, 5, 42570, 3100,
+     82000000, 0.8,
+     "The extra long range A321 capable of flying 4,700 nm non-stop. "
+     "Enables new thin transatlantic and transcontinental routes without widebody economics."),
+
+    (219, "McDonnell Douglas", "DC-9-30", 1966,
+     28.5, 36.4, 8.4, 49000,
+     115, 925, 2780,
+     "2 Pratt & Whitney JT8D-9", 12250,
+     2, 2, 14170, 5500,
+     9500000, 1.2,
+     "The most popular DC-9 variant, stretching the fuselage for greater capacity. "
+     "Became a staple of US domestic aviation through the 1970s and 1980s."),
+
+    (220, "McDonnell Douglas", "MD-80", 1980,
+     32.9, 45.1, 9.0, 63500,
+     172, 925, 4635,
+     "2 Pratt & Whitney JT8D-217", 18500,
+     2, 3, 21000, 5800,
+     19000000, 1.1,
+     "The re-engined and stretched DC-9, becoming one of the most common "
+     "US domestic jets. American Airlines operated over 350 of the type."),
+
+    (221, "McDonnell Douglas", "MD-90", 1993,
+     32.9, 46.5, 9.0, 70760,
+     172, 925, 3861,
+     "2 International Aero Engines V2525-D5", 25000,
+     2, 3, 21600, 4400,
+     32000000, 1.0,
+     "A further development of the MD-80 with quieter and more efficient "
+     "IAE V2500 engines. Operated by Delta and United in the US."),
+
+    (222, "Boeing", "717-200", 1999,
+     28.4, 37.8, 8.9, 54885,
+     117, 811, 3815,
+     "2 Rolls-Royce BR715", 18500,
+     2, 3, 21190, 3900,
+     30000000, 1.0,
+     "Originally the MD-95, redesignated after the Boeing-McDonnell Douglas merger. "
+     "AirTran and then Delta operated large fleets on US regional routes."),
+
+    (223, "Fokker", "F28-4000", 1976,
+     25.1, 29.6, 8.5, 33000,
+     85, 843, 2085,
+     "2 Rolls-Royce Spey 555-15H", 9850,
+     2, 2, 12480, 5000,
+     10500000, 1.2,
+     "The stretched F28 variant with increased capacity and improved range. "
+     "Widely used by European and postcolonial African and Asian carriers."),
+
+    (224, "Fokker", "Fokker 100", 1988,
+     28.1, 35.5, 8.5, 44450,
+     107, 845, 3170,
+     "2 Rolls-Royce Tay 620-15", 13850,
+     2, 3, 13890, 4000,
+     19000000, 1.0,
+     "A modern re-engined successor to the F28, featuring glass cockpit and "
+     "Tay turbofans. Popular with KLM, Swissair and Australian operators."),
+
+    (225, "British Aircraft Corporation", "BAC 1-11-500", 1968,
+     26.9, 32.6, 7.5, 47400,
+     119, 871, 2780,
+     "2 Rolls-Royce Spey 512-14DW", 12550,
+     2, 3, 11501, 5600,
+     9200000, 1.2,
+     "The stretched Series 500 of the BAC 1-11, extending range and seating. "
+     "Operated by British Airways and many charter carriers."),
+
+    (226, "Sud Aviation", "Caravelle III", 1959,
+     34.3, 32.0, 8.7, 46000,
+     80, 845, 2100,
+     "2 Rolls-Royce Avon 527", 12600,
+     2, 2, 13500, 6800,
+     8000000, 1.4,
+     "Europe's first successful jet airliner, featuring revolutionary rear-mounted "
+     "engines. Air France and SAS were among the original operators."),
+
+    (227, "Tupolev", "Tu-204-100", 1993,
+     41.8, 46.1, 13.9, 107500,
+     214, 850, 6500,
+     "2 Aviadvigatel PS-90A", 16000,
+     2, 4, 34900, 5000,
+     22000000, 1.1,
+     "Russia's answer to the 757 and A321, designed to replace the Tu-154. "
+     "Operated by Aeroflot and several Russian carriers."),
+
+    # =========================================================================
+    # CLASSIC WIDEBODY JETS
+    # =========================================================================
+    (228, "Boeing", "747-200", 1971,
+     64.4, 70.7, 19.3, 377842,
+     452, 907, 12700,
+     "4 Pratt & Whitney JT9D-7A", 46300,
+     3, 5, 198380, 13500,
+     36000000, 1.0,
+     "The stretched and more powerful 747, becoming the definitive long-range "
+     "widebody of the 1970s. Operated on all major intercontinental routes."),
+
+    (229, "Boeing", "747SP", 1976,
+     59.6, 56.3, 19.9, 317515,
+     276, 939, 15400,
+     "4 Pratt & Whitney JT9D-7A", 46300,
+     3, 4, 204350, 12000,
+     40000000, 1.0,
+     "Special Performance 747 with a shortened fuselage for ultra-long-range "
+     "non-stop operations. Pan Am and South African Airways used it across oceans."),
+
+    (230, "Boeing", "747-300", 1983,
+     64.9, 70.7, 19.3, 377842,
+     496, 907, 12400,
+     "4 Pratt & Whitney JT9D-7R4G2", 54750,
+     3, 6, 204350, 13200,
+     55000000, 0.9,
+     "Added an upper-deck extension for additional seating. Swissair and "
+     "Lufthansa were major operators before the 747-400 took over."),
+
+    (231, "Boeing", "747-8I", 2012,
+     68.4, 76.3, 19.4, 447696,
+     467, 903, 14815,
+     "4 General Electric GEnx-2B67", 66500,
+     2, 6, 226100, 11900,
+     120000000, 0.8,
+     "The latest and largest 747, with a stretched fuselage and GEnx engines. "
+     "Lufthansa and Korean Air are among the few operators of this final Queen variant."),
+
+    (232, "Boeing", "767-200", 1981,
+     47.6, 48.5, 15.9, 142880,
+     224, 851, 7200,
+     "2 Pratt & Whitney JT9D-7R4D", 48000,
+     2, 4, 63216, 7000,
+     26000000, 1.0,
+     "The original 767, launching a new era of twin-engine widebody operations. "
+     "United Airlines was the launch customer in 1982."),
+
+    (233, "Boeing", "767-400ER", 2000,
+     51.9, 61.4, 16.9, 204120,
+     304, 851, 10415,
+     "2 General Electric CF6-80C2B8F", 62100,
+     2, 5, 91370, 7500,
+     38000000, 0.9,
+     "The stretched and extended range 767, the last new 767 variant. "
+     "Delta and Continental used it primarily on US domestic and transatlantic routes."),
+
+    (234, "Boeing", "777-200", 1995,
+     60.9, 63.7, 18.5, 247210,
+     305, 905, 9700,
+     "2 Pratt & Whitney PW4074", 74000,
+     2, 5, 117340, 7800,
+     42000000, 0.9,
+     "The original 777 variant that launched the world's first ETOPS-180 service. "
+     "United Airlines inaugurated commercial service in June 1995."),
+
+    (235, "Boeing", "777-200ER", 1997,
+     60.9, 63.7, 18.5, 297550,
+     314, 905, 13080,
+     "2 General Electric GE90-90B", 90000,
+     2, 5, 171170, 8100,
+     52000000, 0.9,
+     "Extended Range 777-200, becoming the most popular early 777 variant. "
+     "British Airways and Air France operated large long-haul fleets."),
+
+    (236, "Boeing", "777-200LR", 2006,
+     64.8, 63.7, 18.5, 347450,
+     317, 905, 15843,
+     "2 General Electric GE90-110B1", 110000,
+     2, 5, 202000, 8500,
+     68000000, 0.9,
+     "Long Range variant, the world's longest-range commercial airliner at launch. "
+     "Can fly non-stop between almost any two cities on Earth."),
+
+    (237, "Boeing", "777-300ER", 2003,
+     64.8, 73.9, 18.5, 352440,
+     396, 905, 13650,
+     "2 General Electric GE90-115B", 115300,
+     2, 6, 202000, 8700,
+     80000000, 0.8,
+     "The most popular 777 variant, combining high capacity with ultra-long range. "
+     "Emirates operates the world's largest fleet, transforming hub-and-spoke travel."),
+
+    (238, "Boeing", "787-8", 2011,
+     60.1, 56.7, 17.0, 227930,
+     242, 903, 13620,
+     "2 General Electric GEnx-1B or Rolls-Royce Trent 1000", 64000,
+     2, 5, 126920, 6200,
+     78000000, 0.8,
+     "The original Dreamliner, featuring composite construction and large windows. "
+     "All Nippon Airways launched services in 2011, transforming long-haul economics."),
+
+    (239, "Boeing", "787-9", 2014,
+     60.1, 62.8, 17.0, 254011,
+     296, 903, 14140,
+     "2 General Electric GEnx-1B or Rolls-Royce Trent 1000", 71000,
+     2, 5, 126920, 6500,
+     90000000, 0.8,
+     "The stretched Dreamliner, offering the optimal balance of capacity and range. "
+     "Air New Zealand uses it for ultra-long-haul routes to North America."),
+
+    (240, "Boeing", "787-10", 2018,
+     60.1, 68.3, 17.0, 254011,
+     330, 903, 11910,
+     "2 General Electric GEnx-1B or Rolls-Royce Trent 1000TEN", 78000,
+     2, 6, 126920, 7000,
+     98000000, 0.8,
+     "The largest Dreamliner, optimised for high-density medium-to-long haul. "
+     "Singapore Airlines and United Airlines are major operators."),
+
+    (241, "Airbus Industrie", "A330-200", 1998,
+     60.3, 58.8, 17.9, 242000,
+     293, 871, 13450,
+     "2 General Electric CF6-80E1A4 or Rolls-Royce Trent 772", 67500,
+     2, 5, 139090, 7200,
+     55000000, 0.9,
+     "The shorter and longer-range A330 variant. Popular for transatlantic and "
+     "transpacific operations, offering 787-like capability at lower cost."),
+
+    (242, "Airbus Industrie", "A330-300", 1993,
+     60.3, 63.7, 16.8, 242000,
+     335, 871, 10500,
+     "2 General Electric CF6-80E1A2 or Rolls-Royce Trent 768", 67500,
+     2, 6, 97530, 7500,
+     58000000, 0.9,
+     "The original and longer A330 variant, dominating medium-to-long haul routes. "
+     "Cathay Pacific and Thai Airways built large A330-300 fleets."),
+
+    (243, "Airbus Industrie", "A330-900neo", 2018,
+     64.0, 63.7, 16.8, 251000,
+     310, 912, 13334,
+     "2 Rolls-Royce Trent 7000", 72000,
+     2, 6, 139090, 6500,
+     70000000, 0.8,
+     "New engine option A330 with Trent 7000 engines, cutting fuel burn by 14%. "
+     "Features an Airspace cabin interior with wider seats and mood lighting."),
+
+    (244, "Airbus Industrie", "A330-800neo", 2020,
+     64.0, 58.8, 17.9, 251000,
+     257, 912, 15094,
+     "2 Rolls-Royce Trent 7000", 72000,
+     2, 5, 139090, 6200,
+     65000000, 0.8,
+     "The ultra-long-range neo variant, capable of flying non-stop from Europe "
+     "to Australia. Hawaii Airlines was an early operator."),
+
+    (245, "Airbus Industrie", "A340-200", 1993,
+     60.3, 59.4, 16.8, 257000,
+     261, 881, 15000,
+     "4 CFM International CFM56-5C2", 31200,
+     2, 5, 139090, 9800,
+     58000000, 1.1,
+     "The shorter A340 variant with exceptional range. Air France used it "
+     "on thin ultra-long-haul routes where twin-engine ETOPS was not yet approved."),
+
+    (246, "Airbus Industrie", "A340-300", 1993,
+     60.3, 63.7, 16.8, 271000,
+     295, 881, 13700,
+     "4 CFM International CFM56-5C4", 34000,
+     2, 6, 139090, 10200,
+     62000000, 1.1,
+     "The standard A340, popular with European carriers for intercontinental routes. "
+     "Lufthansa and Swiss operated large fleets before the A350 arrived."),
+
+    (247, "Airbus Industrie", "A340-500", 2002,
+     63.4, 67.9, 17.1, 372000,
+     313, 881, 16670,
+     "4 Rolls-Royce Trent 553", 53000,
+     2, 5, 195545, 11500,
+     88000000, 1.2,
+     "Ultra-long-range A340 capable of non-stop flights between Singapore and "
+     "New York. Emirates and Singapore Airlines operated these on extreme routes."),
+
+    (248, "Airbus Industrie", "A340-600", 2002,
+     63.4, 75.4, 17.3, 368000,
+     380, 881, 14600,
+     "4 Rolls-Royce Trent 556", 56000,
+     2, 7, 195545, 12200,
+     96000000, 1.2,
+     "The longest commercial airliner of its era, competing directly with "
+     "the 747-400. Lufthansa and Iberia were the largest operators."),
+
+    (249, "Airbus Industrie", "A350-900", 2014,
+     64.7, 66.8, 17.1, 280000,
+     369, 910, 15000,
+     "2 Rolls-Royce Trent XWB-84", 84000,
+     2, 6, 158000, 7300,
+     110000000, 0.7,
+     "Airbus's answer to the 787, built from 70% composite materials. "
+     "Qatar Airways, Singapore Airlines and Cathay Pacific are major operators."),
+
+    (250, "Airbus Industrie", "A350-1000", 2017,
+     64.7, 73.8, 17.1, 316000,
+     369, 910, 16100,
+     "2 Rolls-Royce Trent XWB-97", 97000,
+     2, 6, 158791, 7800,
+     125000000, 0.7,
+     "The larger A350 variant, directly competing with the 777X. "
+     "Qatar Airways launched operations and uses it on ultra-long-haul routes."),
+
+    (251, "Airbus Industrie", "A380-800", 2007,
+     79.8, 72.7, 24.1, 575000,
+     555, 903, 15200,
+     "4 Rolls-Royce Trent 970", 70000,
+     2, 6, 320000, 13000,
+     170000000, 0.9,
+     "The world's largest commercial airliner, with a full double-deck cabin. "
+     "Emirates operates by far the largest fleet, transforming hub traffic at Dubai."),
+
+    (252, "McDonnell Douglas", "MD-11", 1990,
+     51.7, 61.2, 17.6, 286900,
+     323, 945, 12455,
+     "3 General Electric CF6-80C2D1F", 61500,
+     2, 5, 162600, 9600,
+     55000000, 1.1,
+     "The tri-engine successor to the DC-10, with advanced avionics and "
+     "extended range. KLM and Finnair were major operators; FedEx uses it as freighter."),
+
+    (253, "Lockheed Aircraft Corp.", "L-1011-1 TriStar", 1972,
+     47.3, 54.4, 16.9, 195045,
+     400, 890, 7420,
+     "3 Rolls-Royce RB211-22B", 42000,
+     3, 5, 91630, 10500,
+     28000000, 1.1,
+     "The original TriStar variant, competing with the DC-10 for wide-body supremacy. "
+     "Eastern Air Lines and TWA were launch customers."),
+
+    (254, "Ilyushin Sowjetunion", "Il-96-300", 1992,
+     60.1, 55.4, 15.7, 250000,
+     300, 870, 13500,
+     "4 Aviadvigatel PS-90A", 35270,
+     3, 4, 152000, 9000,
+     30000000, 1.2,
+     "Russia's widebody airliner, used by Aeroflot on intercontinental routes. "
+     "A development of the Il-86 with Western-inspired avionics and greater range."),
+
+    # =========================================================================
+    # REGIONAL JETS
+    # =========================================================================
+    (255, "Bombardier", "CRJ-200", 1995,
+     21.2, 26.8, 6.2, 24040,
+     50, 860, 3150,
+     "2 General Electric CF34-3B1", 9220,
+     2, 1, 6630, 2000,
+     13000000, 1.0,
+     "The definitive 50-seat regional jet, operated by hundreds of US commuter "
+     "carriers. Cheap to buy but demanding on maintenance and passenger comfort."),
+
+    (256, "Bombardier", "CRJ-700", 2001,
+     23.2, 32.5, 7.6, 33838,
+     70, 876, 3045,
+     "2 General Electric CF34-8C1", 13790,
+     2, 2, 13120, 2600,
+     22000000, 1.0,
+     "Stretched CRJ with 70-seat capacity, bridging regional and mainline operations. "
+     "United Express and American Eagle operated large fleets."),
+
+    (257, "Bombardier", "CRJ-900", 2003,
+     24.9, 36.2, 7.5, 38330,
+     90, 876, 2876,
+     "2 General Electric CF34-8C5", 14500,
+     2, 3, 13120, 2900,
+     28000000, 1.0,
+     "The 90-seat CRJ, maximising capacity in the regional jet segment. "
+     "Delta Connection and Lufthansa CityLine are major operators."),
+
+    (258, "Embraer", "ERJ-145", 1996,
+     20.0, 29.9, 6.8, 22000,
+     50, 833, 2800,
+     "2 Rolls-Royce AE3007A1", 8917,
+     2, 1, 6185, 1950,
+     12000000, 1.0,
+     "Brazil's first regional jet, competing directly with the CRJ-200. "
+     "Continental Express and American Eagle chose it for 50-seat operations."),
+
+    (259, "Embraer", "E170", 2004,
+     26.0, 29.9, 9.7, 37200,
+     78, 870, 3735,
+     "2 General Electric CF34-8E", 14200,
+     2, 2, 13985, 2800,
+     24000000, 0.9,
+     "First of the E-Jet family, bringing airline standards to the 70-80 seat market. "
+     "LOT Polish Airlines and Alitalia Express were launch customers."),
+
+    (260, "Embraer", "E175", 2004,
+     26.0, 31.7, 9.7, 40370,
+     88, 870, 4074,
+     "2 General Electric CF34-8E5", 14200,
+     2, 2, 13985, 2900,
+     26000000, 0.9,
+     "Slightly stretched E170, the most popular E-Jet variant in North America "
+     "due to scope clause provisions. Operates as United Express and American Eagle."),
+
+    (261, "Embraer", "E190", 2006,
+     28.7, 36.2, 10.6, 51800,
+     114, 870, 4537,
+     "2 General Electric CF34-10E", 18500,
+     2, 3, 16805, 3500,
+     36000000, 0.9,
+     "The 100-120 seat E-Jet, challenging the A319 and 737-600 in the lower end "
+     "of the mainline segment. JetBlue and Air Canada Jazz operated large fleets."),
+
+    (262, "Embraer", "E195", 2006,
+     28.7, 38.7, 10.6, 52290,
+     124, 870, 4260,
+     "2 General Electric CF34-10E5", 18500,
+     2, 3, 16805, 3600,
+     38000000, 0.9,
+     "The largest original E-Jet, maximising the design's capacity. "
+     "Azul Brazilian Airlines built an all-E195 fleet for domestic operations."),
+
+    (263, "Embraer", "E190-E2", 2018,
+     31.0, 36.2, 10.6, 56400,
+     106, 870, 5278,
+     "2 Pratt & Whitney PW1900G", 18000,
+     2, 3, 17405, 2800,
+     44000000, 0.8,
+     "Second generation E-Jet with Pratt & Whitney GTF engines, cutting fuel burn "
+     "by 17%. Wideroe and Azul were among the launch customers."),
+
+    (264, "Embraer", "E195-E2", 2019,
+     31.0, 41.5, 10.6, 61500,
+     146, 870, 4205,
+     "2 Pratt & Whitney PW1900G", 18000,
+     2, 4, 17405, 3100,
+     52000000, 0.8,
+     "The largest and most capable E2, offering A320neo competition at lower capacity. "
+     "Operated by Breeze Airways and Azul on thinner routes."),
+
+    (265, "BAe", "BAe 146-200", 1983,
+     26.3, 28.6, 8.6, 42185,
+     100, 750, 2650,
+     "4 Avco Lycoming ALF 502R-5", 6970,
+     2, 3, 11800, 4600,
+     16000000, 1.3,
+     "The quiet four-engine regional jet, ideal for city centre airports with "
+     "noise restrictions. Air Wisconsin and TNT Airways were operators."),
+
+    # =========================================================================
+    # TURBOPROPS
+    # =========================================================================
+    (266, "Saab", "340B", 1984,
+     21.4, 19.7, 6.9, 13155,
+     35, 522, 1732,
+     "2 General Electric CT7-9B Turboprops", 1870,
+     2, 1, 4050, 900,
+     6500000, 1.0,
+     "Swedish 35-seat turboprop popular with Scandinavian and US commuter carriers. "
+     "Reliable and economical, it became a regional mainstay through the 1990s."),
+
+    (267, "Embraer", "EMB 120 Brasilia", 1985,
+     19.8, 20.0, 6.4, 11500,
+     30, 555, 1750,
+     "2 Pratt & Whitney Canada PW118 Turboprops", 1800,
+     2, 1, 3620, 800,
+     5800000, 1.0,
+     "Brazilian 30-seat turboprop widely used by US regional carriers. "
+     "Continental Express and Comair operated large fleets throughout the 1990s."),
+
+    (268, "Fokker", "Fokker 50", 1987,
+     29.0, 25.3, 8.3, 20820,
+     50, 530, 2700,
+     "2 Pratt & Whitney Canada PW125B Turboprops", 2500,
+     2, 1, 6600, 1400,
+     8500000, 1.0,
+     "Re-engined and modernised successor to the Fokker F27 Friendship. "
+     "KLM and Luxair used it extensively on short European sectors."),
+
+    (269, "Bombardier", "Dash 8 Q300", 1989,
+     27.4, 25.7, 7.5, 19505,
+     50, 528, 1558,
+     "2 Pratt & Whitney Canada PW123 Turboprops", 2500,
+     2, 1, 6050, 1400,
+     7500000, 1.0,
+     "Stretched Dash 8 with 50-seat capacity and active noise suppression system. "
+     "Air Canada Jazz and Horizon Air operated large Q300 fleets."),
+
+    (270, "Saab", "Saab 2000", 1994,
+     24.8, 27.3, 7.7, 22800,
+     50, 665, 2868,
+     "2 Allison AE2100A Turboprops", 4150,
+     2, 1, 6070, 1350,
+     10000000, 1.0,
+     "High-speed turboprop designed to close the gap with regional jets. "
+     "Crossair and Austrian operated it on trunk routes where jets were uneconomical."),
+
+    (271, "ATR", "ATR 42-600", 2009,
+     24.6, 22.7, 7.6, 18600,
+     48, 556, 1326,
+     "2 Pratt & Whitney Canada PW127M Turboprops", 2475,
+     2, 1, 6370, 1100,
+     8000000, 0.9,
+     "Latest ATR 42 variant with new avionics and improved cabin. "
+     "Ideal for thin short-haul routes where jets are uneconomical."),
+
+    (272, "ATR", "ATR 72-600", 2009,
+     27.1, 27.2, 7.7, 23000,
+     70, 510, 1528,
+     "2 Pratt & Whitney Canada PW127M Turboprops", 2475,
+     2, 2, 6370, 1300,
+     10500000, 0.9,
+     "The most popular regional turboprop of the modern era, used by hundreds "
+     "of airlines on short-haul routes worldwide. Extremely economical on thin routes."),
+
+    (273, "Bombardier", "Dash 8 Q400", 1999,
+     28.4, 32.8, 8.4, 29257,
+     78, 667, 2522,
+     "2 Pratt & Whitney Canada PW150A Turboprops", 5071,
+     2, 2, 6890, 1900,
+     14000000, 0.9,
+     "High-speed turboprop competing with regional jets on speed while offering "
+     "lower operating costs. SAS and Air Canada Jazz operate large fleets."),
+
+    (274, "BAe", "BAe ATP", 1988,
+     30.6, 26.0, 7.1, 22930,
+     64, 493, 1800,
+     "2 Pratt & Whitney Canada PW126A Turboprops", 2653,
+     2, 2, 6370, 1200,
+     7200000, 1.1,
+     "Advanced Turboprop from British Aerospace, stretched from the HS 748. "
+     "Operated by Manx Airlines and British Midland on UK regional routes."),
+
+    (275, "Shorts", "Shorts 360", 1981,
+     22.8, 21.6, 7.3, 12020,
+     36, 393, 1178,
+     "2 Pratt & Whitney Canada PT6A-65R Turboprops", 1198,
+     2, 1, 3120, 700,
+     4200000, 1.1,
+     "Simple boxy twin-turboprop built in Belfast, popular with US commuter carriers. "
+     "Used extensively by Piedmont and Business Express in the 1980s."),
+
+    # =========================================================================
+    # MODERN / MISC
+    # =========================================================================
+    (276, "Airbus Industrie", "A220-100", 2016,
+     35.1, 35.0, 11.5, 60780,
+     120, 871, 5920,
+     "2 Pratt & Whitney PW1500G", 23300,
+     2, 3, 21805, 2600,
+     40000000, 0.8,
+     "Originally the Bombardier C Series CS100, acquired by Airbus in 2018. "
+     "Offers single-aisle economics with widebody passenger comfort on thinner routes."),
+
+    (277, "Airbus Industrie", "A220-300", 2016,
+     35.1, 38.7, 11.5, 70900,
+     145, 871, 6300,
+     "2 Pratt & Whitney PW1500G", 23300,
+     2, 3, 21805, 2800,
+     46000000, 0.8,
+     "Stretched A220, the optimal replacement for older 100-150 seat narrowbodies. "
+     "Delta Air Lines and Air France operate large fleets."),
+
+    (278, "COMAC", "C919", 2023,
+     35.8, 38.9, 11.9, 77300,
+     168, 834, 5555,
+     "2 CFM International LEAP-1C", 27000,
+     2, 4, 19156, 2800,
+     50000000, 0.9,
+     "China's first domestically developed narrowbody airliner, competing with "
+     "the A320neo and 737 MAX. COMAC aims to challenge the Western duopoly."),
+
+    (279, "Sukhoi", "Superjet 100", 2008,
+     27.8, 29.9, 10.3, 45880,
+     98, 830, 3048,
+     "2 PowerJet SaM146", 15432,
+     2, 3, 15805, 2700,
+     20000000, 1.1,
+     "Russia's first modern regional jet, developed with French technology. "
+     "Aeroflot and Mexican Interjet operated it, though reliability was challenging."),
+]
+
+# ---------------------------------------------------------------------------
+# Read existing planetyp.csv
+# ---------------------------------------------------------------------------
+def read_existing(path):
+    with open(path, "r", encoding="cp1252", errors="replace") as f:
+        lines = f.readlines()
+    header = lines[0].rstrip("\n")
+    planes = {}   # Bezeichnung -> raw line
+    for line in lines[1:]:
+        line = line.rstrip("\n")
+        if not line:
+            continue
+        parts = line.split(";")
+        name = parts[2] if len(parts) > 2 else ""
+        planes[name.strip()] = line
+    return header, planes
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+def main():
+    if not os.path.exists(DECODED_CSV):
+        print(f"ERROR: cannot find {DECODED_CSV}", file=sys.stderr)
+        sys.exit(1)
+
+    header, existing = read_existing(DECODED_CSV)
+
+    # Build new rows dict keyed by name
+    new_rows = {}
+    for entry in NEW_PLANES:
+        (pid, manufacturer, name, year,
+         wingspan, length, height, mtow,
+         pax, speed, range_km,
+         engines, thrust,
+         pilots, crew,
+         fuel_cap, fuel_burn,
+         price, maint_factor, comment) = entry
+        new_rows[name] = plane_row(
+            pid, manufacturer, name, year,
+            wingspan, length, height, mtow,
+            pax, speed, range_km,
+            engines, thrust,
+            pilots, crew,
+            fuel_cap, fuel_burn,
+            price, maint_factor, comment
+        )
+
+    # Check collisions
+    collisions = set(existing.keys()) & set(new_rows.keys())
+    if collisions:
+        print(f"WARNING: {len(collisions)} plane(s) already exist and will be SKIPPED:")
+        for c in sorted(collisions):
+            print(f"  - {c}")
+
+    # Merge (existing takes priority)
+    merged = dict(existing)
+    added = 0
+    for name, row in new_rows.items():
+        if name.strip() not in merged:
+            merged[name.strip()] = row
+            added += 1
+
+    # Sort by manufacturer then name (case-insensitive)
+    def sort_key(name):
+        row = merged[name]
+        parts = row.split(";")
+        mfr  = parts[1].strip().lower() if len(parts) > 1 else ""
+        return (mfr, name.lower())
+
+    sorted_names = sorted(merged.keys(), key=sort_key)
+
+    # Write output
+    with open(DECODED_CSV, "w", encoding="cp1252", newline="\r\n") as f:
+        f.write(header + "\n")
+        for name in sorted_names:
+            f.write(merged[name] + "\n")
+
+    total = len(sorted_names)
+    print(f"Done.  {added} new planes added.  Total: {total} plane types.")
+    print(f"Output: {DECODED_CSV}")
+
+    if total > MAX_PLANETYPES:
+        print(f"WARNING: {total} planes exceeds MAX_PLANETYPES={MAX_PLANETYPES} — bump defines.h!")
+
+if __name__ == "__main__":
+    main()

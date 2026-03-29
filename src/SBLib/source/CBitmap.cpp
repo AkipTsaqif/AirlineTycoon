@@ -245,6 +245,8 @@ ULONG SB_CBitmapCore::Clear(SB_Hardwarecolor hwcolor, const RECT* pRect)
 
 ULONG SB_CBitmapCore::SetPixel(SLONG x, SLONG y, SB_Hardwarecolor hwcolor)
 {
+    if (x < 0 || y < 0 || x >= lpDDSurface->w || y >= lpDDSurface->h)
+        return 1;
     if (SDL_MUSTLOCK(lpDDSurface) && SDL_LockSurface(lpDDSurface) < 0)
         return 1;
     Uint8 bpp = lpDDSurface->format->BytesPerPixel;

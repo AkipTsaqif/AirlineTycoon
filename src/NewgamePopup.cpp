@@ -28,10 +28,11 @@ SLONG gNetworkSavegameLoading = -1;    //Komm-Variable, �ber die der Options-S
 extern CJumpingVar<ULONG>   gPhysicalCdRomBitlist;
 extern CJumpingVar<CString> gCDPath;
 
+#include "git_version.h"
 #ifdef _DEBUG
-char VersionString[] = "VERSION 1.4 DEBUG"; // (pre-release; build 100)";
+char VersionString[] = "v1.4-DEBUG-" GIT_COMMIT_ID;
 #else
-char VersionString[] = "VERSION 1.4 PRE-RELEASE (VS2026/SDL2.32)";
+char VersionString[] = "v1.4-" GIT_COMMIT_ID;
 #endif
 
 extern SLONG gLoadGameNumber;

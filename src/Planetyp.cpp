@@ -23,7 +23,7 @@ SLONG ReadLine (BUFFER<UBYTE> &Buffer, SLONG BufferStart, char *Line, SLONG Line
 extern SLONG SaveVersion;
 extern SLONG SaveVersionSub;
 
-//Speedup für die Flugzeuge:
+//Speedup fï¿½r die Flugzeuge:
 SLONG SkipPlaneCalculation=0;
 
 //============================================================================================
@@ -62,10 +62,10 @@ void CPlaneTypes::ReInit (const CString &TabFilename)
       //if (!Tab.ReadString (Line, 800)) break;
       TeakStrRemoveEndingCodes (Line, "\xd\xa\x1a\r");
 
-      //Tabellenzeile hinzufügen:
+      //Tabellenzeile hinzufï¿½gen:
       Id=atol (strtok (Line, ";\x8\""))+0x10000000;
 
-      //Hinzufügen (darf noch nicht existieren):
+      //Hinzufï¿½gen (darf noch nicht existieren):
       if (IsInAlbum (Id)) TeakLibW_Exception (FNL, ExcNever);
       (*this)+=Id;
 
@@ -98,14 +98,15 @@ void CPlaneTypes::ReInit (const CString &TabFilename)
 }
 
 //--------------------------------------------------------------------------------------------
-//Sucht einen zufälligen (bereits erfundenen) Flugzeugtyp raus:
+//Sucht einen zufï¿½lligen (bereits erfundenen) Flugzeugtyp raus:
 //--------------------------------------------------------------------------------------------
-ULONG CPlaneTypes::GetRandomExistingType (TEAKRAND *pRand)
+ULONG CPlaneTypes::GetRandomExistingType (TEAKRAND *pRand, SLONG maxErstbaujahr)
 {
    SLONG c, Anz, rnd;
 
    for (c=Anz=0; c<(SLONG)AnzEntries(); c++)
       if (IsInAlbum (c))
+      if ((*this)[c].Erstbaujahr <= maxErstbaujahr)
       if ((*this)[c].FirstMissions<Sim.Difficulty || (((*this)[c].FirstMissions==Sim.Difficulty || Sim.Difficulty==-1) && (*this)[c].FirstDay<=Sim.Date))
          Anz++;
 
@@ -114,6 +115,7 @@ ULONG CPlaneTypes::GetRandomExistingType (TEAKRAND *pRand)
 
    for (c=0; c<(SLONG)AnzEntries(); c++)
       if (IsInAlbum (c))
+      if ((*this)[c].Erstbaujahr <= maxErstbaujahr)
       if ((*this)[c].FirstMissions<Sim.Difficulty || (((*this)[c].FirstMissions==Sim.Difficulty || Sim.Difficulty==-1) && (*this)[c].FirstDay<=Sim.Date))
       {
          rnd--;
@@ -139,7 +141,7 @@ void CPlaneTypes::BlitPlaneAt (SBPRIMARYBM &TargetBm, SLONG PlaneType, SLONG Siz
       //Hinter Glas:
       case 2:
          {
-            //Breite für's zentrieren berechnen:
+            //Breite fï¿½r's zentrieren berechnen:
             SLONG c, x=-(gUniversalPlaneBms[9+OwningPlayer*5+0].Size.x+gUniversalPlaneBms[9+OwningPlayer*5+2].Size.x+gUniversalPlaneBms[9+OwningPlayer*5+1].Size.x*((*this)[PlaneType].Passagiere/60))/2;
 
             //Bug blitten:
@@ -265,7 +267,7 @@ CPlane::CPlane (CString Name, ULONG TypeId, UBYTE Zustand, SLONG Baujahr)
 //--------------------------------------------------------------------------------------------
 // Repairiert die Referenzen in dem CXPlane Objekt. Dort zeigt das Album auf den Buffer und
 // wenn die CPlanes resizet wurden liegt der Buffer woanders und das Album fragt sich warum
-// es davon nichts weiß.
+// es davon nichts weiï¿½.
 //--------------------------------------------------------------------------------------------
 void CPlane::RepairReferences (void)
 {
@@ -286,7 +288,7 @@ SLONG CPlane::CalculatePrice (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Bewegt das Flugzeug für Animationen etwas weiter:
+//Bewegt das Flugzeug fï¿½r Animationen etwas weiter:
 //--------------------------------------------------------------------------------------------
 void CPlane::DoOneStep (SLONG PlayerNum)
 {
@@ -391,7 +393,7 @@ void CPlane::DoOneStep (SLONG PlayerNum)
 
             Speed = max(3, min (10, abs (AirportPos.x-TargetX)/30));
 
-            //Lautstärke für Flugzeuge berechnen:
+            //Lautstï¿½rke fï¿½r Flugzeuge berechnen:
             Temp  = 150-abs(AirportPos.x-320-Sim.Players.Players[Sim.localPlayer].ViewPos.x)/4;
             if (Temp<0) Temp=0;
 
@@ -557,7 +559,7 @@ void CPlane::DoOneStep (SLONG PlayerNum)
                   {
                      SLONG c, Gate=GetFlugplanEintrag()->Gate;
 
-                     //Personen brauchen nicht mehr warten, sondern können das Flugzeug stürmen:
+                     //Personen brauchen nicht mehr warten, sondern kï¿½nnen das Flugzeug stï¿½rmen:
                      for (c=Sim.Persons.AnzEntries()-1; c>=0; c--)
                      {
                         if (Sim.Persons.IsInAlbum(c) && 
@@ -635,7 +637,7 @@ void CPlane::DoOneStep (SLONG PlayerNum)
       case -5:
          break;
 
-      //Am Boden (in einer Stadt) ==> Müssen wir es ausrüsten?
+      //Am Boden (in einer Stadt) ==> Mï¿½ssen wir es ausrï¿½sten?
       default:
          if (PlayerNum>=0 && PlayerNum<=3 && (Sim.Players.Players[PlayerNum].GetRoom()!=ROOM_PLANEPROPS || Sim.CallItADay))
          {
@@ -716,7 +718,7 @@ void CPlane::DoOneStep (SLONG PlayerNum)
 }
 
 //--------------------------------------------------------------------------------------------
-//Überprüft, die Flugpläne für ein Flugzeug und streicht ggf. Flüge
+//ï¿½berprï¿½ft, die Flugplï¿½ne fï¿½r ein Flugzeug und streicht ggf. Flï¿½ge
 //--------------------------------------------------------------------------------------------
 void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
 {
@@ -745,7 +747,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
          if (c>Flugplan.Flug.AnzEntries()) c=Flugplan.Flug.AnzEntries();
       }
 
-   //Automatikflüge löschen, andere ergänzen:
+   //Automatikflï¿½ge lï¿½schen, andere ergï¿½nzen:
    for (c=Flugplan.Flug.AnzEntries()-1; c>=0; c--)
       if (Flugplan.Flug[c].Startdate>Sim.Date || (Flugplan.Flug[c].Startdate==Sim.Date && Flugplan.Flug[c].Startzeit>Sim.GetHour()+1))
       {
@@ -810,10 +812,10 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
          if (c>Flugplan.Flug.AnzEntries()) c=Flugplan.Flug.AnzEntries();
       }
 
-   //Nötigenfalls am Anfang automatische Flüge einbauen:
+   //Nï¿½tigenfalls am Anfang automatische Flï¿½ge einbauen:
    if (Flugplan.Flug[0].ObjectType!=0 && Cities(Flugplan.Flug[0].VonCity)!=(ULONG)Cities(Flugplan.StartCity))
    {
-      //Automatik-Flug einfügen:
+      //Automatik-Flug einfï¿½gen:
       for (d=Flugplan.Flug.AnzEntries()-1; d>0; d--)
          Flugplan.Flug[d]=Flugplan.Flug[d-1];
 
@@ -829,7 +831,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
       Flugplan.Flug[0].Landedate = Flugplan.Flug[0].Startdate+(Flugplan.Flug[0].Startzeit+Dauer)/24;
    }
 
-   //Nötigenfalls zwischendurch automatische Flüge einbauen:
+   //Nï¿½tigenfalls zwischendurch automatische Flï¿½ge einbauen:
    for (c=0; c<Flugplan.Flug.AnzEntries()-1; c++)
    {
       if (Flugplan.Flug[c+1].ObjectType==0) break;
@@ -842,7 +844,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
 
       if (VonCity!=NachCity)
       {
-         //Automatik-Flug einfügen:
+         //Automatik-Flug einfï¿½gen:
          for (d=Flugplan.Flug.AnzEntries()-1; d>c+1; d--)
             Flugplan.Flug[d]=Flugplan.Flug[d-1];
 
@@ -852,7 +854,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
          Flugplan.Flug[c+1].Startzeit = Flugplan.Flug[c+0].Landezeit;
          Flugplan.Flug[c+1].Startdate = Flugplan.Flug[c+0].Landedate;
 
-         //Prüfen, ob Startzeit- und Datum auch in der Zukunft liegen:
+         //Prï¿½fen, ob Startzeit- und Datum auch in der Zukunft liegen:
          if (Flugplan.Flug[c+1].Startdate<Sim.Date) Flugplan.Flug[c+1].Startdate=Sim.Date;
          if (Flugplan.Flug[c+1].Startdate==Sim.Date && Flugplan.Flug[c+1].Startzeit<=Sim.GetHour()+1) Flugplan.Flug[c+1].Startzeit=Sim.GetHour()+2;
 
@@ -892,7 +894,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
       }
    }
 
-   //Überschüssige Flüge abschneiden:
+   //ï¿½berschï¿½ssige Flï¿½ge abschneiden:
    if (gMouseLButton==0 || Sim.Players.Players[PlayerNum].Owner!=0 || Sim.Players.Players[PlayerNum].LocationWin==NULL || (Sim.Players.Players[PlayerNum].GetRoom()!=ROOM_GLOBE && Sim.Players.Players[PlayerNum].GetRoom()!=ROOM_LAPTOP) && ((CPlaner*)Sim.Players.Players[PlayerNum].LocationWin)->DragFlightMode==0)
       for (c=0; c<Flugplan.Flug.AnzEntries(); c++)
       {
@@ -906,7 +908,7 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
          }
       }
 
-   //Automatik-Flüge möglichst spät ansetzen:
+   //Automatik-Flï¿½ge mï¿½glichst spï¿½t ansetzen:
    for (c=0; c<Flugplan.Flug.AnzEntries()-1; c++)
    {
       if (Flugplan.Flug[c+1].ObjectType==0) break;
@@ -942,12 +944,12 @@ void CPlane::CheckFlugplaene (SLONG PlayerNum, BOOL Sort, BOOL PlanGates)
 }
 
 //--------------------------------------------------------------------------------------------
-//Setzt den Flugplan auf Knopfdruck für die restliche Woche fort:
+//Setzt den Flugplan auf Knopfdruck fï¿½r die restliche Woche fort:
 //--------------------------------------------------------------------------------------------
 void CPlane::ExtendFlugplaene (SLONG PlayerNum)
 {
    SLONG c;
-   SLONG RapportL;    //Länge des Rapports in Tagen
+   SLONG RapportL;    //Lï¿½nge des Rapports in Tagen
    SLONG AnzOkay, AnzSource, SourceStart;
 
    for (c=0; c<Flugplan.Flug.AnzEntries(); c++)
@@ -1007,7 +1009,7 @@ void CPlane::FlugplaeneFortfuehren (SLONG PlayerNum)
    SLONG c, d;
    SLONG LastDate=0, LastTime=0;
 
-   //Den letzten Flug als Maßstab heraussuchen:
+   //Den letzten Flug als Maï¿½stab heraussuchen:
    for (c=0; c<Flugplan.Flug.AnzEntries(); c++)
    {
       if (Flugplan.Flug[c].ObjectType)
@@ -1024,7 +1026,7 @@ void CPlane::FlugplaeneFortfuehren (SLONG PlayerNum)
    {
       if (Flugplan.Flug[c].Landedate<Sim.Date)
       {
-         //Alte Aufträge oder Automatikflüge löschen:
+         //Alte Auftrï¿½ge oder Automatikflï¿½ge lï¿½schen:
          if (Flugplan.Flug[c].ObjectType==2 || Flugplan.Flug[c].ObjectType==3 || Flugplan.Flug[c].ObjectType==4)
          {
             Flugplan.StartCity=Flugplan.Flug[c].NachCity;
@@ -1059,7 +1061,7 @@ void CPlane::FlugplaeneFortfuehren (SLONG PlayerNum)
             }
          }
 
-         //Ist der Flug trotz Verschiebung noch von gestern? Dann löschen:
+         //Ist der Flug trotz Verschiebung noch von gestern? Dann lï¿½schen:
          if (Flugplan.Flug[c].ObjectType==1 && Flugplan.Flug[c].Landedate<Sim.Date)
          {
             Flugplan.Flug[c].ObjectType=0;
@@ -1069,7 +1071,7 @@ void CPlane::FlugplaeneFortfuehren (SLONG PlayerNum)
 
    CheckFlugplaene (PlayerNum);
 
-   //Autoflüge ggf. durch Routen ersetzen:
+   //Autoflï¿½ge ggf. durch Routen ersetzen:
    for (c=0; c<Flugplan.Flug.AnzEntries(); c++)
       if (Flugplan.Flug[c].ObjectType==3)
          for (d=0; d<Flugplan.Flug.AnzEntries(); d++)
@@ -1083,7 +1085,7 @@ void CPlane::FlugplaeneFortfuehren (SLONG PlayerNum)
 }
 
 //--------------------------------------------------------------------------------------------
-//Kann das Flugzeug zur Zeit verkauft werden, oder sind Flüge darauf gebucht?
+//Kann das Flugzeug zur Zeit verkauft werden, oder sind Flï¿½ge darauf gebucht?
 //--------------------------------------------------------------------------------------------
 BOOL CPlane::CanBeSold (void)
 {
@@ -1152,7 +1154,7 @@ SLONG CPlane::GetSaldo (void)
 }
 
 //--------------------------------------------------------------------------------------------
-// Gibt die größte Passagieranzahl eines noch offenen Fluges zurück:
+// Gibt die grï¿½ï¿½te Passagieranzahl eines noch offenen Fluges zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 SLONG CPlane::GetMaxPassengerOpenFlight (SLONG PlayerNum)
 {
@@ -1179,7 +1181,7 @@ SLONG CPlane::GetMaxPassengerOpenFlight (SLONG PlayerNum)
 }
 
 //--------------------------------------------------------------------------------------------
-//Löscht den Saldo:
+//Lï¿½scht den Saldo:
 //--------------------------------------------------------------------------------------------
 void CPlane::ClearSaldo (void)
 {
@@ -1187,7 +1189,7 @@ void CPlane::ClearSaldo (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Fügt einem Flugzeug eine Panne hinzu:
+//Fï¿½gt einem Flugzeug eine Panne hinzu:
 //--------------------------------------------------------------------------------------------
 void CPlane::AddPanne (SLONG Code)
 {
@@ -1207,7 +1209,7 @@ void CPlane::AddPanne (SLONG Code)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt eine Referenz auf den aktuellen Flugplan zurück:
+//Gibt eine Referenz auf den aktuellen Flugplan zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 const CFlugplanEintrag *CPlane::GetFlugplanEintrag (void)
 {
@@ -1339,7 +1341,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPanne &Panne)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein CPanne Datum:
+//Lï¿½dt ein CPanne Datum:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPanne &Panne)
 {
@@ -1406,7 +1408,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPlane &Plane)
 }
 
 //--------------------------------------------------------------------------------------------
-//Läd ein CPlane Datum:
+//Lï¿½d ein CPlane Datum:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPlane &Plane)
 {
@@ -1483,7 +1485,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CPlanes &Planes)
 }
 
 //--------------------------------------------------------------------------------------------
-//Läd ein CPlanes Datum:
+//Lï¿½d ein CPlanes Datum:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CPlanes &Planes)
 {
@@ -1511,7 +1513,7 @@ BOOL CPlanes::IsPlaneNameInUse (const CString &PlaneName)
 //--------------------------------------------------------------------------------------------
 // Repairiert die Referenzen in dem CXPlane Objekt. Dort zeigt das Album auf den Buffer und
 // wenn die CPlanes resizet wurden liegt der Buffer woanders und das Album fragt sich warum
-// es davon nichts weiß.
+// es davon nichts weiï¿½.
 //--------------------------------------------------------------------------------------------
 void CPlanes::RepairReferences (void)
 {
@@ -1523,7 +1525,7 @@ void CPlanes::RepairReferences (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Bewegt alle Flugzeuge für Animationen etwas weiter:
+//Bewegt alle Flugzeuge fï¿½r Animationen etwas weiter:
 //--------------------------------------------------------------------------------------------
 void CPlanes::DoOneStep (SLONG PlayerNum)
 {
@@ -1628,7 +1630,7 @@ void CPlaneNames::ReInit (const CString &TabFilename)
 
       TeakStrRemoveEndingCodes (Line, "\xd\xa\x1a\r");
 
-      //Tabellenzeile hinzufügen:
+      //Tabellenzeile hinzufï¿½gen:
       str = strtok (Line, ";\x8\"");
 
       if (atoi (strtok (NULL, TabSeparator))==1)
@@ -1643,7 +1645,7 @@ void CPlaneNames::ReInit (const CString &TabFilename)
       }
    }
 
-   //Keine freien Plätze offen lassen:
+   //Keine freien Plï¿½tze offen lassen:
    NameBuffer1.ReSize (Anz1);
    NameBuffer2.ReSize (Anz2);
 }
@@ -1667,7 +1669,7 @@ CString CPlaneNames::GetUnused (TEAKRAND *pRnd)
    SLONG   c;
    CString Name;
 
-   //Namen erster Qualitätsstufe
+   //Namen erster Qualitï¿½tsstufe
    for (c=0; c<NameBuffer1.AnzEntries(); c++)
    {
       Name = GetRandom(pRnd);
@@ -1679,7 +1681,7 @@ CString CPlaneNames::GetUnused (TEAKRAND *pRnd)
       if (!Sim.Players.IsPlaneNameInUse(NameBuffer1[c])) return (NameBuffer1[c]);
    }
 
-   //Namen zweiter Qualitätsstufe
+   //Namen zweiter Qualitï¿½tsstufe
    for (c=0; c<NameBuffer2.AnzEntries(); c++)
    {
       if (pRnd)

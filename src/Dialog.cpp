@@ -3371,6 +3371,15 @@ _und_jetzt_weiter_mit_etc:
                         TmpStr += bprintf (DialogTexte.GetS (TOKEN_BOSS, 2024*10+rand()%10)) + Space;
                   }
 
+                  // Grace period warning: append days-remaining count to this bubble
+                  if (Sim.Players.Players[DialogPar1].Image<-990 &&
+                      Sim.Players.Players[DialogPar1].ImageWarningDate!=-1)
+                  {
+                     SLONG daysLeft=14-(Sim.Date-Sim.Players.Players[DialogPar1].ImageWarningDate);
+                     if (daysLeft<0) daysLeft=0;
+                     TmpStr += bprintf (DialogTexte.GetS (TOKEN_BOSS, 20280), (LPCSTR)(CString)bitoa(daysLeft)) + Space;
+                  }
+
                   MakeSayWindow (0, 12040, TmpStr, pFontPartner);
                   break;
                }

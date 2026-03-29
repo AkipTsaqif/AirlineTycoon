@@ -74,6 +74,7 @@ PLAYER::PLAYER ()
 
    pSmack           = NULL;
    NetworkID        = 0;
+   ImageWarningDate = -1;
 
    RobotActions.ReSize (5);
    Sympathie.ReSize (4);
@@ -947,6 +948,9 @@ void PLAYER::NewDay (void)
       Image+=(SLONG(Sim.Date)%3);
       Limit (SLONG(-1000), Image, SLONG(1000));
    }
+
+   if (Image>=-990)
+      ImageWarningDate=-1;
 
    if (Owner==1 && Bonus==0)
    {
@@ -4914,6 +4918,36 @@ void PLAYER::RobotExecuteAction(void)
             }
          }
 
+         //AI airport expansion: pay 1M DM if no free gates and conditions allow
+         if (Owner==1 && !Sim.ExpandAirport)
+         {
+            bool bBelowCap = !(Sim.CheckIn>=6 ||
+                               (Sim.CheckIn>=2 &&
+                                Sim.Difficulty<=DIFF_NORMAL &&
+                                Sim.Difficulty!=DIFF_FREEGAME));
+            if (Airport.GetNumberOfFreeGates()==0 && bBelowCap &&
+                Sim.Date>=8 && Sim.Date-Sim.LastExpansionDate>=3)
+            {
+               SLONG nGateMinus1=0;
+               forall (c, Planes)
+                  if (Planes.IsInAlbum(c))
+                     for (SLONG ei=0; ei<Planes[c].Flugplan.Flug.AnzEntries(); ei++)
+                        if (Planes[c].Flugplan.Flug[ei].ObjectType!=0 &&
+                            Planes[c].Flugplan.Flug[ei].Gate==-1)
+                           nGateMinus1++;
+               bool bAuctionEmpty=true;
+               for (c=0; c<7; c++)
+                  if (TafelData.Gate[c].ZettelId && TafelData.Gate[c].Player!=PlayerNum)
+                     { bAuctionEmpty=false; break; }
+               if (Money>=10000000 || (nGateMinus1>=3 && bAuctionEmpty))
+               {
+                  Sim.ExpandAirport=TRUE;
+                  Sim.SendSimpleMessage(ATNET_EXPAND_AIRPORT);
+                  ChangeMoney(-1000000, 3170, "");
+               }
+            }
+         }
+
          //Niederlassung erwerben:
          if ((!SavesForPlane && !SavesForRocket) || Sim.Date<5 || LocalRandom.Rand(25)==0 || (PlayerNum==0 && LocalRandom.Rand(3)==0))
             for (c=0; c<7; c++)
@@ -6655,6 +6689,8 @@ TEAKFILE &operator << (TEAKFILE &File, const PLAYER &Player)
    File << Player.CalledPlayer  << Player.BoredOfPlayer;
    File << Player.IsTalking     << Player.IsWalking2Player;
 
+   if (SaveVersion==1 && SaveVersionSub>=108) File << Player.ImageWarningDate;
+
    return (File);
 }
 
@@ -6840,6 +6876,11 @@ TEAKFILE &operator >> (TEAKFILE &File, PLAYER &Player)
    File >> Player.PlayerDialog  >> Player.PlayerDialogState;
    File >> Player.CalledPlayer  >> Player.BoredOfPlayer;
    File >> Player.IsTalking     >> Player.IsWalking2Player;
+
+   if (SaveVersion==1 && SaveVersionSub>=108)
+      File >> Player.ImageWarningDate;
+   else
+      Player.ImageWarningDate=-1;
 
    return (File);
 }

@@ -1870,6 +1870,7 @@ class PLAYER
       FBUFFER<__int64> MoneyPast;  //Vergangenheitslinie des Geldes
       __int64          Credit;     //Seine Schulden
       SLONG          Image;      //Firmenimage generell [-1000..1000]
+      SLONG          ImageWarningDate; //Day image first fell below -990; -1 = not in warning state
       SLONG          BadKerosin; //Soviel Liter schlechtes Kerosin wurde gekauft
       SLONG          KerosinKind;//Diese Art wird getankt
       SLONG          Tank;       //Soviel kann man auf Reserve Bunkern

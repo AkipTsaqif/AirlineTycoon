@@ -3380,7 +3380,17 @@ _und_jetzt_weiter_mit_etc:
                {
                   CString TmpStr;
 
+                  bool bFireNow=false;
                   if (Sim.Players.Players[DialogPar1].Image<-990)
+                  {
+                     SLONG &warningDate=Sim.Players.Players[DialogPar1].ImageWarningDate;
+                     if (warningDate==-1) warningDate=Sim.Date;
+                     if (Sim.Date-warningDate>=14) bFireNow=true;
+                  }
+                  else
+                     Sim.Players.Players[DialogPar1].ImageWarningDate=-1;
+
+                  if (bFireNow)
                   {
                      MakeSayWindow (0, TOKEN_BOSS, 2023*10+rand()%2, pFontPartner);
                   }

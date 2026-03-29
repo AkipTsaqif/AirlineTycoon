@@ -6689,7 +6689,7 @@ TEAKFILE &operator << (TEAKFILE &File, const PLAYER &Player)
    File << Player.CalledPlayer  << Player.BoredOfPlayer;
    File << Player.IsTalking     << Player.IsWalking2Player;
 
-   if (SaveVersion==1 && SaveVersionSub>=108) File << Player.ImageWarningDate;
+   if (SaveVersion==1 && SaveVersionSub>=109) File << Player.ImageWarningDate;
 
    return (File);
 }
@@ -6877,7 +6877,7 @@ TEAKFILE &operator >> (TEAKFILE &File, PLAYER &Player)
    File >> Player.CalledPlayer  >> Player.BoredOfPlayer;
    File >> Player.IsTalking     >> Player.IsWalking2Player;
 
-   if (SaveVersion==1 && SaveVersionSub>=108)
+   if (SaveVersion==1 && SaveVersionSub>=109)
       File >> Player.ImageWarningDate;
    else
       Player.ImageWarningDate=-1;

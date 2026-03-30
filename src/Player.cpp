@@ -4890,7 +4890,7 @@ void PLAYER::RobotExecuteAction(void)
             SLONG Cheapest;
 
             for (c=0; c<7; c++)
-               if (TafelData.Gate[c].ZettelId && TafelData.Gate[c].Player!=PlayerNum)
+               if (TafelData.Gate[c].ZettelId!=-1 && TafelData.Gate[c].Player!=PlayerNum)
                   break;
 
             if (c<7)
@@ -4898,8 +4898,8 @@ void PLAYER::RobotExecuteAction(void)
                SLONG n=-1;
                Cheapest=99999999;
                for (c=0; c<7; c++)
-                  if (TafelData.Gate[c].ZettelId &&
-                      TafelData.Gate[c].Player!=PlayerNum && 
+                  if (TafelData.Gate[c].ZettelId!=-1 &&
+                      TafelData.Gate[c].Player!=PlayerNum &&
                       (TafelData.Gate[c].Preis<Cheapest || TafelData.Gate[c].Player==dislike || PlayerNum==0))
                   {
                      Cheapest=TafelData.Gate[c].Preis;
@@ -4937,7 +4937,7 @@ void PLAYER::RobotExecuteAction(void)
                            nGateMinus1++;
                bool bAuctionEmpty=true;
                for (c=0; c<7; c++)
-                  if (TafelData.Gate[c].ZettelId && TafelData.Gate[c].Player!=PlayerNum)
+                  if (TafelData.Gate[c].ZettelId!=-1 && TafelData.Gate[c].Player!=PlayerNum)
                      { bAuctionEmpty=false; break; }
                if (Money>=10000000 || (nGateMinus1>=3 && bAuctionEmpty))
                {

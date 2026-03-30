@@ -2602,6 +2602,11 @@ void SIM::NewDay (void)
 
    ReformGates ();
 
+   //Fix G: update AI flight gate assignments after nightly awards
+   for (c=0; c<Sim.Players.AnzPlayers; c++)
+      if (!Sim.Players.Players[c].IsOut && Sim.Players.Players[c].Owner==1)
+         Sim.Players.Players[c].PlanGates();
+
    Airport.CreateGateMapper();
 
    //Auftr�ge, Routen, Etc.

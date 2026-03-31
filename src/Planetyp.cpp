@@ -1161,7 +1161,7 @@ SLONG CPlane::GetMaxPassengerOpenFlight (SLONG PlayerNum)
    SLONG rc=0;
 
    for (SLONG c=0; c<Flugplan.Flug.AnzEntries(); c++)
-      if (Flugplan.Flug[c].Landedate>=Sim.Date)
+      if (Flugplan.Flug[c].Landedate>Sim.Date || (Flugplan.Flug[c].Landedate==Sim.Date && Flugplan.Flug[c].Landezeit>Sim.GetHour()))
       {
          CFlugplanEintrag &qFPE=Flugplan.Flug[c];
 

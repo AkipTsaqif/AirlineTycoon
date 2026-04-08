@@ -6959,7 +6959,7 @@ bool RobotUse (SLONG FeatureId)
       case ROBOT_USE_FORCEROUTES      : pFeatureDesc = "------" "." "-----X----" "----------"; break;
       case ROBOT_USE_HARDWERBUNG      : pFeatureDesc = "----XX" "X" "------XXXX" "----------"; break;
       case ROBOT_USE_SELLSHARES       : pFeatureDesc = "XXXX--" "." "XXX-------" "X---------"; break;
-      case ROBOT_USE_BUYOWNSHARES     : pFeatureDesc = "----XX" "." "-------XXX" "----------"; break;
+      case ROBOT_USE_BUYOWNSHARES     : pFeatureDesc = "----XX" "X" "-------XXX" "----------"; break;
       case ROBOT_USE_REBUYSHARES      : pFeatureDesc = "-----X" "." "--------XX" "----------"; break;
       case ROBOT_USE_TUTORIALLIMIT    : pFeatureDesc = "X-----" "." "----------" "----------"; break;
       case ROBOT_USE_ROUTEMISSION     : pFeatureDesc = "---X--" "." "----------" "----------"; break;
@@ -6977,7 +6977,7 @@ bool RobotUse (SLONG FeatureId)
       case ROBOT_USE_LUXERY           : pFeatureDesc = "------" "." "----X-----" "-X--------"; break;
       case ROBOT_USE_TRAVELHOLDING    : pFeatureDesc = "XXXXXX" "X" "XXXXX-XXXX" "XXXXXXXXXX"; break;
       case ROBOT_USE_IMAGEBONUS       : pFeatureDesc = "------" "." "-----X----" "----------"; break;
-      case ROBOT_USE_GOODPLANES       : pFeatureDesc = "------" "." "-----X----" "-X--------"; break;
+      case ROBOT_USE_GOODPLANES       : pFeatureDesc = "------" "X" "-----X----" "-X--------"; break;
       case ROBOT_USE_REPAIRPLANES     : pFeatureDesc = "------" "." "------X---" "----------"; break;
       case ROBOT_USE_HIGHSHAREPRICE   : pFeatureDesc = "------" "." "-------X--" "XXXXXXXXXX"; break;
       case ROBOT_USE_WORKQUICK        : pFeatureDesc = "------" "." "---XXXXXXX" "XXXXXXXXXX"; break;
@@ -6999,7 +6999,7 @@ bool RobotUse (SLONG FeatureId)
       case ROBOT_USE_PETROLAIR        : pFeatureDesc = "XXXXXX" "!" "XXXXXXXXXX" "XXXXX-XX--"; break;
       case ROBOT_USE_MAX20PERCENT     : pFeatureDesc = "XXXXXX" "!" "XXXXXXXXXX" "XXXXX-XXXX"; break;
       case ROBOT_USE_TANKS            : pFeatureDesc = "------" "." "----------" "--------XX"; break;
-      case ROBOT_USE_DESIGNER         : pFeatureDesc = "------" "?" "----------" "---XX-XX--"; break;
+      case ROBOT_USE_DESIGNER         : pFeatureDesc = "------" "X" "----------" "---XX-XX--"; break;
       case ROBOT_USE_DESIGNER_BUY     : pFeatureDesc = "------" "X" "----------" "----X--X--"; break;
 
       default:

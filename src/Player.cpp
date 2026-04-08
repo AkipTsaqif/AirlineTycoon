@@ -4926,7 +4926,7 @@ void PLAYER::RobotExecuteAction(void)
                                 Sim.Difficulty<=DIFF_NORMAL &&
                                 Sim.Difficulty!=DIFF_FREEGAME));
             if (Airport.GetNumberOfFreeGates()==0 && bBelowCap &&
-                Sim.Date>=8 && Sim.Date-Sim.LastExpansionDate>=3)
+                Sim.Date>=30 && Sim.Date-Sim.LastExpansionDate>=14)
             {
                SLONG nGateMinus1=0;
                forall (c, Planes)
@@ -4939,7 +4939,7 @@ void PLAYER::RobotExecuteAction(void)
                for (c=0; c<7; c++)
                   if (TafelData.Gate[c].ZettelId!=-1 && TafelData.Gate[c].Player!=PlayerNum)
                      { bAuctionEmpty=false; break; }
-               if (Money>=10000000 || (nGateMinus1>=3 && bAuctionEmpty))
+               if (nGateMinus1>=3 && (Money>=10000000 || bAuctionEmpty))
                {
                   Sim.ExpandAirport=TRUE;
                   Sim.SendSimpleMessage(ATNET_EXPAND_AIRPORT);

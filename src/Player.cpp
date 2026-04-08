@@ -5206,7 +5206,7 @@ void PLAYER::RobotExecuteAction(void)
                   ChangeMoney(-gWerbePrice[6+3], 3+3120, "");
                }
             }
-            if ((((Image<0 || ((DoRoutes || WantToDoRoutes) && Image<300)) && Money>7500000 && !SavesForPlane && !SavesForRocket) || (Money>750000 && RobotUse(ROBOT_USE_MUCHWERBUNG) && (Image+10<Sim.Players.Players[(PlayerNum+1)%3].Image || (dislike!=-1 && Image+10<Sim.Players.Players[dislike].Image)))) || (Image<1000 && Money-Credit>20000000 && !SavesForPlane && !SavesForRocket))
+            if ((((Image<100 || ((DoRoutes || WantToDoRoutes) && Image<300)) && Money>7500000 && !SavesForPlane && !SavesForRocket) || (Money>750000 && RobotUse(ROBOT_USE_MUCHWERBUNG) && (Image+10<Sim.Players.Players[(PlayerNum+1)%3].Image || (dislike!=-1 && Image+10<Sim.Players.Players[dislike].Image)))) || (Image<1000 && Money-Credit>20000000 && !SavesForPlane && !SavesForRocket))
             {
                if (DoRoutes || RobotUse(ROBOT_USE_HARDWERBUNG))
                {
@@ -6957,7 +6957,7 @@ bool RobotUse (SLONG FeatureId)
       case ROBOT_USE_ROUTES           : pFeatureDesc = "------" "." "----------" "----------"; break;
       case ROBOT_USE_SUGGESTROUTES    : pFeatureDesc = "---X--" "." "----------" "----------"; break;
       case ROBOT_USE_FORCEROUTES      : pFeatureDesc = "------" "." "-----X----" "----------"; break;
-      case ROBOT_USE_HARDWERBUNG      : pFeatureDesc = "----XX" "." "------XXXX" "----------"; break;
+      case ROBOT_USE_HARDWERBUNG      : pFeatureDesc = "----XX" "X" "------XXXX" "----------"; break;
       case ROBOT_USE_SELLSHARES       : pFeatureDesc = "XXXX--" "." "XXX-------" "X---------"; break;
       case ROBOT_USE_BUYOWNSHARES     : pFeatureDesc = "----XX" "." "-------XXX" "----------"; break;
       case ROBOT_USE_REBUYSHARES      : pFeatureDesc = "-----X" "." "--------XX" "----------"; break;

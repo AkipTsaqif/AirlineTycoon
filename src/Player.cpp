@@ -4377,7 +4377,7 @@ void PLAYER::RobotExecuteAction(void)
                   SLONG d, e, VonCity, VonZeit;
 
                   NetGenericAsync (17001+Sim.Date*100, c, PlayerNum);
-                  for (level=0; level<=2; level++)
+                  for (level=0; level<=5; level++)
                   {
                      VonCity=Planes[c].Flugplan.StartCity;
                      VonZeit=Sim.GetHour()+2;
@@ -4445,7 +4445,7 @@ void PLAYER::RobotExecuteAction(void)
                                  }
                               }
                         }
-                        else if (level==2)
+                        else
                         {
                            SLONG Min=999999999;
                            SLONG MinE=-1;
@@ -4520,7 +4520,7 @@ void PLAYER::RobotExecuteAction(void)
                {
                   SLONG d, e, VonCity, VonZeit;
 
-                  for (level=0; level<=2; level++)
+                  for (level=0; level<=5; level++)
                   {
                      VonCity=Planes[c].Flugplan.StartCity;
                      VonZeit=Sim.GetHour()+2;
@@ -4587,7 +4587,7 @@ void PLAYER::RobotExecuteAction(void)
                                  }
                               }
                         }
-                        else if (level==2)
+                        else
                         {
                            SLONG Min=999999999;
                            SLONG MinE=-1;

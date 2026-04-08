@@ -3418,8 +3418,8 @@ void PLAYER::RobotExecuteAction(void)
          if (!DoRoutes)
          {
             if (RobotUse(ROBOT_USE_SUGGESTROUTES) ||
-                (PlayerNum+15<Sim.Date && Planes.GetNumUsed()>3) ||
-                (PlayerNum+15<Sim.Date && (Sim.Players.Players[(PlayerNum+3)%4].DoRoutes==1 || Sim.Players.Players[(PlayerNum+3)%4].DoRoutes>20)))
+                (PlayerNum+7<Sim.Date && Planes.GetNumUsed()>2) ||
+                (PlayerNum+7<Sim.Date && (Sim.Players.Players[(PlayerNum+3)%4].DoRoutes==1 || Sim.Players.Players[(PlayerNum+3)%4].DoRoutes>20)))
             {
                SLONG c, Anz=0;
 
@@ -4985,7 +4985,7 @@ void PLAYER::RobotExecuteAction(void)
                   if (RentRouten.RentRouten[c].Rang)
                   {
                      Anz++;
-                     if (RentRouten.RentRouten[c].TageMitGering>1) break;
+                     if (RentRouten.RentRouten[c].TageMitGering>5) break;
                   }
                }
             if (c<RentRouten.RentRouten.AnzEntries()) break; //Nicht solange eine Route krieselt
@@ -5078,7 +5078,7 @@ void PLAYER::RobotExecuteAction(void)
                }
             }
          }
-         while (0);
+         while (BestC!=-1);
          WorkCountdown=20*7;
          break;
 

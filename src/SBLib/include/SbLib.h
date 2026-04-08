@@ -21,7 +21,7 @@ public:
 
     long GetNumberOfElements()
     {
-        return mList.size();
+        return (long)mList.size();
     }
 
     T& Get(size_t i)

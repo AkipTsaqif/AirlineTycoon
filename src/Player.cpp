@@ -4973,8 +4973,11 @@ void PLAYER::RobotExecuteAction(void)
          break;
 
       case ACTION_VISITROUTEBOX:
+         {
+         bool bBoughtRoute;
          do
          {
+            bBoughtRoute = false;
             SLONG        c, Anz=0;
             BUFFER<BOOL> IsBuyable;
 
@@ -5075,10 +5078,12 @@ void PLAYER::RobotExecuteAction(void)
                         RentRouten.RentRouten[c].TageMitGering=0;
                         break;
                      }
+                  bBoughtRoute = true;
                }
             }
          }
-         while (BestC!=-1);
+         while (bBoughtRoute);
+         } //end ACTION_VISITROUTEBOX scope
          WorkCountdown=20*7;
          break;
 

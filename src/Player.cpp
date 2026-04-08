@@ -4936,7 +4936,7 @@ void PLAYER::RobotExecuteAction(void)
                                 Sim.Difficulty<=DIFF_NORMAL &&
                                 Sim.Difficulty!=DIFF_FREEGAME));
             if (Airport.GetNumberOfFreeGates()==0 && bBelowCap &&
-                Sim.Date>=30 && Sim.Date-Sim.LastExpansionDate>=14)
+                Sim.Date>=30 && Sim.Date-Sim.LastExpansionDate>=30)
             {
                SLONG nGateMinus1=0;
                forall (c, Planes)
@@ -4998,7 +4998,7 @@ void PLAYER::RobotExecuteAction(void)
                   if (RentRouten.RentRouten[c].Rang)
                   {
                      Anz++;
-                     if (RentRouten.RentRouten[c].TageMitGering>5) break;
+                     if (RentRouten.RentRouten[c].TageMitGering>7) break;
                   }
                }
             if (c<RentRouten.RentRouten.AnzEntries()) break; //Nicht solange eine Route krieselt

@@ -1584,11 +1584,19 @@ void PLAYER::RentGate (SLONG Nummer, SLONG Miete)
 //--------------------------------------------------------------------------------------------
 long PLAYER::CalcCreditLimit (void)
 {
-   __int64 cr=(Money-Credit)/2-Credit;
+   SLONG c, planeValue = 0;
+   forall (c, Planes)
+      if (Planes.IsInAlbum(c))
+         planeValue += Planes[c].CalculatePrice();
 
-   if (Credit<200000) cr=max(cr, 200000-cr);
+   __int64 netWorth = (Money - Credit) + planeValue;
+   __int64 cr = netWorth / 2 - Credit;
 
-   return (long(min(0x7fffffff, max(0, cr))));
+   if (Credit < 1000000) cr = max(cr, (__int64)(1000000 - Credit));
+
+   cr = min(cr, (__int64)200000000);
+
+   return (long(min(0x7fffffff, max(0LL, cr))));
 }
 
 //--------------------------------------------------------------------------------------------

@@ -1590,7 +1590,9 @@ long PLAYER::CalcCreditLimit (void)
          planeValue += Planes[c].CalculatePrice();
 
    __int64 netWorth = (Money - Credit) + planeValue;
-   __int64 cr = netWorth / 2 - Credit;
+   __int64 asset_limit   = netWorth / 2 - Credit;
+   __int64 revenue_limit = max((__int64)0, (__int64)BilanzGestern.GetSumme()) * 30 - Credit;
+   __int64 cr = max(asset_limit, revenue_limit);
 
    if (Credit < 1000000) cr = max(cr, (__int64)(1000000 - Credit));
 

@@ -2447,9 +2447,9 @@ void SIM::NewDay (void)
    if (ExpandAirport)
    {
       ExpandAirport=0;
+      Sim.CheckIn++;
       Sim.WaitZone++;
-      Sim.CheckIn  = min(Sim.CheckIn+1, 5);  // check*.dat only exists up to level 5
-      Sim.Suitcase = min(Sim.WaitZone,   5);  // suit*.dat  only exists up to level 5
+      Sim.Suitcase = Sim.WaitZone;
    
       LastExpansionDate = Sim.Date;
 
@@ -3356,15 +3356,15 @@ BOOL SIM::LoadGame (SLONG Number)
    //Manchmal wird der Checkin nicht richtig gespeichert. Warum, wei� ich nicht, aber das hier korrigiert es:
    if (d-4+1>Sim.CheckIn)
    {
+      Sim.CheckIn  = min(d-4+1, 69);
       Sim.WaitZone = min(d-4+1, 69);
-      Sim.CheckIn  = min(Sim.WaitZone, 5);  // check*.dat only exists up to level 5
       goto reload_airport;
    }
 
    if (SaveVersionSub<107)
    {
 reload_airport:
-      Sim.Suitcase = min(Sim.WaitZone, 5);   // suit*.dat only exists up to level 5
+      Sim.Suitcase = Sim.WaitZone;
       Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, Sim.WaitZone, Sim.RightEnd);
    }
 

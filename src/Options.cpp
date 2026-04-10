@@ -419,7 +419,13 @@ void Options::OnPaint()
 			break;
 			}
 		case 4: //Sonstiges:
-			if ((Line >= 2 && Line <= 10) || Line == 11) SetMouseLook(CURSOR_HOT, 0, -100, 0);
+			if ((Line >= 2 && Line <= 9) || Line == 11) SetMouseLook(CURSOR_HOT, 0, -100, 0);
+			if (Line == 10)
+			{
+				SetMouseLook(CURSOR_HOT, 4052, StandardTexte.GetS(TOKEN_MISC, 4054), ROOM_OPTIONS, 0);
+				if (ToolTipState == FALSE) ToolTipTimer = timeGetTime() - 601;
+				if (Line != LastLine) ToolTipState = FALSE;
+			}
 			break;
 
 		case 5: //Laden

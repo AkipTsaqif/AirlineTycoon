@@ -4997,7 +4997,7 @@ void PLAYER::RobotExecuteAction(void)
          //AI airport expansion: pay 1M DM if no free gates and conditions allow
          if (Owner==1 && !Sim.ExpandAirport)
          {
-            bool bBelowCap = !(Sim.CheckIn>=69 ||
+            bool bBelowCap = !(Sim.WaitZone>=69 ||
                                (Sim.CheckIn>=2 &&
                                 Sim.Difficulty<=DIFF_NORMAL &&
                                 Sim.Difficulty!=DIFF_FREEGAME));

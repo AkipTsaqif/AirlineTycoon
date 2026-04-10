@@ -4968,7 +4968,7 @@ void PLAYER::RobotExecuteAction(void)
                          TafelData.Gate[c].Player!=dislike)
                      {
                         SLONG nHolderGateless = 0;
-                        CPLANES &qHP = Sim.Players.Players[holderNum].Planes;
+                        CPlanes &qHP = Sim.Players.Players[holderNum].Planes;
                         for (SLONG hp=0; hp<SLONG(qHP.AnzEntries()); hp++)
                            if (qHP.IsInAlbum(hp))
                               for (SLONG hf=0; hf<qHP[hp].Flugplan.Flug.AnzEntries(); hf++)

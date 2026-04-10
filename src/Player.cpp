@@ -4937,6 +4937,15 @@ void PLAYER::RobotExecuteAction(void)
             }
          if (bNeedsGate) //Gates erwerben
          {
+            // Count our own gate-less flights for need-based outbidding
+            SLONG nMyGateless = 0;
+            for (SLONG gi=0; gi<SLONG(Planes.AnzEntries()); gi++)
+               if (Planes.IsInAlbum(gi))
+                  for (SLONG ei=0; ei<Planes[gi].Flugplan.Flug.AnzEntries(); ei++)
+                     if (Planes[gi].Flugplan.Flug[ei].ObjectType!=0 &&
+                         Planes[gi].Flugplan.Flug[ei].Gate==-1)
+                        nMyGateless++;
+
             SLONG Cheapest;
 
             for (c=0; c<7; c++)
@@ -4950,8 +4959,25 @@ void PLAYER::RobotExecuteAction(void)
                for (c=0; c<7; c++)
                   if (TafelData.Gate[c].ZettelId!=-1 &&
                       TafelData.Gate[c].Player!=PlayerNum &&
-                      (TafelData.Gate[c].Preis<Cheapest || TafelData.Gate[c].Player==dislike || PlayerNum==0))
+                      (TafelData.Gate[c].Preis<Cheapest || TafelData.Gate[c].Player==dislike))
                   {
+                     // Need-based: don't outbid an AI that needs the gate at least as much
+                     SLONG holderNum = TafelData.Gate[c].Player;
+                     if (holderNum>=0 && holderNum<Sim.Players.AnzPlayers &&
+                         Sim.Players.Players[holderNum].Owner==1 &&
+                         TafelData.Gate[c].Player!=dislike)
+                     {
+                        SLONG nHolderGateless = 0;
+                        CPLANES &qHP = Sim.Players.Players[holderNum].Planes;
+                        for (SLONG hp=0; hp<SLONG(qHP.AnzEntries()); hp++)
+                           if (qHP.IsInAlbum(hp))
+                              for (SLONG hf=0; hf<qHP[hp].Flugplan.Flug.AnzEntries(); hf++)
+                                 if (qHP[hp].Flugplan.Flug[hf].ObjectType!=0 &&
+                                     qHP[hp].Flugplan.Flug[hf].Gate==-1)
+                                    nHolderGateless++;
+                        if (nMyGateless <= nHolderGateless)
+                           continue; // holder needs it at least as much — don't outbid
+                     }
                      Cheapest=TafelData.Gate[c].Preis;
                      n=c;
                   }

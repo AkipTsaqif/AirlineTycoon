@@ -19,11 +19,14 @@ Assets (sprites, audio, data CSVs) are **not** included — you need a GOG copy 
 The branch was migrated from VS2019/CMake to **Visual Studio 2026 Community** with a native `.sln`/`.vcxproj` build.
 
 **Quick build:**
-```
-powershell -Command "& 'C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe' 'AirlineTycoon.sln' /p:Configuration=Release /p:Platform=x64 /m /v:minimal"
-```
+- **laptop:** `powershell -Command "& 'C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe' 'AirlineTycoon.sln' /p:Configuration=Release /p:Platform=x64 /m /v:minimal"`
+- **pc:** `powershell -Command "& 'C:\Program Files\Microsoft Visual Studio\18\Insiders\MSBuild\Current\Bin\MSBuild.exe' 'AirlineTycoon.sln' /p:Configuration=Release /p:Platform=x64 /m /v:minimal"`
 
-The post-build event automatically copies `AT.exe` to `C:\Games\Airline Tycoon Deluxe\At.exe`.
+**Machine passkey:** `laptop` = `C:\Games\Airline Tycoon Deluxe\` — `pc` = `D:\Games\Steam\steamapps\common\Airline Tycoon Deluxe\`
+
+The post-build event automatically copies `AT.exe` to the game folder:
+- **laptop:** `C:\Games\Airline Tycoon Deluxe\At.exe`
+- **pc:** `D:\Games\Steam\steamapps\common\Airline Tycoon Deluxe\At.exe`
 
 **What was fixed to get it building:**
 - All `.vcxproj` toolsets updated: v142 → v145, SDK 10.0.19041.0 → 10.0.26100.0
@@ -33,7 +36,7 @@ The post-build event automatically copies `AT.exe` to `C:\Games\Airline Tycoon D
 - Post-build `xcopy` replaced with `copy /Y`
 - SDL fullscreen scaling fixed: removed premature `SDL_GetWindowSurface()` call, added `SDL_RenderSetLogicalSize(640, 480)` so the 640×480 game content scales to any resolution
 
-**Debugger config** (`AT.vcxproj.user`): debugger command points at `C:\Games\Airline Tycoon Deluxe\At.exe` so F5 launches from the game folder where the assets live.
+**Debugger config** (`AT.vcxproj.user`): debugger command points at the game folder (see passkey above) so F5 launches from the game folder where the assets live.
 
 ---
 

@@ -3680,7 +3680,7 @@ _ehemals_2080:
                   }
                   else
                   {
-                     if (Sim.CheckIn>=6 || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
+                     if (Sim.CheckIn>=69 || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
                         MakeSayWindow (0, TOKEN_BOSS, 4111, pFontPartner);
                      else
                      {

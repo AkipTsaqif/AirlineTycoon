@@ -2853,6 +2853,36 @@ void PLAYER::RobotPlanRoutes(void)
    LastCity.FillWith (0);
    PlanesOnRoute.FillWith (0);
 
+   // One-time conflict repair: if any two planes share a route with the same departure time, wipe and rebuild
+   {
+      bool bRouteConflict = false;
+      forall (c, Routen)
+         if (Routen.IsInAlbum(c) && !bRouteConflict)
+         {
+            SLONG firstTime = -1;
+            forall (d, Planes)
+               if (Planes.IsInAlbum(d))
+                  for (e=0; e<Planes[d].Flugplan.Flug.AnzEntries() && !bRouteConflict; e++)
+                     if (Planes[d].Flugplan.Flug[e].ObjectType==1 &&
+                         Planes[d].Flugplan.Flug[e].ObjectId==c)
+                     {
+                        if (firstTime==-1) firstTime=Planes[d].Flugplan.Flug[e].Startzeit;
+                        else if (Planes[d].Flugplan.Flug[e].Startzeit==firstTime)
+                           bRouteConflict=true;
+                     }
+         }
+      if (bRouteConflict)
+      {
+         forall (c, Planes)
+            if (Planes.IsInAlbum(c))
+               for (d=0; d<Planes[c].Flugplan.Flug.AnzEntries(); d++)
+                  if (Planes[c].Flugplan.Flug[d].ObjectType==1)
+                     Planes[c].Flugplan.Flug[d].ObjectType=0;
+         PlanesOnRoute.FillWith(0);
+         LastCity.FillWith(0);
+      }
+   }
+
    //Alte Routenpl�ne l�schen:
    forall (c, Planes)
       if (Planes.IsInAlbum(c))
@@ -3046,6 +3076,7 @@ void PLAYER::RobotPlanRoutes(void)
                   LastCity[BestD] = -1;
 
                FlightAdded=TRUE;
+               PlanesOnRoute[BestC]++;
                break;
             }
          }
@@ -3064,6 +3095,7 @@ void PLAYER::RobotPlanRoutes(void)
    while (FlightAdded);
 
    PlanGates();
+   DelayFlightsIfNecessary();
 
    //Autofl�ge ggf. durch Routen ersetzen:
    forall (d, Planes)
@@ -4260,7 +4292,15 @@ void PLAYER::RobotExecuteAction(void)
                if (Planes.IsInAlbum(dd) && Planes[dd].Zustand < 40)
                   { bFleetDegraded = true; break; }
 
-         if ((BuyBigPlane || bFleetDegraded) && !RobotUse(ROBOT_USE_GROSSESKONTO))
+            SLONG nNoGate = 0;
+            for (SLONG nc=0; nc<SLONG(Planes.AnzEntries()); nc++)
+               if (Planes.IsInAlbum(nc))
+                  for (SLONG ei=0; ei<Planes[nc].Flugplan.Flug.AnzEntries(); ei++)
+                     if (Planes[nc].Flugplan.Flug[ei].ObjectType!=0 &&
+                         Planes[nc].Flugplan.Flug[ei].Gate==-1)
+                        nNoGate++;
+
+         if ((BuyBigPlane || bFleetDegraded) && !RobotUse(ROBOT_USE_GROSSESKONTO) && nNoGate==0)
          {
             Sim.UpdateUsedPlanes ();
             for (SLONG d=0; d<3; d++)
@@ -4931,20 +4971,23 @@ void PLAYER::RobotExecuteAction(void)
          //AI airport expansion: pay 1M DM if no free gates and conditions allow
          if (Owner==1 && !Sim.ExpandAirport)
          {
-            bool bBelowCap = !(Sim.CheckIn>=6 ||
+            bool bBelowCap = !(Sim.CheckIn>=69 ||
                                (Sim.CheckIn>=2 &&
                                 Sim.Difficulty<=DIFF_NORMAL &&
                                 Sim.Difficulty!=DIFF_FREEGAME));
+            SLONG nGateMinus1=0;
+            forall (c, Planes)
+               if (Planes.IsInAlbum(c))
+                  for (SLONG ei=0; ei<Planes[c].Flugplan.Flug.AnzEntries(); ei++)
+                     if (Planes[c].Flugplan.Flug[ei].ObjectType!=0 &&
+                         Planes[c].Flugplan.Flug[ei].Gate==-1)
+                        nGateMinus1++;
+
+            SLONG expansionCooldown = max(7L, 30L - max(0L, (long)nGateMinus1-2) * 5);
+
             if (Airport.GetNumberOfFreeGates()==0 && bBelowCap &&
-                Sim.Date>=30 && Sim.Date-Sim.LastExpansionDate>=30)
+                Sim.Date>=30 && Sim.Date-Sim.LastExpansionDate>=expansionCooldown)
             {
-               SLONG nGateMinus1=0;
-               forall (c, Planes)
-                  if (Planes.IsInAlbum(c))
-                     for (SLONG ei=0; ei<Planes[c].Flugplan.Flug.AnzEntries(); ei++)
-                        if (Planes[c].Flugplan.Flug[ei].ObjectType!=0 &&
-                            Planes[c].Flugplan.Flug[ei].Gate==-1)
-                           nGateMinus1++;
                bool bAuctionEmpty=true;
                for (c=0; c<7; c++)
                   if (TafelData.Gate[c].ZettelId!=-1 && TafelData.Gate[c].Player!=PlayerNum)

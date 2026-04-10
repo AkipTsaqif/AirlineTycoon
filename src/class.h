@@ -2296,6 +2296,7 @@ class COptions
       BOOL        OptionRoundNumber;
       BOOL        OptionSpeechBubble;
       BOOL        OptionRandomStartday;
+      BOOL        OptionExpandAirport;
       CString     OptionPlayerNames[4];
       CString     OptionAirlineNames[4];
       CString     OptionAirlineAbk[4];

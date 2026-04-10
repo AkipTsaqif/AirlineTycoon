@@ -4091,6 +4091,7 @@ void COptions::ReadOptions (void)
    if (!reg.ReadRegistryKey (&OptionFax))             OptionFax             = TRUE;
    if (!reg.ReadRegistryKey (&OptionRoundNumber))     OptionRoundNumber     = TRUE;
    if (!reg.ReadRegistryKey (&OptionRandomStartday))  OptionRandomStartday  = TRUE;
+   if (!reg.ReadRegistryKey (&OptionExpandAirport))   OptionExpandAirport   = FALSE;
    if (!reg.ReadRegistryKey (&OptionViewedIntro))     OptionViewedIntro     = FALSE;
    if (!reg.ReadRegistryKey (&OptionSpeechBubble))
    {
@@ -4284,6 +4285,7 @@ void COptions::WriteOptions (void)
    reg.WriteRegistryKey (&OptionTalking);
    reg.WriteRegistryKey (&OptionSpeechBubble);
    reg.WriteRegistryKey (&OptionRandomStartday);
+   reg.WriteRegistryKey (&OptionExpandAirport);
 
 #ifdef NO_D_VOICES
 dont_save_talking:

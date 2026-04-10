@@ -1,5 +1,5 @@
 //============================================================================================
-// Options.cpp : Das Optionsmenü
+// Options.cpp : Das Optionsmenï¿½
 //============================================================================================
 // Link: "Options.h"
 //============================================================================================
@@ -82,7 +82,7 @@ Options::Options(BOOL bHandy, SLONG PlayerNum) : CStdRaum(bHandy, PlayerNum, "st
 }
 
 //--------------------------------------------------------------------------------------------
-//Options-Fenster zerstören:
+//Options-Fenster zerstï¿½ren:
 //--------------------------------------------------------------------------------------------
 Options::~Options()
 {
@@ -256,6 +256,7 @@ void Options::RefreshKlackerField(void)
 		KlackerTafel.PrintAt(0, 7, StandardTexte.GetS(TOKEN_MISC, 4044 + Sim.Options.OptionSpeechBubble));
 		KlackerTafel.PrintAt(0, 8, StandardTexte.GetS(TOKEN_MISC, 4048 + Sim.Options.OptionBriefBriefing));
 		KlackerTafel.PrintAt(0, 9, StandardTexte.GetS(TOKEN_MISC, 4050 + Sim.Options.OptionRandomStartday));
+		KlackerTafel.PrintAt(0, 10, StandardTexte.GetS(TOKEN_MISC, 4052 + Sim.Options.OptionExpandAirport));
 		KlackerTafel.PrintAt(0, 11, StandardTexte.GetS(TOKEN_MISC, 4099));
 	}
 	else if (PageNum == 5) //Laden
@@ -418,7 +419,7 @@ void Options::OnPaint()
 			break;
 			}
 		case 4: //Sonstiges:
-			if ((Line >= 2 && Line <= 9) || Line == 11) SetMouseLook(CURSOR_HOT, 0, -100, 0);
+			if ((Line >= 2 && Line <= 10) || Line == 11) SetMouseLook(CURSOR_HOT, 0, -100, 0);
 			break;
 
 		case 5: //Laden
@@ -622,6 +623,7 @@ void Options::OnLButtonDown(UINT nFlags, CPoint point)
 			if (Line == 7) Sim.Options.OptionSpeechBubble ^= 1;
 			if (Line == 8) Sim.Options.OptionBriefBriefing ^= 1;
 			if (Line == 9) Sim.Options.OptionRandomStartday ^= 1;
+			if (Line == 10) Sim.Options.OptionExpandAirport ^= 1;
 			if (Line == 11) PageNum = 1;
 			RefreshKlackerField();
 			break;
@@ -646,14 +648,14 @@ void Options::OnLButtonDown(UINT nFlags, CPoint point)
 			{
 				if (NewgameWantsToLoad == 2)
 				{
-					//Netzwerk-Laden vom Hauptmenü aus:
+					//Netzwerk-Laden vom Hauptmenï¿½ aus:
 					gNetworkSavegameLoading = Line - 2;
 					KlackerTafel.Warp(); FrameWnd->Invalidate(); MessagePump(); FrameWnd->Invalidate(); MessagePump();
 					Sim.Gamestate = GAMESTATE_BOOT;
 				}
 				else if (Sim.bNetwork)
 				{
-					//Laden während des Spiels: Kommt das mit der aktuellen Anzahl der Spieler hin?
+					//Laden wï¿½hrend des Spiels: Kommt das mit der aktuellen Anzahl der Spieler hin?
 					if (Sim.GetSavegameNumHumans(Line - 2) != Sim.Players.GetAnzHumanPlayers())
 					{
 						if (Sim.Players.Players[Sim.localPlayer].LocationWin)
@@ -830,10 +832,10 @@ void Options::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (CursorY != -1)
 	{
 		if (nChar >= 'a' && nChar <= 'z') nChar = toupper(nChar);
-		if (nChar == 196 || nChar == 228) nChar = (UINT)'Ä';
-		if (nChar == 214 || nChar == 246) nChar = (UINT)'Ö';
-		if (nChar == 220 || nChar == 252) nChar = (UINT)'Ü';
-		if (nChar == ' ' || nChar == '-' || nChar == '+' || nChar == '.' || (nChar >= 'A' && nChar <= 'Z') || nChar == 'Ä' || nChar == 'Ö' || nChar == 'Ü' || (nChar >= '0' && nChar <= '9'))
+		if (nChar == 196 || nChar == 228) nChar = (UINT)'ï¿½';
+		if (nChar == 214 || nChar == 246) nChar = (UINT)'ï¿½';
+		if (nChar == 220 || nChar == 252) nChar = (UINT)'ï¿½';
+		if (nChar == ' ' || nChar == '-' || nChar == '+' || nChar == '.' || (nChar >= 'A' && nChar <= 'Z') || nChar == 'ï¿½' || nChar == 'ï¿½' || nChar == 'ï¿½' || (nChar >= '0' && nChar <= '9'))
 		{
 			if (!SavenamesValid[CursorY] && strncmp(SavegameNames[CursorY], StandardTexte.GetS(TOKEN_MISC, 4073), 6) == 0)
 				SavegameNames[CursorY] = "      ";

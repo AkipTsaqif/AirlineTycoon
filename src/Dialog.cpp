@@ -3680,7 +3680,8 @@ _ehemals_2080:
                   }
                   else
                   {
-                     if (Sim.WaitZone>=69 || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
+                     SLONG nExpandCap = Sim.Options.OptionExpandAirport ? 69 : 5;
+                     if (Sim.WaitZone>=nExpandCap || (Sim.CheckIn>=2 && Sim.Difficulty<=DIFF_NORMAL && Sim.Difficulty!=DIFF_FREEGAME))
                         MakeSayWindow (0, TOKEN_BOSS, 4111, pFontPartner);
                      else
                      {

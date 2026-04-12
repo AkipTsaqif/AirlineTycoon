@@ -2888,11 +2888,17 @@ void SIM::ReformGates (void)
 {
    SLONG c, d, n;
 
+   // Only renumber physical gates (0..physGates-1) by player-ID order.
+   // Virtual gates (Nummer >= physGates) keep their specific numbers so they
+   // stay with whichever player actually won them, not the last player by ID.
+   SLONG physGates = Airport.GetNumberOfShops (RUNE_2WAIT);
+
    for (c=n=0; c<4; c++)
       if (!Players.Players[c].IsOut)
       {
          for (d=0; d<Players.Players[c].Gates.NumRented; d++)
-            if (Players.Players[c].Gates.Gates[d].Miete!=-1)
+            if (Players.Players[c].Gates.Gates[d].Miete!=-1 &&
+                Players.Players[c].Gates.Gates[d].Nummer < physGates)
             {
                Players.Players[c].Gates.Gates[d].Nummer=n;
                n++;

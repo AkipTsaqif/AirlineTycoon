@@ -2868,8 +2868,9 @@ void PERSON::PersonReachedTarget (void)
                //Person ist am Ausgang des engen Check-In Bereichs angekommen:
                case PERSON_2CHECKIN_EXIT:
                      State   = PERSON_2WAITROOM | PERSON_WAITFLAG;
-                     if (fpe->Gate==-1) State = PERSON_LEAVING;
-                                   else Target  = Airport.GetRandomTypedRune (RUNE_2WAIT, (UBYTE)fpe->Gate, false, &PersonalRand);
+                     if (fpe->Gate==-1 || fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT))
+                          State = PERSON_LEAVING;
+                     else Target  = Airport.GetRandomTypedRune (RUNE_2WAIT, (UBYTE)fpe->Gate, false, &PersonalRand);
                      break;
 
                //Ist am Warteraum angekommen und l�uft dort ein bischen umher, steigt direkt ein oder geht wieder:

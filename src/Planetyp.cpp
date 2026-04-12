@@ -359,12 +359,19 @@ void CPlane::DoOneStep (SLONG PlayerNum)
                }
                else
                {
-                  //Gate vorgesehen:
-                  Ort        = -3;     //Hinterm Fenstern
-                  AirportPos = XY(Airport.RightEnd+600, 190);
+                  if (GetFlugplanEintrag()->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT))
+                  {
+                     Ort = Sim.HomeAirportId;  //Virtual gate: silently at airport, no taxi, no penalty
+                  }
+                  else
+                  {
+                     //Gate vorgesehen:
+                     Ort        = -3;     //Hinterm Fenstern
+                     AirportPos = XY(Airport.RightEnd+600, 190);
 
-                  TargetX   = 200+Airport.GetRandomTypedRune (RUNE_2WAIT, UBYTE(GetFlugplanEintrag()->Gate)).x;
-                  Startzeit = 255; //Kein Start
+                     TargetX   = 200+Airport.GetRandomTypedRune (RUNE_2WAIT, UBYTE(GetFlugplanEintrag()->Gate)).x;
+                     Startzeit = 255; //Kein Start
+                  }
                }
             }
             else //Leerflug ==> nicht mehr anzeigen

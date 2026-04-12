@@ -1,5 +1,5 @@
 //============================================================================================
-// AirportView.cpp - Das Fenster zum anzeigen & handlen der isometrischen Übersicht
+// AirportView.cpp - Das Fenster zum anzeigen & handlen der isometrischen ï¿½bersicht
 //============================================================================================
 // Links: "AirportView.h"
 //============================================================================================
@@ -21,14 +21,14 @@ extern SB_CColorFX ColorFX;
 //extern LPDIRECTDRAWSURFACE FrontSurf;
 extern XY  gScrollOffsetA, gScrollOffsetB;
 
-//Die statischen Daten dafür initialisieren:
+//Die statischen Daten dafï¿½r initialisieren:
 static const char FileId[] = "AVie";
 
 BUFFER<CBencher> BrickWait (MAX_BRICKS);
 
 BOOL IgnoreNextLButtonUp=FALSE;
 
-//Öfnungszeiten:
+//ï¿½fnungszeiten:
 SLONG timeDutyOpen  = 10*60000;
 SLONG timeDutyClose = 16*60000; //Nur Sa, So
 SLONG timeArabOpen  = 11*60000;
@@ -51,7 +51,7 @@ extern SLONG SaveVersionSub;
 //--------------------------------------------------------------------------------------------
 AirportView::AirportView (BOOL bHandy, ULONG PlayerNum) : CStdRaum (bHandy, PlayerNum, "", NULL)
 {
-   //Per Default kein Objekt für den Editor angeben und keine Personen hinzufügen:
+   //Per Default kein Objekt fï¿½r den Editor angeben und keine Personen hinzufï¿½gen:
    EditObject    = 0xffffffff;
 	PersonsToAdd  = 0;
    bgWarp        = FALSE;
@@ -112,7 +112,7 @@ AirportView::~AirportView()
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt die Bitmap neu:
+//Lï¿½dt die Bitmap neu:
 //--------------------------------------------------------------------------------------------
 void AirportView::ReloadBitmaps (void)
 {
@@ -281,7 +281,7 @@ void AirportView::FocusCameraOnPos (XY Pos, BOOL Speed)
 					if (Tmp<CameraSpeed.x) CameraSpeed.x--;
 				}
 
-            //Änderungen in der Kamera-Geschwindigkeit nur akzeptieren, wenn sie auch von Dauer sind
+            //ï¿½nderungen in der Kamera-Geschwindigkeit nur akzeptieren, wenn sie auch von Dauer sind
             if (AcceptedCameraSpeedX!=CameraSpeed.x)
             {
                if (LastCameraSpeedX==CameraSpeed.x || CameraSpeed.x==0)
@@ -320,7 +320,7 @@ void AirportView::FocusCameraOnPos (XY Pos, BOOL Speed)
 			}
 			else CameraSpeed.y=Tmp;
 
-         //Verhindern, daß die Kamera am stehenden Spieler vorbeirauscht:
+         //Verhindern, daï¿½ die Kamera am stehenden Spieler vorbeirauscht:
          if (LastPlayerDeltas[4]==0 && abs (CameraSpeed.x)<=2 && (ViewPos.x+CameraSpeed.x-Pos.x)*(ViewPos.x-Pos.x)<=0)
             CameraSpeed.x=0;
 
@@ -346,7 +346,7 @@ void AirportView::FocusCameraOnPos (XY Pos, BOOL Speed)
 }
 
 //--------------------------------------------------------------------------------------------
-//Bewegt die Kamera ein Stück:
+//Bewegt die Kamera ein Stï¿½ck:
 //--------------------------------------------------------------------------------------------
 void AirportView::MoveCamera (void)
 {
@@ -366,7 +366,7 @@ void AirportView::MoveCamera (void)
 
             XY   &ViewPos = Sim.Players.Players[(SLONG)PlayerNum].ViewPos;
 
-            //Über große Strecken lieber faden als scrollen
+            //ï¿½ber groï¿½e Strecken lieber faden als scrollen
             if (abs((Sim.Persons[PlayerIndex].ScreenPos.x-ViewPos.x))>640 && Sim.Options.OptionBlenden)
             {
                ViewPos.x=Sim.Persons[PlayerIndex].ScreenPos.x-320;
@@ -450,7 +450,7 @@ void AirportView::OnPaint()
    static SLONG Pos=0;
    static UWORD Alpha=0, r=10;
    static UBYTE FlackerCount=0;
-   static SLONG ParallaxIndex[5]={-1,-1,-1,-1,-1};      //Die direkten Brick Indices fürs Paralax
+   static SLONG ParallaxIndex[5]={-1,-1,-1,-1,-1};      //Die direkten Brick Indices fï¿½rs Paralax
    XY   &ViewPos = Sim.Players.Players[(SLONG)PlayerNum].ViewPos;
 
    if (ViewPos.x<-1000) DebugBreak();
@@ -467,7 +467,7 @@ void AirportView::OnPaint()
    SLONG  GateSmackMax    = bFirstClass ? 0 : Bricks((SLONG)0x10000000+760);
    SLONG  DoorIndexMin    = Bricks((SLONG)0x10000000+729);
    SLONG  DoorIndexMax    = bFirstClass ? Bricks((SLONG)0x10000000+720) : Bricks((SLONG)0x10000000+718);
-   SLONG  LogoBarIndex    = Bricks((SLONG)0x10000000+492);  //Der Logobalken über dem CheckIn
+   SLONG  LogoBarIndex    = Bricks((SLONG)0x10000000+492);  //Der Logobalken ï¿½ber dem CheckIn
    SLONG  CheckInIndex    = Bricks((SLONG)0x10000000+500);  //Der CheckIn-Schalter
    SLONG  AbflugIndex     = Bricks((SLONG)0x10000000+522);  //Der Abflugschalter
    SLONG  AbflugIndex2    = Bricks((SLONG)0x10000000+521);  //Der Abflugschalter
@@ -546,7 +546,7 @@ void AirportView::OnPaint()
       else if (SLONG(Sim.Time)<timeLastClose) DoorOpenTab[2]=256;
       else DoorOpenTab[2]=256-(Sim.Time-timeLastClose)*256/2000;
 
-      //Reisebüro
+      //Reisebï¿½ro
       if (SLONG(Sim.Time)>timeReisClose+2000) DoorOpenTab[4]=0;
       else if (SLONG(Sim.Time)<timeReisClose) DoorOpenTab[4]=256;
       else DoorOpenTab[4]=256-(Sim.Time-timeReisClose)*256/2000;
@@ -632,7 +632,7 @@ void AirportView::OnPaint()
 
                   switch (Airport.ClipMarkers[c-1].Type)
                   {
-                     case RUNE_CLIPMIDDLE: //Büros verdecken
+                     case RUNE_CLIPMIDDLE: //Bï¿½ros verdecken
                         PrimaryBm.PrimaryBm.SetClipRect(&CRect(max(RangeDrawn-ViewPos.x,0),MiddleHeight,min(Airport.ClipMarkers[c].Position-ViewPos.x,RightClip),440));
                         break;
                      case RUNE_CLIPNONE: //Nix verdeckt
@@ -700,7 +700,7 @@ void AirportView::OnPaint()
             {
                if (!Sim.Players.Players[(SLONG)c].IsOut)
                {
-                  //Für alle Flugzeuge die er besitzt
+                  //Fï¿½r alle Flugzeuge die er besitzt
                   for (d=0; d<Sim.Players.Players[(SLONG)c].Planes.AnzEntries(); d++)
                   {
                      if (Sim.Players.Players[(SLONG)c].Planes.IsInAlbum (d))
@@ -733,7 +733,7 @@ void AirportView::OnPaint()
             {
                if (!Sim.Players.Players[(SLONG)c].IsOut)
                {
-                  //Für alle Flugzeuge die er besitzt
+                  //Fï¿½r alle Flugzeuge die er besitzt
                   for (d=0; d<Sim.Players.Players[(SLONG)c].Planes.AnzEntries(); d++)
                   {
                      if (Sim.Players.Players[(SLONG)c].Planes.IsInAlbum (d))
@@ -1042,9 +1042,9 @@ void AirportView::OnPaint()
                         PrimaryBm.PrimaryBm.SetClipRect(&rect);
                      }
                      else if (BrickId>=DoorIndexMin && BrickId<=DoorIndexMax)
-                        //Tür bekommt als Parameter die Öffnungsweite
+                        //Tï¿½r bekommt als Parameter die ï¿½ffnungsweite
                         qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, Airport.Doors[(SLONG)qBuild.Par].Winkel);
-                     //Fließband hat 'n kranken Assisstenten:
+                     //Flieï¿½band hat 'n kranken Assisstenten:
                      else if (BrickId>=Fl1IndexMin && BrickId<=Fl1IndexMax)
                         qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, (((qBuild.ScreenPos.x+qBuild.ScreenPos.y/2)/44+qBuild.ScreenPos.y/22)*2)%7+100);
                      else if (BrickId>=Fl2IndexMin && BrickId<=Fl2IndexMax)
@@ -1054,10 +1054,14 @@ void AirportView::OnPaint()
                      else if (Editor!=EDITOR_BUILDS && BrickId==LogoBarIndex)
                         qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, Airport.GateMapper[(SLONG)qBuild.Par]+1);
                      else if (Editor!=EDITOR_BUILDS && (BrickId==Kamera1Index || BrickId==Kamera2Index))
-                        qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, Sim.Players.Players[Airport.GateMapper[(SLONG)qBuild.Par]].SecurityFlags&(1<<0));
+                     {
+                        SLONG gm = Airport.GateMapper[(SLONG)qBuild.Par];
+                        qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, gm!=-1 ? (Sim.Players.Players[gm].SecurityFlags&(1<<0)) : 0);
+                     }
                      else if (Editor!=EDITOR_BUILDS && BrickId>=GateSmackMin && BrickId<=GateSmackMax)
                      {
-                        if (Sim.Players.Players[Airport.GateMapper[(SLONG)qBuild.Par]].SecurityFlags&(1<<8))
+                        SLONG gm = Airport.GateMapper[(SLONG)qBuild.Par];
+                        if (gm!=-1 && Sim.Players.Players[gm].SecurityFlags&(1<<8))
                            qBrick.BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, 0); //Ggf erweitertes Gate
                      }
                      else
@@ -1065,9 +1069,12 @@ void AirportView::OnPaint()
                         if (BrickId==AbflugIndex || BrickId==AbflugIndex2)
                         {
                            long phase = 0;
-                           
-                           if (Sim.Players.Players[Airport.GateMapper[(SLONG)qBuild.Par]].SecurityFlags&(1<<8))  phase=1;
-                           if (Sim.Players.Players[Airport.GateMapper[(SLONG)qBuild.Par]].SecurityFlags&(1<<10)) phase=2;
+                           SLONG gm = Airport.GateMapper[(SLONG)qBuild.Par];
+                           if (gm!=-1)
+                           {
+                              if (Sim.Players.Players[gm].SecurityFlags&(1<<8))  phase=1;
+                              if (Sim.Players.Players[gm].SecurityFlags&(1<<10)) phase=2;
+                           }
                            Bricks[BrickId].BlitAt (PrimaryBm, 0, qBuild.ScreenPos-ViewPos+WinP1, phase);
                         }
                         else
@@ -1132,7 +1139,7 @@ void AirportView::OnPaint()
                      }
                   }
 
-               //Das hier kostet einiges an Zeit. Könnte man optimieren: ==>+<==
+               //Das hier kostet einiges an Zeit. Kï¿½nnte man optimieren: ==>+<==
                do c++; while (c<pBuilds->AnzEntries() && (!pBuilds->IsInAlbum(c) || (Editor==EDITOR_NONE && pBuilds->IsInAlbum(c) && (*pBuilds)[c].BrickId>=0x10000000+2000)));
 
                if (c<pBuilds->AnzEntries())
@@ -1253,11 +1260,11 @@ void AirportView::OnPaint()
          {
             //Die Transparenten Maus-Tips:
             c=Airport.IsInMarkedArea (gMousePosition+ViewPos);
-            if (c==ROOM_WALL) c=0; //Die Kindersicherung für die Wall-Eigenschaft
+            if (c==ROOM_WALL) c=0; //Die Kindersicherung fï¿½r die Wall-Eigenschaft
 
             if (c>=ROOM_FLIGHTDISPLAY && c<ROOM_FLIGHTDISPLAY+60)
             {
-               //Die Tips für die Flugkürzel:
+               //Die Tips fï¿½r die Flugkï¿½rzel:
                if (c>=ROOM_FLIGHTDISPLAY && c<ROOM_FLIGHTDISPLAY+30)
                   SetMouseLook (CURSOR_HOT, 5000+c, TextBrickTexts[SLONG(c-ROOM_FLIGHTDISPLAY)], ROOM_AIRPORT, 10);
                else
@@ -1295,7 +1302,7 @@ void AirportView::OnPaint()
 }
 
 //--------------------------------------------------------------------------------------------
-//Schickt eine Ankündigung weiter...
+//Schickt eine Ankï¿½ndigung weiter...
 //--------------------------------------------------------------------------------------------
 void AirportView::AnnouceTipDataUpdate (SLONG TipType)
 {
@@ -1339,7 +1346,7 @@ void AirportView::OnLButtonDown(UINT nFlags, CPoint point)
    if (Sim.FocusPerson!=-1 && gMousePosition.y<440 && !IsDialogOpen() && !MenuIsOpen())
       Sim.FocusPerson=-1;
 
-   //Ist das Fenster hier zuständig? Ist der Klick in diesem Fenster?
+   //Ist das Fenster hier zustï¿½ndig? Ist der Klick in diesem Fenster?
    if (point.x>=WinP1.x && point.x<=WinP2.x && point.y>=WinP1.y && point.y<=WinP2.y-StatusLineSizeY*(Editor==0))
    {
       LButtonState = TRUE;
@@ -1649,7 +1656,7 @@ void AirportView::OnLButtonUp(UINT nFlags, CPoint point)
          return;
    }
 
-   //Ist das Fenster hier zuständig? Ist der Klick in diesem Fenster?
+   //Ist das Fenster hier zustï¿½ndig? Ist der Klick in diesem Fenster?
    if (point.x>=WinP1.x && point.x<=WinP2.x && point.y>=WinP1.y && point.y<=WinP2.y && !MenuIsOpen())
    {
       if (timeGetTime()-gMouseLButtonDownTimer<500 && gMouseScroll && !Editor && gMousePosition.y<440 && !MouseWait)
@@ -1668,7 +1675,7 @@ void AirportView::OnLButtonDblClk(UINT, CPoint point)
 {
    if (Sim.Time<=9*60000) return;
 
-   //Ist das Fenster hier zuständig? Ist der Klick in diesem Fenster?
+   //Ist das Fenster hier zustï¿½ndig? Ist der Klick in diesem Fenster?
    if (point.x>=WinP1.x && point.x<=WinP2.x && point.y>=WinP1.y && point.y<=WinP2.y && !Editor)
    {
       if (MenuIsOpen())
@@ -1727,7 +1734,7 @@ void AirportView::OnRButtonDown(UINT nFlags, CPoint point)
 		if (Pos.x<Airport.LeftEnd)        Pos.x=Airport.LeftEnd;
 		if (Pos.x+SizeX>Airport.RightEnd) Pos.x=Airport.RightEnd-SizeX;
 
-      //Über große Strecken lieber faden als scrollen
+      //ï¿½ber groï¿½e Strecken lieber faden als scrollen
       if (abs(Pos.x-ViewPos.x)>640)
       {
          ViewPos.x=Pos.x;
@@ -1793,7 +1800,7 @@ void AirportView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
       {
          switch (nChar)
          {
-            //Neues, autonomes & selbstzerstörendes Fenster erzeuges:
+            //Neues, autonomes & selbstzerstï¿½rendes Fenster erzeuges:
             case VK_F2:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 550+0x10000000, &EditObject); else CStdRaum::OnKeyDown(nChar, nRepCnt, nFlags); break;
             case VK_F3:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 618+0x10000000, &EditObject); break;
             case VK_F4:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 664+0x10000000, &EditObject); break;
@@ -1820,7 +1827,7 @@ void AirportView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
       {
          switch (nChar)
          {
-            //Neues, autonomes & selbstzerstörendes Fenster erzeuges:
+            //Neues, autonomes & selbstzerstï¿½rendes Fenster erzeuges:
             case VK_F2:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 100+0x10000000, &EditObject); break;
             case VK_F3:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 140+0x10000000, &EditObject); break;
             case VK_F4:  if (Editor==EDITOR_BUILDS) TopWin=new AskBrick (bHandy, PlayerNum, 250+0x10000000, &EditObject); break;
@@ -1968,7 +1975,7 @@ void AirportView::OnSysChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt einen zufälligen Geburtsort für einen Kunden (0) oder einen Spieler (1) zurück:
+//Gibt einen zufï¿½lligen Geburtsort fï¿½r einen Kunden (0) oder einen Spieler (1) zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 XY AIRPORT::GetRandomBirthplace (BOOL Type, SLONG PlayerNum, TEAKRAND *pRand)
 {
@@ -1977,7 +1984,7 @@ XY AIRPORT::GetRandomBirthplace (BOOL Type, SLONG PlayerNum, TEAKRAND *pRand)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt einen zufälligen Ausgang zurück:
+//Gibt einen zufï¿½lligen Ausgang zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 XY AIRPORT::GetRandomExit (TEAKRAND *pRand)
 {
@@ -1985,11 +1992,11 @@ XY AIRPORT::GetRandomExit (TEAKRAND *pRand)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt eines der Geschäfte zurück:
+//Gibt eines der Geschï¿½fte zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 void AIRPORT::GetRandomShop (XY &ReturnPosition, SLONG &ReturnStatePar, SLONG ClanType, UBYTE *pMood, TEAKRAND *pRand)
 {
-   ULONG Buffer[20];    //Bis zu 20 Möglichkeiten werden hier zwischengespeichert
+   ULONG Buffer[20];    //Bis zu 20 Mï¿½glichkeiten werden hier zwischengespeichert
    SLONG c;
    SLONG Anz;           //Zahl der Elementer in "Buffer"
 
@@ -2027,7 +2034,7 @@ nofreetravelagents:
    if (Runes[(SLONG)Buffer[c]].Par==ROOM_MUSEUM && (SLONG(Sim.Time)<timeMuseOpen || Sim.Weekday==5 || Sim.Weekday==6)) goto again;
    if (Runes[(SLONG)Buffer[c]].Par==ROOM_REISEBUERO && (SLONG(Sim.Time)>timeReisClose-60000 || Sim.Weekday==6)) goto again;
 
-   //Spezialfix für Personen zu Reisebüro / LastMinute
+   //Spezialfix fï¿½r Personen zu Reisebï¿½ro / LastMinute
    if (Runes[(SLONG)Buffer[c]].Par==ROOM_REISEBUERO)
    {
       SLONG d, n;
@@ -2124,7 +2131,7 @@ nofreetravelagents:
 }
 
 //--------------------------------------------------------------------------------------------
-//War ein Mausklick in einer markierten Kachel-Area? Gibt 0 oder Raum zurück
+//War ein Mausklick in einer markierten Kachel-Area? Gibt 0 oder Raum zurï¿½ck
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::IsInMarkedArea (const XY &Pos)
 {
@@ -2157,7 +2164,7 @@ SLONG AIRPORT::IsInMarkedArea (const XY &Pos)
             }
          }
 
-      //Spezielle Marked-Areas für FlightDisplays über CheckIn und Abflug
+      //Spezielle Marked-Areas fï¿½r FlightDisplays ï¿½ber CheckIn und Abflug
       if (d>=ROOM_FLIGHTDISPLAY && d<ROOM_FLIGHTDISPLAY+60)
       {
          if (d<ROOM_FLIGHTDISPLAY+30)
@@ -2170,7 +2177,7 @@ SLONG AIRPORT::IsInMarkedArea (const XY &Pos)
          }
       }
 
-      //Anti-Marked Areas z.B. für Postkasten
+      //Anti-Marked Areas z.B. fï¿½r Postkasten
       if (d==255) return (0);
 
       return (d);
@@ -2179,7 +2186,7 @@ SLONG AIRPORT::IsInMarkedArea (const XY &Pos)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt die nächste Station eines Weges zurück:
+//Gibt die nï¿½chste Station eines Weges zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 XY AIRPORT::GetNextWaypointRune (UBYTE StartingWaypoint, UBYTE *CurrentWaypoint, ULONG *Gimmick)
 {
@@ -2190,7 +2197,7 @@ XY AIRPORT::GetNextWaypointRune (UBYTE StartingWaypoint, UBYTE *CurrentWaypoint,
       if (Runes[c].BrickId==(SLONG)(RUNE_WAYPOINT_WAIT|0x10000000) && Runes[c].Par==*CurrentWaypoint)
          *Gimmick=100;
 
-   //Nächsten Waypoint raussuchen:
+   //Nï¿½chsten Waypoint raussuchen:
    for (c=SLONG(Runes.AnzEntries())-1; c>=0; c--)
       if ((Runes[c].BrickId==(SLONG)(RUNE_WAYPOINT|0x10000000) || Runes[c].BrickId==(SLONG)(RUNE_WAYPOINT_WAIT|0x10000000) || Runes[c].BrickId==(SLONG)(RUNE_WAYPOINT_G|0x10000000)) && Runes[c].Par==*CurrentWaypoint+1)
       {
@@ -2224,11 +2231,11 @@ BOOL AIRPORT::DoesRuneExist (ULONG BrickId, UBYTE Par)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt eine zufälligen (falls mehrere möglich) Rune des Typs zurück:
+//Gibt eine zufï¿½lligen (falls mehrere mï¿½glich) Rune des Typs zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 XY AIRPORT::GetRandomTypedRune (ULONG BrickId, UBYTE Par, bool AcceptError, TEAKRAND *pRand)
 {
-   ULONG Buffer[20];    //Bis zu 20 Möglichkeiten werden hier zwischengespeichert
+   ULONG Buffer[20];    //Bis zu 20 Mï¿½glichkeiten werden hier zwischengespeichert
    SLONG c;
    SLONG Anz=0;         //Zahl der Elementer in "Buffer"
 
@@ -2258,7 +2265,7 @@ XY AIRPORT::GetRandomTypedRune (ULONG BrickId, UBYTE Par, bool AcceptError, TEAK
 }
 
 //--------------------------------------------------------------------------------------------
-//Wieviele Shops (oder Gates o.ä.) gibt es von einer Sorte?:
+//Wieviele Shops (oder Gates o.ï¿½.) gibt es von einer Sorte?:
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::GetNumberOfShops (ULONG BrickId)
 {
@@ -2298,7 +2305,7 @@ SLONG AIRPORT::GetNumberOfFreeGates (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt die Treppe zurück, die am nächsten ist:
+//Gibt die Treppe zurï¿½ck, die am nï¿½chsten ist:
 //--------------------------------------------------------------------------------------------
 XY AIRPORT::GetBestStairs (UBYTE Par, SLONG x1, SLONG x2)
 {
@@ -2322,7 +2329,7 @@ XY AIRPORT::GetBestStairs (UBYTE Par, SLONG x1, SLONG x2)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt zurück, welchen Parameter die Rune des Types n in der Umgebung von XY hat:
+//Gibt zurï¿½ck, welchen Parameter die Rune des Types n in der Umgebung von XY hat:
 //--------------------------------------------------------------------------------------------
 UBYTE AIRPORT::GetRuneParNear (const XY &Pos, const XY &MaxDist, ULONG RuneType)
 {
@@ -2341,7 +2348,7 @@ UBYTE AIRPORT::GetRuneParNear (const XY &Pos, const XY &MaxDist, ULONG RuneType)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt zurück, welcher Brick von Sorte X dort so rumhängt:
+//Gibt zurï¿½ck, welcher Brick von Sorte X dort so rumhï¿½ngt:
 //--------------------------------------------------------------------------------------------
 BUILD *AIRPORT::GetBuildNear (const XY &Pos, const XY &MaxDist, ULONG BrickId)
 {
@@ -2372,7 +2379,7 @@ void AIRPORT::Load (SLONG Hall, SLONG Level)
 
    Builds.Load (Hall, Level);
 
-   //Und dafür sorgen, daß nichts im negativen Bereich liegt:
+   //Und dafï¿½r sorgen, daï¿½ nichts im negativen Bereich liegt:
    for (e=0, BestE = -1; e<SLONG(Builds.AnzEntries()); e++)
       if (Builds.IsInAlbum(e) && Builds[e].BrickId == 100+0x10000000)
          if (BestE == -1 || Builds[e].ScreenPos.x<Builds[BestE].ScreenPos.x)
@@ -2405,7 +2412,7 @@ void AIRPORT::Save (void) const
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt einen kompletten Flughafen indem er ihn aus Einzelteilen zusammensetzt
+//Lï¿½dt einen kompletten Flughafen indem er ihn aus Einzelteilen zusammensetzt
 //--------------------------------------------------------------------------------------------
 //#pragma optimize("", off)
 #pragma optimize("agptwy", on)
@@ -2416,7 +2423,7 @@ void AIRPORT::LoadAirport (SLONG LeftEnd, SLONG CheckIn, SLONG Office, SLONG Ent
    SLONG  BestD, BestE;
    BUILDS localBuilds[10];  //Die verschiedenen Abschnitte des Flughafens
    SLONG  Diletation[10];   //Die Verschiebung der Abschnitte; Diletation[0] ist immer 0
-   SLONG  Count[10];        //Fünf Counter, da alle fünf Abschnitte zugleich zusammengefügt werden
+   SLONG  Count[10];        //Fï¿½nf Counter, da alle fï¿½nf Abschnitte zugleich zusammengefï¿½gt werden
 
    CWait  Waiting;
    FrameWnd->Invalidate(); MessagePump();
@@ -2436,7 +2443,7 @@ void AIRPORT::LoadAirport (SLONG LeftEnd, SLONG CheckIn, SLONG Office, SLONG Ent
 
    HallNum = 0;
 
-   //alten Airport löschen:
+   //alten Airport lï¿½schen:
    Builds.Clear ();
 
    TotalMem      = 0;
@@ -2544,14 +2551,14 @@ void AIRPORT::LoadAirport (SLONG LeftEnd, SLONG CheckIn, SLONG Office, SLONG Ent
 //#pragma optimize("", on)
 
 //--------------------------------------------------------------------------------------------
-//Den Flughafen für einen neuen Tag vorbereiten: Personen entfernen & Spieler hinzufügen
+//Den Flughafen fï¿½r einen neuen Tag vorbereiten: Personen entfernen & Spieler hinzufï¿½gen
 //--------------------------------------------------------------------------------------------
 void AIRPORT::NewDay (void)
 {
    //Alte Leute entfernen:
    Sim.Persons.ClearAlbum();
 
-   //Spieler hinzufügen:
+   //Spieler hinzufï¿½gen:
    if (!Sim.Players.Players[0].IsOut) Sim.Persons+=PERSON (Clans.GetPlayerId (CLAN_PLAYER1), Airport.GetRandomBirthplace(TRUE, 1), 0, 99, 0, 0);
    if (!Sim.Players.Players[1].IsOut) Sim.Persons+=PERSON (Clans.GetPlayerId (CLAN_PLAYER2), Airport.GetRandomBirthplace(TRUE, 2), 0, 99, 0, 0);
    if (!Sim.Players.Players[2].IsOut) Sim.Persons+=PERSON (Clans.GetPlayerId (CLAN_PLAYER3), Airport.GetRandomBirthplace(TRUE, 3), 0, 99, 0, 0);
@@ -2559,7 +2566,7 @@ void AIRPORT::NewDay (void)
 
    SLONG c, d;
 
-   //WayPoint-Figuren hinzufügen:
+   //WayPoint-Figuren hinzufï¿½gen:
    for (c=d=0; c<(SLONG)Builds.AnzEntries(); c++)
    {
       if (Builds.IsInAlbum(c))
@@ -2577,7 +2584,7 @@ void AIRPORT::NewDay (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Berechnet den x-Index für das iPlate Array aus einer Brick-Position: (Alignment -1=l 0=c 1=r)
+//Berechnet den x-Index fï¿½r das iPlate Array aus einer Brick-Position: (Alignment -1=l 0=c 1=r)
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::CalcPlateXPosition (SLONG BuildIndex, SLONG BrickXOffset, SLONG Alignment)
 {
@@ -2585,7 +2592,7 @@ SLONG AIRPORT::CalcPlateXPosition (SLONG BuildIndex, SLONG BrickXOffset, SLONG A
 }
 
 //--------------------------------------------------------------------------------------------
-//Berechnet den x-Index für das iPlate Array aus einer Brick-Position: (Alignment -1=l 0=c 1=r)
+//Berechnet den x-Index fï¿½r das iPlate Array aus einer Brick-Position: (Alignment -1=l 0=c 1=r)
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::CalcPlateXPosition (BUILD &qBuild, SLONG BrickXOffset, SLONG Alignment)
 {
@@ -2622,7 +2629,7 @@ SLONG AIRPORT::CalcPlateXPosition (BUILD &qBuild, SLONG BrickXOffset, SLONG Alig
 }
 
 //--------------------------------------------------------------------------------------------
-//Berechnet den y-Index für das iPlate Array aus einer Brick-Position:
+//Berechnet den y-Index fï¿½r das iPlate Array aus einer Brick-Position:
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::CalcPlateYPosition (SLONG BuildIndex, SLONG BrickYOffset)
 {
@@ -2630,7 +2637,7 @@ SLONG AIRPORT::CalcPlateYPosition (SLONG BuildIndex, SLONG BrickYOffset)
 }
 
 //--------------------------------------------------------------------------------------------
-//Berechnet den y-Index für das iPlate Array aus einer Brick-Position:
+//Berechnet den y-Index fï¿½r das iPlate Array aus einer Brick-Position:
 //--------------------------------------------------------------------------------------------
 SLONG AIRPORT::CalcPlateYPosition (BUILD &qBuild, SLONG BrickYOffset)
 {
@@ -2648,7 +2655,7 @@ SLONG AIRPORT::CalcPlateYPosition (BUILD &qBuild, SLONG BrickYOffset)
       rc = 5+(Bricks[qBuild.BrickId].GetBitmapDimension().y-2+qBuild.ScreenPos.y-220+BrickYOffset+2200)/22-100;
    }
 
-   //Nicht ungefährlich, denn das passiert noch öfter
+   //Nicht ungefï¿½hrlich, denn das passiert noch ï¿½fter
    //if (rc<0 || rc>=PlateDimension.y) { return (0); }
 
    return (rc);
@@ -2761,7 +2768,7 @@ void AIRPORT::CalcPlates (void)
                }
                break;
 
-            //Punktförmiges Hindernis:
+            //Punktfï¿½rmiges Hindernis:
             case OBST_POINT:
                x = CalcPlateXPosition (c, 0, 0);
                y = CalcPlateYPosition (c, 0);
@@ -2825,13 +2832,13 @@ void AIRPORT::CalcPlates (void)
                if (y>=-1 && y<=14 && x>=0) for (d=x; d<=x2; d++) {FUCK(y+1+(d<<4));iPlate[y+1+(d<<4)] &= (~128);  }
                break;
 
-            //Große Vertikale Abgrenzung: (verändert nur die Ausgänge einer Plate)
+            //Groï¿½e Vertikale Abgrenzung: (verï¿½ndert nur die Ausgï¿½nge einer Plate)
             case OBST_BIGVERTIKAL:
                x = CalcPlateXPosition (c, -10+4, -1);
                y = CalcPlateYPosition (c, -8)-1;
                if (y>=0 && y<=15 && x>=0) { FUCK(y+(x<<4)); iPlate[y+(x<<4)] &= (~64); {FUCK(y+((x+1)<<4));iPlate[y+((x+1)<<4)] &= (~16); }}
 
-            //Vertikale Abgrenzung: (verändert nur die Ausgänge einer Plate)
+            //Vertikale Abgrenzung: (verï¿½ndert nur die Ausgï¿½nge einer Plate)
             case OBST_VERTIKAL:
                x = CalcPlateXPosition (c, -10+4, -1);
                y = CalcPlateYPosition (c, -8);
@@ -2848,7 +2855,7 @@ void AIRPORT::CalcPlates (void)
                if (y>=0 && y<=15 && x>=0) for (d=x; d<=x2; d++) if (d!=x2-2) {FUCK(y+(d<<4));iPlate[y+(d<<4)] &= (~128); }
                break;
 
-            //Der Eingang zu einem Geschäft / Museum:
+            //Der Eingang zu einem Geschï¿½ft / Museum:
             case OBST_SHOPFRONT:
             case OBST_MUSEUM:
                x  = CalcPlateXPosition (c, 10, -1);
@@ -2862,14 +2869,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+(x<<4));}
                      {FUCK(y+((x-1)<<4));}
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+(x2<<4));     }
                      {FUCK(y+((x2+1)<<4));}
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -2889,14 +2896,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+((x-1)<<4));}
                      {FUCK(y+(x<<4));}
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+((x2+1)<<4)); }
                      {FUCK(y+(x2<<4));}
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -2924,14 +2931,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+((x-1)<<4));}
                      {FUCK(y+(x<<4));      }
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+((x2+1)<<4));}
                      {FUCK(y+(x2<<4));}
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -2959,14 +2966,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+((x-1)<<4));}
                      {FUCK(y+(x<<4));      }
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+((x2+1)<<4));}
                      {FUCK(y+(x2<<4));}
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -2992,14 +2999,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+((x-1)<<4));}
                      {FUCK(y+(x<<4));     }
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+((x2+1)<<4));}
                      {FUCK(y+(x2<<4));     }
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -3025,14 +3032,14 @@ void AIRPORT::CalcPlates (void)
                   {
                      {FUCK(y+((x-1)<<4));}
                      {FUCK(y+(x<<4));     }
-                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (außen)
+                     iPlate[y+((x-1)<<4)]  &= (~64);   //linke Wand (auï¿½en)
                      iPlate[y+(x<<4)]      &= (~16);   //linke Wand (innen)
                   }
                   if (x2>=0)
                   {
                      {FUCK(y+((x2+1)<<4));}
                      {FUCK(y+(x2<<4));     }
-                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (außen)
+                     iPlate[y+((x2+1)<<4)] &= (~16);   //rechte Wand (auï¿½en)
                      iPlate[y+(x2<<4)]     &= (~64);   //rechte Wand (innen)
                   }
                }
@@ -3062,7 +3069,7 @@ void AIRPORT::CalcPlates (void)
                iPlate[y+(x<<4)] &= (~224);
                break;
 
-            //Die Runen stellen immer Sonderfälle dar:
+            //Die Runen stellen immer Sonderfï¿½lle dar:
             case OBST_RUNE:
                x  = CalcPlateXPosition (c, 0, 0);
                y = CalcPlateYPosition (c, 0);
@@ -3097,7 +3104,7 @@ void AIRPORT::CalcPlates (void)
                      case RUNE_LEFTEND:  LeftEnd = x*44; break;
                      case RUNE_RIGHTEND: RightEnd = x*44; break;
 
-                     //Künstliche Shop-begrenzungen:
+                     //Kï¿½nstliche Shop-begrenzungen:
                      case RUNE_NOLEFT: iPlate[y+(x<<4)] &= (~16); iPlate[y+((x-1)<<4)] &= (~64); break;
                      case RUNE_NODOWN: iPlate[y+(x<<4)] &= (~32); iPlate[(y+1)+(x<<4)] &= (~128); break;
                      case RUNE_NOWAY:
@@ -3145,7 +3152,7 @@ void AIRPORT::CalcPlates (void)
 
    //hprintf (0, "Airport goes from %li to %li", LeftEnd, RightEnd);
 
-   //Plate Ausgänge abgleichen:
+   //Plate Ausgï¿½nge abgleichen:
    /*for (x=0; x<PlateDimension.x-20; x++)
       for (y=0; y<PlateDimension.y; y++)
       {
@@ -3157,7 +3164,7 @@ void AIRPORT::CalcPlates (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Schaut, ob die Türen bewegt werden müssen:
+//Schaut, ob die Tï¿½ren bewegt werden mï¿½ssen:
 //--------------------------------------------------------------------------------------------
 void AIRPORT::PumpDoors (void)
 {
@@ -3168,13 +3175,13 @@ void AIRPORT::PumpDoors (void)
    {
       if (Doors[c].ArabDoor==TRUE)
       {
-         if (Doors[c].Dir==1) //Feuerlöscher nach innen drehen ("öffnen")
+         if (Doors[c].Dir==1) //Feuerlï¿½scher nach innen drehen ("ï¿½ffnen")
          {
             if (Doors[c].State>=40)
             {
                Doors[c].Dir=0;
 
-               //Tür erneut drehen?
+               //Tï¿½r erneut drehen?
                if (!IsRoomBusy(ROOM_SABOTAGE, -1))
                {
                   Doors[c].State=(10-1)*2;
@@ -3185,7 +3192,7 @@ void AIRPORT::PumpDoors (void)
 
             /*if (IsRoomBusy(ROOM_SABOTAGE, -1))
             {
-               //Tür resetten, weil Spieler nur halb reingegangen ist
+               //Tï¿½r resetten, weil Spieler nur halb reingegangen ist
                Doors[c].State=(10-1)*2;
                Doors[c].Dir=-1;
             } */
@@ -3193,14 +3200,14 @@ void AIRPORT::PumpDoors (void)
             Doors[c].Winkel=UBYTE(min ((10-1)*2, Doors[c].State+1)/2);
             //Doors[c].Winkel=UBYTE(min ((Bricks[Builds[Doors[c].BuildIndex].BrickId].Bitmap.AnzEntries()-1)*2, Doors[c].State+1)/2);
          }
-         else if (Doors[c].Dir==-1) //Feuerlöscher wieder nach außen drehen ("schließen")
+         else if (Doors[c].Dir==-1) //Feuerlï¿½scher wieder nach auï¿½en drehen ("schlieï¿½en")
          {
             Doors[c].State--;
             if (Doors[c].State==0 && Doors[c].Dir!=0)
             {
                Doors[c].Dir=0;
 
-               //Tür erneut drehen?
+               //Tï¿½r erneut drehen?
                if (IsRoomBusy(ROOM_SABOTAGE, -1))
                {
                   Doors[c].Dir=1;
@@ -3257,7 +3264,7 @@ void AIRPORT::PumpDoors (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Schaut, ob die Türen bewegt werden müssen:
+//Schaut, ob die Tï¿½ren bewegt werden mï¿½ssen:
 //--------------------------------------------------------------------------------------------
 void AIRPORT::TryDoor (XY ArrayPos, BOOL Player, SLONG PlayerNum)
 {
@@ -3267,7 +3274,7 @@ void AIRPORT::TryDoor (XY ArrayPos, BOOL Player, SLONG PlayerNum)
 
    for (c=Doors.AnzEntries()-1; c>=0; c--)
    {
-      if (Doors[c].ArabDoor==2) //Frachttür
+      if (Doors[c].ArabDoor==2) //Frachttï¿½r
       {
          if (!Player) continue;
          if (Sim.Players.Players[PlayerNum].ExRoom!=ROOM_FRACHT && Sim.Players.Players[PlayerNum].DirectToRoom!=ROOM_FRACHT) continue;
@@ -3299,7 +3306,7 @@ void AIRPORT::TryDoor (XY ArrayPos, BOOL Player, SLONG PlayerNum)
              (Doors[c].ArrayPos.x==ArrayPos.x+1 && Doors[c].ArrayPos.y==ArrayPos.y) ||
              (Doors[c].ArrayPos.x==ArrayPos.x-1 && Doors[c].ArrayPos.y==ArrayPos.y))
          {
-            //Ist die Tür vermint?
+            //Ist die Tï¿½r vermint?
             if (Player && ArrayPos.y<5 && ArrayPos.y>0)
             {
                for (SLONG c=0; c<SLONG(Runes.AnzEntries()); c++)
@@ -3389,7 +3396,7 @@ void AIRPORT::TryDoor (XY ArrayPos, BOOL Player, SLONG PlayerNum)
 }
 
 //--------------------------------------------------------------------------------------------
-//Sorgt dafür, daß nach neuem Tag/LoadGame eine Tür richtig (Explodiert oder nicht) angezeigt wird:
+//Sorgt dafï¿½r, daï¿½ nach neuem Tag/LoadGame eine Tï¿½r richtig (Explodiert oder nicht) angezeigt wird:
 //--------------------------------------------------------------------------------------------
 void AIRPORT::UpdateStaticDoorImage (void)
 {
@@ -3428,7 +3435,7 @@ void AIRPORT::CalcCoordinates (void)
 
    AnzRunes = 0;
 
-   //Die Area-Runen automatisch ergänzen:
+   //Die Area-Runen automatisch ergï¿½nzen:
    for (c=0; c<SLONG(Builds.AnzEntries()); c++)
       if (Builds.IsInAlbum(c))
       {
@@ -3505,7 +3512,7 @@ void AIRPORT::CalcCoordinates (void)
          d++;
       }
 
-   //Die Zahl der für uns wichtigen Runen bestimmen:
+   //Die Zahl der fï¿½r uns wichtigen Runen bestimmen:
    for (c=0; c<SLONG(Builds.AnzEntries()); c++)
       if (Builds.IsInAlbum(c) && Bricks[Builds[c].BrickId].ObstacleType==OBST_RUNE)
          if ((Builds[c].BrickId>=0x10000000+RUNE_CREATION && Builds[c].BrickId<=0x10000000+RUNE_PCREATION2) || (Builds[c].BrickId>=0x10000000+RUNE_CHECKIN && Builds[c].BrickId<=0x10000000+RUNE_2WAIT) || Builds[c].BrickId==0x10000000+RUNE_AREALO || Builds[c].BrickId==0x10000000+RUNE_AREARU || Builds[c].BrickId==0x10000000+RUNE_WAITPLANE || Builds[c].BrickId==0x10000000+RUNE_DROPSUITCASE || Builds[c].BrickId==0x10000000+RUNE_EXIT_SUITCASE || Builds[c].BrickId==0x10000000+RUNE_CREATE_SUITCASE || Builds[c].BrickId==0x10000000+RUNE_2CHECKIN_EXIT || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_START || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_G || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_WAIT || Builds[c].BrickId==0x10000000+RUNE_CONDBLOCK || Builds[c].BrickId==0x10000000+RUNE_DURCHLEUCHTER)
@@ -3517,13 +3524,13 @@ void AIRPORT::CalcCoordinates (void)
    AnzRunes     = 0;       
    NumBeltSpots = 0;
 
-   //Die Belt-Spots zählen:
+   //Die Belt-Spots zï¿½hlen:
    for (c=0; c<SLONG(Builds.AnzEntries()); c++)
       if (Builds.IsInAlbum(c) && Bricks[Builds[c].BrickId].ObstacleType==OBST_RUNE)
          if (Builds[c].BrickId==0x10000000+RUNE_SHOP && Builds[c].Par>=ROOM_BELT_X1 && Builds[c].Par<=ROOM_BELT_X10)
             NumBeltSpots = max (NumBeltSpots, Builds[c].Par-ROOM_BELT_X1);
 
-   //Die Zahl der für uns wichtigen Runen bestimmen:
+   //Die Zahl der fï¿½r uns wichtigen Runen bestimmen:
    for (c=0; c<SLONG(Builds.AnzEntries()); c++)
       if (Builds.IsInAlbum(c) && Bricks[Builds[c].BrickId].ObstacleType==OBST_RUNE)
          if ((Builds[c].BrickId>=0x10000000+RUNE_CREATION && Builds[c].BrickId<=0x10000000+RUNE_PCREATION2) || (Builds[c].BrickId>=0x10000000+RUNE_CHECKIN && Builds[c].BrickId<=0x10000000+RUNE_2WAIT) || Builds[c].BrickId==0x10000000+RUNE_AREALO || Builds[c].BrickId==0x10000000+RUNE_AREARU || Builds[c].BrickId==0x10000000+RUNE_WAITPLANE || Builds[c].BrickId==0x10000000+RUNE_DROPSUITCASE || Builds[c].BrickId==0x10000000+RUNE_EXIT_SUITCASE || Builds[c].BrickId==0x10000000+RUNE_CREATE_SUITCASE || Builds[c].BrickId==0x10000000+RUNE_2CHECKIN_EXIT || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_START || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_G || Builds[c].BrickId==0x10000000+RUNE_WAYPOINT_WAIT || Builds[c].BrickId==0x10000000+RUNE_CONDBLOCK || Builds[c].BrickId==0x10000000+RUNE_DURCHLEUCHTER)
@@ -3564,7 +3571,7 @@ void AIRPORT::RemoveRunes (void)
 
    for (c=d=0; c<(SLONG)Builds.AnzEntries(); c++)
    {
-      //Einige Runen werden zum Abschuß freigegeben:
+      //Einige Runen werden zum Abschuï¿½ freigegeben:
       if (Builds.IsInAlbum(c))
          switch (Builds[c].BrickId-0x10000000)
          {
@@ -3592,7 +3599,7 @@ void AIRPORT::RemoveRunes (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Gibt für die On-Screen Informationen einen STATIC Pointer auf den Filenamen zurück:
+//Gibt fï¿½r die On-Screen Informationen einen STATIC Pointer auf den Filenamen zurï¿½ck:
 //--------------------------------------------------------------------------------------------
 char *AIRPORT::GetHallFilename (void)
 {
@@ -3603,7 +3610,7 @@ char *AIRPORT::GetHallFilename (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Sorgt dafür, daß die Builds die Bricks nicht-assoziativ adressieren; Nicht mit Airport Parts verwenden!
+//Sorgt dafï¿½r, daï¿½ die Builds die Bricks nicht-assoziativ adressieren; Nicht mit Airport Parts verwenden!
 //--------------------------------------------------------------------------------------------
 void AIRPORT::UnassociateBuilds (void)
 {
@@ -3702,12 +3709,13 @@ void AIRPORT::SetConditionBlock (SLONG Id, BOOL Blocking)
 }
 
 //--------------------------------------------------------------------------------------------
-//Generiert die Mapper-Tabelle für die Schalter-Schildchen
+//Generiert die Mapper-Tabelle fï¿½r die Schalter-Schildchen
 //--------------------------------------------------------------------------------------------
 void AIRPORT::CreateGateMapper (void)
 {
    SLONG c, d;
-   SLONG AnzGates= GetNumberOfShops (RUNE_2WAIT);
+   SLONG physGates = GetNumberOfShops (RUNE_2WAIT);
+   SLONG AnzGates  = Sim.WaitZone >= 5 ? Sim.WaitZone + 3 : physGates;
 
    GateMapper.ReSize(AnzGates*2);
    GateMapper.FillWith (-1);
@@ -3753,17 +3761,17 @@ void AIRPORT::RepaintTextBricks (void)
                GateMapper[Sim.Players.Players[c].Gates.Gates[d].Nummer]=c;
       }
 
-   //Für alle Spieler:
+   //Fï¿½r alle Spieler:
    for (c=0; c<Sim.Players.AnzPlayers; c++)
    {
-      //Für alle Flugzeuge des Spielers:
+      //Fï¿½r alle Flugzeuge des Spielers:
       for (d=0; d<(SLONG)Sim.Players.Players[c].Planes.AnzEntries(); d++)
       {
          if (Sim.Players.Players[c].Planes.IsInAlbum(d))
          {
             Plan = &Sim.Players.Players[c].Planes[d].Flugplan;
 
-            //Für alle Flüge des Flugzeuges:
+            //Fï¿½r alle Flï¿½ge des Flugzeuges:
             e= Sim.Players.Players[c].Planes[d].Flugplan.NextStart;
 
             if (e!=-1)
@@ -3800,7 +3808,7 @@ void AIRPORT::RepaintTextBricks (void)
                }
             }
 
-            //Für alle Flüge des Flugzeuges:
+            //Fï¿½r alle Flï¿½ge des Flugzeuges:
             e= Sim.Players.Players[c].Planes[d].Flugplan.NextFlight;
 
             if (e!=-1)
@@ -3850,7 +3858,7 @@ TEAKFILE &operator << (TEAKFILE &File, const AIRPORT &Airport)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein Airport-Objekt:
+//Lï¿½dt ein Airport-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, AIRPORT &Airport)
 {
@@ -3889,7 +3897,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CClipMarker &Marker)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein ClipMarker-Objekt:
+//Lï¿½dt ein ClipMarker-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CClipMarker &Marker)
 {
@@ -3909,7 +3917,7 @@ TEAKFILE &operator << (TEAKFILE &File, const CAreaMarker &Marker)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt ein CAreaMarker-Objekt:
+//Lï¿½dt ein CAreaMarker-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, CAreaMarker &Marker)
 {

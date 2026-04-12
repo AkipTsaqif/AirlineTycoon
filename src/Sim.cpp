@@ -2194,14 +2194,21 @@ void SIM::DoTimeStep (void)
                      }
                      else
                      {
-                        qPlane.Ort      = -3;     //Hinterm Fenstern
-                        qPlane.AirportPos = XY(Airport.RightEnd+count+200, 191);
-
-                        qPlane.TargetX   = 200+Airport.GetRandomTypedRune (RUNE_2WAIT, UBYTE(qPlane.GetFlugplanEintrag()->Gate)).x;
-                        qPlane.Startzeit = UBYTE(qPlane.GetFlugplanEintrag()->Startzeit);
-
-                        //TEAKRAND LocalRand (Sim.Date+GetHour()+qPlane.TypeId);
                         TEAKRAND LocalRand (Sim.Date+GetHour());
+
+                        if (qPlane.Flugplan.Flug[qPlane.Flugplan.NextFlight].Gate >= Airport.GetNumberOfShops (RUNE_2WAIT))
+                        {
+                           qPlane.Ort      = -2;     //Virtual gate: taxi off-screen, no penalty
+                           qPlane.AirportPos = XY(-40-count, 26);
+                        }
+                        else
+                        {
+                           qPlane.Ort      = -3;     //Hinterm Fenstern
+                           qPlane.AirportPos = XY(Airport.RightEnd+count+200, 191);
+
+                           qPlane.TargetX   = 200+Airport.GetRandomTypedRune (RUNE_2WAIT, UBYTE(qPlane.GetFlugplanEintrag()->Gate)).x;
+                           qPlane.Startzeit = UBYTE(qPlane.GetFlugplanEintrag()->Startzeit);
+                        }
 
                         count += 50 + LocalRand.Rand(30);
                      }
@@ -2453,10 +2460,10 @@ void SIM::NewDay (void)
    
       LastExpansionDate = Sim.Date;
 
-      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, Sim.WaitZone, Sim.RightEnd);
+      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, min(Sim.WaitZone, 5L), Sim.RightEnd);
    }
    else if (bReloadAirport)
-      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, Sim.WaitZone, Sim.RightEnd);
+      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, min(Sim.WaitZone, 5L), Sim.RightEnd);
 
    bReloadAirport=false;
 
@@ -3365,7 +3372,7 @@ BOOL SIM::LoadGame (SLONG Number)
    {
 reload_airport:
       Sim.Suitcase = Sim.WaitZone;
-      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, Sim.WaitZone, Sim.RightEnd);
+      Airport.LoadAirport (Sim.LeftEnd, Sim.CheckIn, Sim.Office, Sim.Entry, Sim.Shops, Sim.Cafe, Sim.Security, Sim.Suitcase, min(Sim.WaitZone, 5L), Sim.RightEnd);
    }
 
    Airport.UpdateStaticDoorImage ();

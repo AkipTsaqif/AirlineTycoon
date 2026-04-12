@@ -529,7 +529,7 @@ void CTafelData::Randomize (SLONG Day)
    }
 
    //Und zu letzt die Gates:
-   Anz = Airport.GetNumberOfShops (RUNE_2WAIT);
+   Anz = Sim.WaitZone >= 5 ? Sim.WaitZone + 3 : Airport.GetNumberOfShops (RUNE_2WAIT);
    if (Sim.Date==0) Anz=4;
 
    for (c=f=0; c<Anz && f<7; c++)

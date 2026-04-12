@@ -727,6 +727,7 @@ END_NAME_MAP
 #define MENU_RENAMEEDITPLANE 42     //Ein Flugzeug im Editor umbennen
 #define MENU_SABOTAGEROUTE   43     //Welche Route will man �bernehmen
 #define MENU_BUYXPLANE       44     //Kauf des Flugzeuges beim Designer
+#define MENU_FLIGHTSCHEDULE  45     //Filofax: Today's arrivals/departures
 
 //Die der der MENU_REQUEST Men�s:
 #define MENU_REQUEST_CALLITADAY     1  //Feierabend! Sicher?

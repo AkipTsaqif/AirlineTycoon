@@ -83,7 +83,8 @@ static UBYTE FilofaxRoomRemapper [] =
 { ROOM_REISEBUERO, ROOM_ARAB_AIR, ROOM_SABOTAGE, ROOM_BANK, ROOM_BURO_A, ROOM_SHOP1, ROOM_AUFSICHT,
   ROOM_FRACHT,
   ROOM_MAKLER, ROOM_KIOSK, ROOM_LAST_MINUTE, ROOM_MUSEUM, ROOM_NASA, ROOM_PERSONAL_A,
-  ROOM_RICKS, ROOM_ROUTEBOX, ROOM_WERBUNG, ROOM_WERKSTATT, 255 };
+  ROOM_RICKS, ROOM_ROUTEBOX, ROOM_WERBUNG, ROOM_WERKSTATT, 253, 255 };
+//Note: 253 = sentinel for "Today's Flights" schedule page (not a real room)
 
 static UBYTE HandyRoomRemapper [] =
 { ROOM_ARAB_AIR, ROOM_BANK, ROOM_BANK, ROOM_AUFSICHT,
@@ -2102,9 +2103,14 @@ void CStdRaum::InitToolTips (void)
                {
                   c=(CursorPos.y-4)/13;
 
-                  if (MenuPar1==1 && c<18) //Filofax
+                  if (MenuPar1==1 && c<19) //Filofax
                   {
-                     if (Sim.Players.Players[(SLONG)PlayerNum].WasInRoom[(SLONG)FilofaxRoomRemapper[c]])
+                     if (FilofaxRoomRemapper[c]==253) //Today's Flights: always clickable
+                     {
+                        CheckCursorHighlight (CursorPos, CRect (32, (CursorPos.y-4)/13*13+4, 204, (CursorPos.y-4)/13*13+4+15), ColorOfFontBlack);
+                        SetMouseLook (CURSOR_HOT, 0, -101, MENU_FILOFAX, CursorPos.x, c);
+                     }
+                     else if (c<18 && Sim.Players.Players[(SLONG)PlayerNum].WasInRoom[(SLONG)FilofaxRoomRemapper[c]])
                         if (!Sim.Players.Players[(SLONG)PlayerNum].IsLocationInQueue(FilofaxRoomRemapper[c]))
                         {
                            CheckCursorHighlight (CursorPos, CRect (32, (CursorPos.y-4)/13*13+4, 204, (CursorPos.y-4)/13*13+4+15), ColorOfFontBlack);
@@ -2122,6 +2128,11 @@ void CStdRaum::InitToolTips (void)
                      }
                   }
                }
+               break;
+
+            case MENU_FLIGHTSCHEDULE:
+               if (CursorPos.IfIsWithin (12, 187, 36, 208)) SetMouseLook (CURSOR_LEFT,  0, -103, MENU_FLIGHTSCHEDULE, -1);
+               if (MenuPage < (MenuInfo-1)/15 && CursorPos.IfIsWithin (190, 196, 203, 209)) SetMouseLook (CURSOR_RIGHT, 0, -103, MENU_FLIGHTSCHEDULE, -2);
                break;
 
             case MENU_KEROSIN:
@@ -4548,12 +4559,16 @@ void CStdRaum::MenuRepaint (void)
 
       case MENU_FILOFAX: //The telefone filofax:
          OnscreenBitmap.BlitFrom (MenuBms[0]);
-         for (c=0; c<18; c++)
+         for (c=0; c<19; c++)
          {
             if (MenuPar1==1) //Filofax
             {
                if (FilofaxRoomRemapper[c]==255) break;
-               if (Sim.Players.Players[(SLONG)PlayerNum].WasInRoom[(SLONG)FilofaxRoomRemapper[c]])
+               if (FilofaxRoomRemapper[c]==253) //Today's Flights schedule: always available
+               {
+                  OnscreenBitmap.PrintAt ("Today's Flights", FontSmallBlack, TEC_FONT_LEFT, 34, 7+c*13, 204, 256);
+               }
+               else if (Sim.Players.Players[(SLONG)PlayerNum].WasInRoom[(SLONG)FilofaxRoomRemapper[c]])
                   if (!Sim.Players.Players[(SLONG)PlayerNum].IsLocationInQueue(FilofaxRoomRemapper[c]))
                      //OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_FILOFAX, 1000+c), FontSmallBlack, TEC_FONT_LEFT, 34, 8+c*13, 204, 253);
                      OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_FILOFAX, 1000+c), FontSmallBlack, TEC_FONT_LEFT, 34, 7+c*13, 204, 256);
@@ -4569,6 +4584,91 @@ void CStdRaum::MenuRepaint (void)
                   else
                      OnscreenBitmap.PrintAt (StandardTexte.GetS (TOKEN_FILOFAX, 2000+c), FontSmallGrey, TEC_FONT_LEFT, 34, 7+c*13, 204, 210);
             }
+         }
+         break;
+
+      case MENU_FLIGHTSCHEDULE: //Filofax: all today's arrivals and departures
+         {
+            OnscreenBitmap.BlitFrom (MenuBms[0]);
+            OnscreenBitmap.BlitFrom (MenuBms[1], 12, 187);
+
+            OnscreenBitmap.PrintAt ("Today's Flights", FontSmallBlack, TEC_FONT_LEFT, 34, 7, 204, 256);
+
+            const SLONG rowsPerPage = 15;
+            SLONG lineIdx = 0;
+            SLONG py      = 20; //y for first data row
+            SLONG pd, pe;       //local loop vars (d/e not in outer scope here)
+
+            for (SLONG h=0; h<24; h++)
+            {
+               //Arrivals at hour h:
+               for (c=0; c<Sim.Players.AnzPlayers; c++)
+                  for (pd=0; pd<(SLONG)Sim.Players.Players[c].Planes.AnzEntries(); pd++)
+                     if (Sim.Players.Players[c].Planes.IsInAlbum(pd))
+                     {
+                        CPlane     &qPlane = Sim.Players.Players[c].Planes[pd];
+                        CFlugplan  *Plan   = &qPlane.Flugplan;
+                        for (pe=0; pe<Plan->Flug.AnzEntries(); pe++)
+                        {
+                           CFlugplanEintrag &flt = Plan->Flug[pe];
+                           if ((flt.ObjectType==1 || flt.ObjectType==2) &&
+                               flt.Landedate==Sim.Date && flt.Landezeit==h &&
+                               flt.NachCity==(ULONG)Sim.HomeAirportId && flt.Gate!=-2)
+                           {
+                              if (lineIdx>=MenuPage*rowsPerPage && lineIdx<(MenuPage+1)*rowsPerPage)
+                              {
+                                 OnscreenBitmap.PrintAt (bprintf("%2li A %s %s-%s", h,
+                                    (LPCTSTR)Sim.Players.Players[c].Abk,
+                                    (LPCTSTR)Cities[flt.VonCity].Kuerzel,
+                                    (LPCTSTR)Cities[flt.NachCity].Kuerzel),
+                                    FontSmallBlack, TEC_FONT_LEFT, 34, py, 170, 256);
+                                 if (flt.Gate==-1)
+                                    OnscreenBitmap.PrintAt ("-",                          FontSmallBlack, TEC_FONT_LEFT, 172, py, 204, 256);
+                                 else
+                                    OnscreenBitmap.PrintAt (bprintf("G%li", flt.Gate+1),  FontSmallBlack, TEC_FONT_LEFT, 172, py, 204, 256);
+                                 py+=13;
+                              }
+                              lineIdx++;
+                           }
+                        }
+                     }
+
+               //Departures at hour h (boarding at h, displayed as h+1):
+               for (c=0; c<Sim.Players.AnzPlayers; c++)
+                  for (pd=0; pd<(SLONG)Sim.Players.Players[c].Planes.AnzEntries(); pd++)
+                     if (Sim.Players.Players[c].Planes.IsInAlbum(pd))
+                     {
+                        CPlane     &qPlane = Sim.Players.Players[c].Planes[pd];
+                        CFlugplan  *Plan   = &qPlane.Flugplan;
+                        for (pe=0; pe<Plan->Flug.AnzEntries(); pe++)
+                        {
+                           CFlugplanEintrag &flt = Plan->Flug[pe];
+                           if ((flt.ObjectType==1 || flt.ObjectType==2) &&
+                               flt.Startdate==Sim.Date && flt.Startzeit==h &&
+                               flt.VonCity==(ULONG)Sim.HomeAirportId && flt.Gate!=-2)
+                           {
+                              if (lineIdx>=MenuPage*rowsPerPage && lineIdx<(MenuPage+1)*rowsPerPage)
+                              {
+                                 OnscreenBitmap.PrintAt (bprintf("%2li D %s %s-%s", h+1,
+                                    (LPCTSTR)Sim.Players.Players[c].Abk,
+                                    (LPCTSTR)Cities[flt.VonCity].Kuerzel,
+                                    (LPCTSTR)Cities[flt.NachCity].Kuerzel),
+                                    FontSmallBlack, TEC_FONT_LEFT, 34, py, 170, 256);
+                                 if (flt.Gate==-1)
+                                    OnscreenBitmap.PrintAt ("-",                          FontSmallBlack, TEC_FONT_LEFT, 172, py, 204, 256);
+                                 else
+                                    OnscreenBitmap.PrintAt (bprintf("G%li", flt.Gate+1),  FontSmallBlack, TEC_FONT_LEFT, 172, py, 204, 256);
+                                 py+=13;
+                              }
+                              lineIdx++;
+                           }
+                        }
+                     }
+            }
+
+            MenuInfo = lineIdx; //store total count for hover next-arrow check
+            if (lineIdx > (MenuPage+1)*rowsPerPage)
+               OnscreenBitmap.BlitFrom (MenuBms[2], 190, 196);
          }
          break;
 
@@ -6033,6 +6133,15 @@ phone_busy:
                   DialBusyFX.Play(0, Sim.Options.OptionEffekte*100/7);
                }
             }
+            else if (FilofaxRoomRemapper[MouseClickPar2]==253) //Today's Flights
+            {
+               MenuStart (MENU_FILOFAX, 1);
+               CurrentMenu = MENU_FLIGHTSCHEDULE;
+               MenuPage    = 0;
+               MenuInfo    = 0;
+               MenuRepaint ();
+               if (Sim.Options.OptionEffekte) gMovePaper.Play (DSBPLAY_NOSTOP, Sim.Options.OptionEffekte*100/7);
+            }
             else if (!qPlayer.IsLocationInQueue(FilofaxRoomRemapper[MouseClickPar2]))
             {
                gMouseScroll=0;
@@ -6143,6 +6252,36 @@ phone_busy:
                MenuStop();
                MenuStart (MENU_FILOFAX, 1);
                return;
+            }
+         }
+         break;
+
+      case MENU_FLIGHTSCHEDULE: //Filofax: today's flight schedule
+         if (MouseClickPar1==-1) //back arrow
+         {
+            if (MenuPage>0)
+            {
+               MenuPage--;
+               MenuRepaint ();
+               if (Sim.Options.OptionEffekte) gMovePaper.Play (DSBPLAY_NOSTOP, Sim.Options.OptionEffekte*100/7);
+            }
+            else
+            {
+               //Back to filofax main list
+               CurrentMenu = MENU_FILOFAX;
+               MenuPage    = 0;
+               MenuPar1    = 1; //Filofax (not handy)
+               MenuRepaint ();
+               if (Sim.Options.OptionEffekte) gMovePaper.Play (DSBPLAY_NOSTOP, Sim.Options.OptionEffekte*100/7);
+            }
+         }
+         else if (MouseClickPar1==-2) //next arrow
+         {
+            if (MenuInfo > (MenuPage+1)*15)
+            {
+               MenuPage++;
+               MenuRepaint ();
+               if (Sim.Options.OptionEffekte) gMovePaper.Play (DSBPLAY_NOSTOP, Sim.Options.OptionEffekte*100/7);
             }
          }
          break;

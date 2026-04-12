@@ -2888,7 +2888,7 @@ void PERSON::PersonReachedTarget (void)
                      {
                         //Sofort boarden:
                         State = bFirstClass ? PERSON_BOARDING : PERSON_2DURCHLEUCHTER;
-                        if (fpe->Gate==-1) State = PERSON_LEAVING;
+                        if (fpe->Gate==-1 || fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT)) State = PERSON_LEAVING;
                                       else if (bFirstClass) Target= Airport.GetRandomTypedRune (RUNE_WAIT, (UBYTE)fpe->Gate, false, &PersonalRand);
                                       else Target= Airport.GetRandomTypedRune (RUNE_DURCHLEUCHTER, (UBYTE)fpe->Gate, false, &PersonalRand);
                      }
@@ -2909,6 +2909,7 @@ void PERSON::PersonReachedTarget (void)
 
                //Am Durchleuchter angekommen, ist das Flugzeug noch da?
                case PERSON_2DURCHLEUCHTER:
+                  if (fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT)) { State = PERSON_LEAVING; break; }
                   State  = PERSON_BOARDING;
                   Target = Airport.GetRandomTypedRune (RUNE_WAIT, (UBYTE)fpe->Gate, false, &PersonalRand);
 
@@ -2948,7 +2949,7 @@ void PERSON::PersonReachedTarget (void)
                       Sim.Players.Players[(SLONG)FlightAirline].Planes[FlightPlaneId].AirportPos.x==Sim.Players.Players[(SLONG)FlightAirline].Planes[FlightPlaneId].TargetX)
                   {
                      State = PERSON_ENTERINGPL;
-                     if (fpe->Gate==-1) State = PERSON_LEAVING;
+                     if (fpe->Gate==-1 || fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT)) State = PERSON_LEAVING;
                                    else Target= Airport.GetRandomTypedRune (RUNE_WAITPLANE, (UBYTE)fpe->Gate, false, &PersonalRand);
                   }
                   else

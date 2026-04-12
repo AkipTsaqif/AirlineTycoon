@@ -777,7 +777,7 @@ PERSON::PERSON (UBYTE ClanId, XY Position, UBYTE Reason, UBYTE FlightAirline, SL
 
       case REASON_FLYING:
          //Sicherheitsabfrage, weil durch einen Bug evtl. woanders falsche Werte reinkamen:
-         if (GetFlugplanEintrag()->Gate==-2)
+         if (GetFlugplanEintrag()->Gate==-2 || GetFlugplanEintrag()->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT))
          {
             //Bad, remove Person again soo:
             PERSON::State  = PERSON_LEAVING;
@@ -2803,7 +2803,7 @@ void PERSON::PersonReachedTarget (void)
                //Person steht jetzt in der Warteschlange drin:
                case PERSON_2CHECKIN:
                   State  = PERSON_CHECKINGIN;
-                  if (fpe->Gate==-1) State = PERSON_LEAVING;
+                  if (fpe->Gate==-1 || fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT)) State = PERSON_LEAVING;
                                 else Target = Airport.GetRandomTypedRune (RUNE_CHECKIN, (UBYTE)fpe->Gate, false, &PersonalRand);
                   if (FlightAirline==Sim.localPlayer && Sim.Tutorial==1602)
                   {
@@ -2821,7 +2821,7 @@ void PERSON::PersonReachedTarget (void)
                   if (Clans[(SLONG)ClanId].HasSuitcase>0)
                   {
                      State  = PERSON_DROPPING_SUICASE;
-                     if (fpe->Gate==-1) State = PERSON_LEAVING;
+                     if (fpe->Gate==-1 || fpe->Gate >= Airport.GetNumberOfShops (RUNE_2WAIT)) State = PERSON_LEAVING;
                                    else Target = Airport.GetRandomTypedRune (RUNE_DROPSUITCASE, (UBYTE)fpe->Gate, false, &PersonalRand);
                   }
                   else

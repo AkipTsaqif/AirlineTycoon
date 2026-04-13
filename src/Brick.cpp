@@ -1,5 +1,5 @@
 //============================================================================================
-// Brick.Cpp - Funktionen für die Verwaltung der baulichen Elemente:
+// Brick.Cpp - Funktionen fï¿½r die Verwaltung der baulichen Elemente:
 //============================================================================================
 #include "StdAfx.h"
 
@@ -22,7 +22,7 @@ BRICK::~BRICK ()
 }
 
 //--------------------------------------------------------------------------------------------
-//Die Ausmaße einer Brick-Bitmap zurückgeben:
+//Die Ausmaï¿½e einer Brick-Bitmap zurï¿½ckgeben:
 //--------------------------------------------------------------------------------------------
 XY BRICK::GetBitmapDimension (void) const
 {
@@ -85,7 +85,7 @@ void BRICK::BlitAt (SBBM &Offscreen, BOOL Ansatz, const XY &ScreenPos, SLONG Pha
 //--------------------------------------------------------------------------------------------
 void BRICK::BlitAt (SBBM &Offscreen, BOOL Ansatz, const XY &p1, const XY &p2)
 {
-   //Hier stand überall früher PrimaryBm statt Offscreen...
+   //Hier stand ï¿½berall frï¿½her PrimaryBm statt Offscreen...
 
    if (Ansatz)
    {
@@ -110,7 +110,7 @@ void BRICK::BlitAt (SBPRIMARYBM &Offscreen, BOOL Ansatz, const XY &ScreenPos, SL
 {
    if (ScreenPos.x+Bitmap[0l].Size.x<-2 || ScreenPos.x>640 || !bActive) return;
 
-   //Hier stand überall früher PrimaryBm statt Offscreen...
+   //Hier stand ï¿½berall frï¿½her PrimaryBm statt Offscreen...
 
    //Wenn man es mit dem Maus-Cursor besonders anfasst:
    if (Ansatz)
@@ -167,7 +167,7 @@ void BRICK::BlitAt (SBPRIMARYBM &Offscreen, BOOL Ansatz, const XY &ScreenPos, SL
 //--------------------------------------------------------------------------------------------
 void BRICK::BlitAt (SBPRIMARYBM &Offscreen, BOOL Ansatz, const XY &p1, const XY &p2)
 {
-   //Hier stand überall früher PrimaryBm statt Offscreen...
+   //Hier stand ï¿½berall frï¿½her PrimaryBm statt Offscreen...
 
    if (Ansatz)
    {
@@ -186,7 +186,7 @@ void BRICK::BlitAt (SBPRIMARYBM &Offscreen, BOOL Ansatz, const XY &p1, const XY 
 }
 
 //--------------------------------------------------------------------------------------------
-//Für Editor: Ist Mauscursor auf Glas oder auf echtem Baustein?
+//Fï¿½r Editor: Ist Mauscursor auf Glas oder auf echtem Baustein?
 //--------------------------------------------------------------------------------------------
 BOOL BRICK::IsGlasAt (SLONG x, SLONG y)
 {
@@ -206,7 +206,7 @@ void BRICK::UpdateBrick (void)
 
    if (ReloadNecessary)
    {
-      //Bild muß (neu) geladen werden:
+      //Bild muï¿½ (neu) geladen werden:
       SLONG  AnzPhases;
 
       //Wie oft kommt diese Periode drin vor ?
@@ -215,10 +215,10 @@ void BRICK::UpdateBrick (void)
       //Sind Angaben vorhanden?
       if (AnzPhases>1)
       {
-         //Speicher für die Animationsphasen bereitstellen:
+         //Speicher fï¿½r die Animationsphasen bereitstellen:
          Bitmap.ReSize (AnzPhases);
 
-         //Dies wird jetzt wieder als Zähler verwendet:
+         //Dies wird jetzt wieder als Zï¿½hler verwendet:
          AnzPhases=0;
 
          //Das richtige Sub-Bild raussuchen:
@@ -231,7 +231,7 @@ void BRICK::UpdateBrick (void)
       }
       else
       {
-         //Speicher für die Animationsphases bereitstellen:
+         //Speicher fï¿½r die Animationsphases bereitstellen:
          Bitmap.ReSize (1);
 
          Bitmap[0l].ReSize (pGLibBrick, graphicIDs[0]);
@@ -280,7 +280,7 @@ BRICKS::BRICKS (const CString &TabFilename) : ALBUM<BRICK> (Bricks, "Bricks")
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt nachträglich die Tabelle mit den Bricks:
+//Lï¿½dt nachtrï¿½glich die Tabelle mit den Bricks:
 //--------------------------------------------------------------------------------------------
 void BRICKS::ReInit (const CString &TabFilename)
 {
@@ -314,10 +314,10 @@ void BRICKS::ReInit (const CString &TabFilename)
 
       TeakStrRemoveEndingCodes (Line, "\xd\xa\x1a\r");
 
-      //Tabellenzeile hinzufügen:
+      //Tabellenzeile hinzufï¿½gen:
       Id=atol (strtok (Line, ";\x8\""))+0x10000000;
 
-      //Hinzufügen (darf noch nicht existieren):
+      //Hinzufï¿½gen (darf noch nicht existieren):
       if (IsInAlbum (Id)) TeakLibW_Exception (FNL, ExcNever);
       (*this)+=Id;
 
@@ -439,7 +439,7 @@ void BRICKS::UpdateBricks (void)
    {
       for (c=0; c<8; c++)
       {
-         //Hiermit löschen wir die Smacker-Platzhalter an den Gates. Die dienen beim Editieren als optische Hilfe zur Positionierung, aber im Spiel können wir sie nicht gebrauchen
+         //Hiermit lï¿½schen wir die Smacker-Platzhalter an den Gates. Die dienen beim Editieren als optische Hilfe zur Positionierung, aber im Spiel kï¿½nnen wir sie nicht gebrauchen
          (*this)[SLONG(0x10000000+760+c)].Bitmap[0].FillWith(0);
          (*this)[SLONG(0x10000000+768+c)].Bitmap[0].FillWith(0);
       }
@@ -517,7 +517,7 @@ TEAKFILE &operator << (TEAKFILE &File, const BUILD &Build)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt einen Build-Eintrag:
+//Lï¿½dt einen Build-Eintrag:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, BUILD &Build)
 {
@@ -537,7 +537,7 @@ TEAKFILE &operator << (TEAKFILE &File, const BUILDS &Builds)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt einen Builds-Objekt:
+//Lï¿½dt einen Builds-Objekt:
 //--------------------------------------------------------------------------------------------
 TEAKFILE &operator >> (TEAKFILE &File, BUILDS &Builds)
 {
@@ -548,7 +548,7 @@ TEAKFILE &operator >> (TEAKFILE &File, BUILDS &Builds)
 }
 
 //--------------------------------------------------------------------------------------------
-//Löscht alle Elemente des Flughafens:
+//Lï¿½scht alle Elemente des Flughafens:
 //--------------------------------------------------------------------------------------------
 void BUILDS::Clear (void)
 {
@@ -556,7 +556,7 @@ void BUILDS::Clear (void)
 }
 
 //--------------------------------------------------------------------------------------------
-//Lädt einen Airport-Anordnung:
+//Lï¿½dt einen Airport-Anordnung:
 //--------------------------------------------------------------------------------------------
 void BUILDS::Load (SLONG Hall, SLONG Level)
 {
@@ -565,7 +565,7 @@ void BUILDS::Load (SLONG Hall, SLONG Level)
 
    if (Difficulty==DIFF_FREEGAME) Difficulty=DIFF_FREEGAMEMAP;
 
-   //Wenn der Flughafen für einen Level nicht existiert, dann Fallback auf den Difficulty-Level davor probieren
+   //Wenn der Flughafen fï¿½r einen Level nicht existiert, dann Fallback auf den Difficulty-Level davor probieren
    do
    {
       Filename = FullFilename (HallFilenames [Hall], MiscPath, 100*Difficulty+Level);
@@ -583,6 +583,12 @@ void BUILDS::Load (SLONG Hall, SLONG Level)
 
       //Etwas tricky: Den geerbeten shifting-operator der ALBUM-Klasse aufrufen:
       File >> *((ALBUM<BUILD>*)this);
+   }
+   else if (Level > 1)
+   {
+      // Level file not found â€” fall back to previous level so missing expanded
+      // content doesn't crash the airport merge (which requires non-empty sections)
+      Load (Hall, Level-1);
    }
    else Clear ();
 }
@@ -611,7 +617,7 @@ void BUILDS::Save (SLONG Hall, SLONG Level) const
 }
 
 //--------------------------------------------------------------------------------------------
-//Sortiert alle Elemente des Flughafens gemäß ihrer Z-Position:
+//Sortiert alle Elemente des Flughafens gemï¿½ï¿½ ihrer Z-Position:
 //--------------------------------------------------------------------------------------------
 void BUILDS::Sort (void)
 {

@@ -336,6 +336,33 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
             AnzPages = max (1, (numPlanes + 12) / 13);
             if (Page >= AnzPages) Page = 0;
          }
+
+         if (SelectedId==5)
+            { AnzPages=1; Page=0; }
+
+         if (SelectedId==6)
+         {
+            SLONG arrTotal = 0, depTotal = 0;
+            for (SLONG fh=0; fh<24; fh++)
+               for (SLONG fp=0; fp<Sim.Players.AnzPlayers; fp++)
+                  for (SLONG fi=0; fi<(SLONG)Sim.Players.Players[fp].Planes.AnzEntries(); fi++)
+                     if (Sim.Players.Players[fp].Planes.IsInAlbum(fi))
+                     {
+                        CFlugplan *fPlan = &Sim.Players.Players[fp].Planes[fi].Flugplan;
+                        for (SLONG fe=0; fe<fPlan->Flug.AnzEntries(); fe++)
+                        {
+                           CFlugplanEintrag &flt = fPlan->Flug[fe];
+                           if ((flt.ObjectType==1||flt.ObjectType==2) && flt.Gate!=-2)
+                           {
+                              if (flt.Landedate==Sim.Date && flt.Landezeit==fh && flt.NachCity==(ULONG)Sim.HomeAirportId)
+                                 arrTotal++;
+                              if (flt.Startdate==Sim.Date && flt.Startzeit==fh && flt.VonCity==(ULONG)Sim.HomeAirportId)
+                                 depTotal++;
+                           }
+                        }
+                     }
+            AnzPages = max(1, (arrTotal+12)/13) + max(1, (depTotal+12)/13);
+         }
       }
    }
 
@@ -852,6 +879,10 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                   Bitmap.PrintAt (CString(StandardTexte.GetS (TOKEN_EXPERT, 2100))+" "+CString(StandardTexte.GetS (TOKEN_SCHED, 3010+(Sim.Date+Sim.StartWeekday)%7)), TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
                else if (SelectedId==4)
                   Bitmap.PrintAt ("Fleet Statistics", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
+               else if (SelectedId==5)
+                  Bitmap.PrintAt ("Gate Ownership", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
+               else if (SelectedId==6)
+                  Bitmap.PrintAt ("Today's Flights", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
                else
                   Bitmap.PrintAt (StandardTexte.GetS (TOKEN_EXPERT, 2000+SelectedId), TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
 
@@ -1092,6 +1123,140 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                                         ClientArea+XY(80, pageRow*13), ClientArea+XY(130, pageRow*13+13));
                         Bitmap.PrintAt (bitoa (qPlane.SummePassagiere), FontSmallBlack, TEC_FONT_RIGHT,
                                         ClientArea+XY(130, pageRow*13), ClientArea+XY(172, pageRow*13+13));
+                     }
+                  }
+                  break;
+
+                  //Gate Ownership:
+                  case 5:
+                  {
+                     SLONG AnzGates = Airport.GateMapper.AnzEntries() / 2;
+                     SLONG row = 0;
+                     for (SLONG g = 0; g < AnzGates; g++)
+                     {
+                        SLONG owner = Airport.GateMapper[g];
+                        SB_CFont *pFont = (owner == (SLONG)PlayerNum) ? &FontSmallBlack : &FontSmallGrey;
+                        Bitmap.PrintAt (bprintf ("%li", g+1), *pFont, TEC_FONT_LEFT,
+                                        ClientArea+XY(0, row*13), ClientArea+XY(20, row*13+13));
+                        if (owner >= 0 && owner < (SLONG)Sim.Players.Players.AnzEntries())
+                           Bitmap.PrintAt (Sim.Players.Players[owner].AirlineX, *pFont, TEC_FONT_LEFT,
+                                           ClientArea+XY(22, row*13), ClientArea+XY(172, row*13+13));
+                        else
+                           Bitmap.PrintAt ("Free", FontSmallGrey, TEC_FONT_LEFT,
+                                           ClientArea+XY(22, row*13), ClientArea+XY(172, row*13+13));
+                        row++;
+                     }
+                  }
+                  break;
+
+                  //Today's Flights (split: arrivals pages then departures pages):
+                  case 6:
+                  {
+                     const SLONG rowsPerPage = 13;
+
+                     //Count arrivals to find the page split point:
+                     SLONG arrTotal = 0;
+                     for (SLONG fh=0; fh<24; fh++)
+                        for (SLONG fp=0; fp<Sim.Players.AnzPlayers; fp++)
+                           for (SLONG fi=0; fi<(SLONG)Sim.Players.Players[fp].Planes.AnzEntries(); fi++)
+                              if (Sim.Players.Players[fp].Planes.IsInAlbum(fi))
+                              {
+                                 CFlugplan *fPlan = &Sim.Players.Players[fp].Planes[fi].Flugplan;
+                                 for (SLONG fe=0; fe<fPlan->Flug.AnzEntries(); fe++)
+                                 {
+                                    CFlugplanEintrag &flt = fPlan->Flug[fe];
+                                    if ((flt.ObjectType==1||flt.ObjectType==2) && flt.Gate!=-2 &&
+                                        flt.Landedate==Sim.Date && flt.Landezeit==fh &&
+                                        flt.NachCity==(ULONG)Sim.HomeAirportId)
+                                       arrTotal++;
+                                 }
+                              }
+
+                     SLONG arrPages  = max(1, (arrTotal+rowsPerPage-1)/rowsPerPage);
+                     bool  showArr   = (Page < arrPages);
+                     SLONG localPage = showArr ? Page : (Page - arrPages);
+
+                     //Overwrite the generic title with the section-specific one:
+                     if (showArr)
+                        Bitmap.PrintAt ("Today's Flights - Arrivals", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
+                     else
+                        Bitmap.PrintAt ("Today's Flights - Departures", TitleFont, TEC_FONT_LEFT, TitleArea, Bitmap.Size);
+
+                     SLONG lineIdx = 0;
+
+                     if (showArr)
+                     {
+                        //--- Arrivals section ---
+                        for (SLONG fh=0; fh<24; fh++)
+                           for (SLONG fp=0; fp<Sim.Players.AnzPlayers; fp++)
+                              for (SLONG fi=0; fi<(SLONG)Sim.Players.Players[fp].Planes.AnzEntries(); fi++)
+                                 if (Sim.Players.Players[fp].Planes.IsInAlbum(fi))
+                                 {
+                                    CFlugplan *fPlan = &Sim.Players.Players[fp].Planes[fi].Flugplan;
+                                    for (SLONG fe=0; fe<fPlan->Flug.AnzEntries(); fe++)
+                                    {
+                                       CFlugplanEintrag &flt = fPlan->Flug[fe];
+                                       if ((flt.ObjectType==1||flt.ObjectType==2) && flt.Gate!=-2 &&
+                                           flt.Landedate==Sim.Date && flt.Landezeit==fh &&
+                                           flt.NachCity==(ULONG)Sim.HomeAirportId)
+                                       {
+                                          SLONG pr = lineIdx - localPage*rowsPerPage;
+                                          if (pr>=0 && pr<rowsPerPage)
+                                          {
+                                             Bitmap.BlitFromT (TinyLogoBms[fp], ClientArea+XY(0, pr*13+2));
+                                             Bitmap.PrintAt (bprintf("%02li:00", fh),
+                                                FontSmallBlack, TEC_FONT_LEFT,
+                                                ClientArea+XY(24, pr*13+6), ClientArea+XY(58, pr*13+13));
+                                             Bitmap.PrintAt (bprintf("%s-%s",
+                                                (LPCTSTR)Cities[flt.VonCity].Kuerzel,
+                                                (LPCTSTR)Cities[flt.NachCity].Kuerzel),
+                                                FontSmallBlack, TEC_FONT_LEFT,
+                                                ClientArea+XY(60, pr*13+6), ClientArea+XY(148, pr*13+13));
+                                             CString gStr = (flt.Gate==-1) ? CString("-") : bprintf("G%li", flt.Gate+1);
+                                             Bitmap.PrintAt (gStr, FontSmallBlack, TEC_FONT_RIGHT,
+                                                ClientArea+XY(148, pr*13+6), ClientArea+XY(172, pr*13+13));
+                                          }
+                                          lineIdx++;
+                                       }
+                                    }
+                                 }
+                     }
+                     else
+                     {
+                        //--- Departures section ---
+                        for (SLONG fh2=0; fh2<24; fh2++)
+                           for (SLONG fp2=0; fp2<Sim.Players.AnzPlayers; fp2++)
+                              for (SLONG fi2=0; fi2<(SLONG)Sim.Players.Players[fp2].Planes.AnzEntries(); fi2++)
+                                 if (Sim.Players.Players[fp2].Planes.IsInAlbum(fi2))
+                                 {
+                                    CFlugplan *fPlan2 = &Sim.Players.Players[fp2].Planes[fi2].Flugplan;
+                                    for (SLONG fe2=0; fe2<fPlan2->Flug.AnzEntries(); fe2++)
+                                    {
+                                       CFlugplanEintrag &flt2 = fPlan2->Flug[fe2];
+                                       if ((flt2.ObjectType==1||flt2.ObjectType==2) && flt2.Gate!=-2 &&
+                                           flt2.Startdate==Sim.Date && flt2.Startzeit==fh2 &&
+                                           flt2.VonCity==(ULONG)Sim.HomeAirportId)
+                                       {
+                                          SLONG pr2 = lineIdx - localPage*rowsPerPage;
+                                          if (pr2>=0 && pr2<rowsPerPage)
+                                          {
+                                             Bitmap.BlitFromT (TinyLogoBms[fp2], ClientArea+XY(0, pr2*13+2));
+                                             Bitmap.PrintAt (bprintf("%02li:00", fh2+1),
+                                                FontSmallBlack, TEC_FONT_LEFT,
+                                                ClientArea+XY(24, pr2*13+6), ClientArea+XY(58, pr2*13+13));
+                                             Bitmap.PrintAt (bprintf("%s-%s",
+                                                (LPCTSTR)Cities[flt2.VonCity].Kuerzel,
+                                                (LPCTSTR)Cities[flt2.NachCity].Kuerzel),
+                                                FontSmallBlack, TEC_FONT_LEFT,
+                                                ClientArea+XY(60, pr2*13+6), ClientArea+XY(148, pr2*13+13));
+                                             CString gStr2 = (flt2.Gate==-1) ? CString("-") : bprintf("G%li", flt2.Gate+1);
+                                             Bitmap.PrintAt (gStr2, FontSmallBlack, TEC_FONT_RIGHT,
+                                                ClientArea+XY(148, pr2*13+6), ClientArea+XY(172, pr2*13+13));
+                                          }
+                                          lineIdx++;
+                                       }
+                                    }
+                                 }
                      }
                   }
                   break;
@@ -1595,6 +1760,8 @@ void BLOCK::RefreshData (SLONG PlayerNum)
             SLONG numPlanes = Sim.Players.Players[(SLONG)PlayerNum].Planes.GetNumUsed();
             AnzPages = max (1, (numPlanes + 12) / 13);
          }
+         else if (Index==0 && SelectedId==5)
+            AnzPages = 1;
          break;
    }
 

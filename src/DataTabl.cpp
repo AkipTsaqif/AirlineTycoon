@@ -558,7 +558,7 @@ void CDataTable::FillWithExperts (SLONG /*PlayerNum*/)
    Title = StandardTexte.GetS (TOKEN_EXPERT, 1000);
 
    AnzColums = 1;
-   AnzRows   = 5;
+   AnzRows   = 7;
    Values.ReSize (0);
    Values.ReSize (AnzColums*AnzRows);
    ValueFlags.ReSize (0);
@@ -568,13 +568,17 @@ void CDataTable::FillWithExperts (SLONG /*PlayerNum*/)
 
    ColTitle[0] = StandardTexte.GetS (TOKEN_EXPERT, 1000);
 
-   for (c=d=0; c<5; c++)
+   for (c=d=0; c<7; c++)
    {
       LineIndex[c] = c;
       if (c < 4)
          Values[d+0] = StandardTexte.GetS (TOKEN_EXPERT, 2000+c);
-      else
+      else if (c == 4)
          Values[d+0] = "Fleet Statistics";
+      else if (c == 5)
+         Values[d+0] = "Gate Ownership";
+      else
+         Values[d+0] = "Today's Flights";
       d++;
    }
 }

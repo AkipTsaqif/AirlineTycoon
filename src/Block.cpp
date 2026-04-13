@@ -1206,15 +1206,15 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                                              Bitmap.BlitFromT (TinyLogoBms[fp], ClientArea+XY(0, pr*13+2));
                                              Bitmap.PrintAt (bprintf("%02li:00", fh),
                                                 FontSmallBlack, TEC_FONT_LEFT,
-                                                ClientArea+XY(24, pr*13+6), XY(ClientArea.x+58, Bitmap.Size.y));
+                                                ClientArea+XY(24, pr*13+4), XY(ClientArea.x+58, Bitmap.Size.y));
                                              Bitmap.PrintAt (bprintf("%s-%s",
                                                 (LPCTSTR)Cities[flt.VonCity].Kuerzel,
                                                 (LPCTSTR)Cities[flt.NachCity].Kuerzel),
                                                 FontSmallBlack, TEC_FONT_LEFT,
-                                                ClientArea+XY(60, pr*13+6), XY(ClientArea.x+148, Bitmap.Size.y));
+                                                ClientArea+XY(60, pr*13+4), XY(ClientArea.x+148, Bitmap.Size.y));
                                              CString gStr = (flt.Gate==-1) ? CString("-") : bprintf("G%li", flt.Gate+1);
                                              Bitmap.PrintAt (gStr, FontSmallBlack, TEC_FONT_RIGHT,
-                                                ClientArea+XY(148, pr*13+6), XY(ClientArea.x+172, Bitmap.Size.y));
+                                                ClientArea+XY(148, pr*13+4), XY(ClientArea.x+172, Bitmap.Size.y));
                                           }
                                           lineIdx++;
                                        }
@@ -1243,15 +1243,15 @@ void BLOCK::Refresh (SLONG PlayerNum, BOOL StyleType)
                                              Bitmap.BlitFromT (TinyLogoBms[fp2], ClientArea+XY(0, pr2*13+2));
                                              Bitmap.PrintAt (bprintf("%02li:00", fh2+1),
                                                 FontSmallBlack, TEC_FONT_LEFT,
-                                                ClientArea+XY(24, pr2*13+6), XY(ClientArea.x+58, Bitmap.Size.y));
+                                                ClientArea+XY(24, pr2*13+4), XY(ClientArea.x+58, Bitmap.Size.y));
                                              Bitmap.PrintAt (bprintf("%s-%s",
                                                 (LPCTSTR)Cities[flt2.VonCity].Kuerzel,
                                                 (LPCTSTR)Cities[flt2.NachCity].Kuerzel),
                                                 FontSmallBlack, TEC_FONT_LEFT,
-                                                ClientArea+XY(60, pr2*13+6), XY(ClientArea.x+148, Bitmap.Size.y));
+                                                ClientArea+XY(60, pr2*13+4), XY(ClientArea.x+148, Bitmap.Size.y));
                                              CString gStr2 = (flt2.Gate==-1) ? CString("-") : bprintf("G%li", flt2.Gate+1);
                                              Bitmap.PrintAt (gStr2, FontSmallBlack, TEC_FONT_RIGHT,
-                                                ClientArea+XY(148, pr2*13+6), XY(ClientArea.x+172, Bitmap.Size.y));
+                                                ClientArea+XY(148, pr2*13+4), XY(ClientArea.x+172, Bitmap.Size.y));
                                           }
                                           lineIdx++;
                                        }
